@@ -1,0 +1,262 @@
+# Portal Scanner Extensions — CareerArchitect fork
+#
+# Upstream Career-Ops's templates/portals.example.yml targets senior AI / dev-tool
+# roles on ATS platforms (Greenhouse / Ashby / Lever / Workable).
+#
+# This file adds WebSearch queries for platform categories the upstream list
+# doesn't cover, preserved from the pre-port agents/job-search-agent.md:
+#
+#   - Non-dev remote aggregators (entry-level, admin, data-entry friendly)
+#   - Neurodiversity-focused job boards
+#   - Academic / higher-ed platforms
+#   - International aggregators (APAC, ME, India)
+#
+# USAGE:
+#   1. Copy whichever sections you want into your portals.yml in the repo root.
+#   2. The scanner reads portals.yml (gitignored). templates/* is reference only.
+#   3. Tune title_filter.positive / negative in portals.yml to your target roles
+#      — the AI-heavy defaults in portals.example.yml will not match non-dev roles.
+
+search_queries:
+
+  # -- Non-dev remote aggregators (entry-level, admin, support, data-entry) --
+
+  - name: RemoteOK — general remote
+    query: 'site:remoteok.com "remote" {{keywords}}'
+    enabled: true
+
+  - name: WeWorkRemotely — general remote
+    query: 'site:weworkremotely.com "remote" {{keywords}}'
+    enabled: true
+
+  - name: FlexJobs — vetted remote
+    query: 'site:flexjobs.com "remote" {{keywords}}'
+    enabled: true
+
+  - name: AngelList / Wellfound — startups
+    query: 'site:wellfound.com OR site:angel.co "remote" {{keywords}}'
+    enabled: true
+
+  - name: Working Nomads — general remote
+    query: 'site:workingnomads.com "remote" {{keywords}}'
+    enabled: true
+
+  # -- Neurodiversity-friendly boards --
+
+  - name: Mentra — neurodivergent-friendly
+    query: 'site:mentra.com {{keywords}}'
+    enabled: true
+
+  - name: Hire Autism
+    query: 'site:hireautism.org {{keywords}}'
+    enabled: true
+
+  - name: Spectroomz — autism-friendly
+    query: 'site:spectroomz.com {{keywords}}'
+    enabled: true
+
+  - name: Exceptional Individuals (UK)
+    query: 'site:exceptionalindividuals.com {{keywords}}'
+    enabled: true
+
+  - name: abilityJOBS
+    query: 'site:abilityjobs.com {{keywords}}'
+    enabled: true
+
+  - name: Spectrum Careers
+    query: 'site:spectrumcareers.com {{keywords}}'
+    enabled: true
+
+  - name: Specialisterne
+    query: 'site:specialisterne.com {{keywords}}'
+    enabled: true
+
+  # -- Academic & higher-ed --
+
+  - name: HigherEdJobs
+    query: 'site:higheredjobs.com {{keywords}}'
+    enabled: false
+
+  - name: Chronicle of Higher Education
+    query: 'site:chroniclevitae.com OR site:jobs.chronicle.com {{keywords}}'
+    enabled: false
+
+  - name: Academic Jobs Online
+    query: 'site:academicjobsonline.org {{keywords}}'
+    enabled: false
+
+  # -- International aggregators --
+
+  - name: Jooble — multi-country aggregator
+    query: 'site:jooble.org {{keywords}}'
+    enabled: false
+
+  - name: Seek (Australia/NZ)
+    query: 'site:seek.com.au {{keywords}}'
+    enabled: false
+
+  - name: Jora (multi-country)
+    query: 'site:jora.com {{keywords}}'
+    enabled: false
+
+  - name: Bayt (Middle East)
+    query: 'site:bayt.com {{keywords}}'
+    enabled: false
+
+  - name: Naukri (India)
+    query: 'site:naukri.com {{keywords}}'
+    enabled: false
+
+  # -- US aggregators (less curated than upstream's ATS list) --
+
+  - name: Monster
+    query: 'site:monster.com {{keywords}}'
+    enabled: false
+
+  - name: CareerBuilder
+    query: 'site:careerbuilder.com {{keywords}}'
+    enabled: false
+
+# -- JobSpy searches (the OEM aggregator scanner) --
+#
+# python-jobspy hits LinkedIn, Indeed, Glassdoor, Google Jobs, ZipRecruiter,
+# Bayt, Naukri, BDJobs in one call. scan-jobspy.py reads this block and
+# writes results to data/pipeline.md + data/scan-history.tsv (same paths
+# scan.mjs uses), so dedup works across both scanners.
+#
+# To use: copy this block into your portals.yml (or merge with existing
+# tracked_companies + search_queries blocks). Then run:
+#   python3 scan-jobspy.py             # all enabled
+#   python3 scan-jobspy.py --dry-run   # preview
+#
+# Sites supported: indeed, linkedin, glassdoor, google, zip_recruiter,
+# bayt, naukri, bdjobs. Indeed is the most reliable; LinkedIn rate-limits
+# heavily without auth.
+
+jobspy_searches:
+
+  - name: AI Engineer Remote USA
+    sites: [indeed, linkedin, glassdoor, zip_recruiter]
+    search_term: "AI engineer"
+    location: "Remote"
+    country_indeed: "USA"
+    results_wanted: 50
+    hours_old: 168   # last 7 days
+    enabled: true
+
+  - name: ML Engineer Remote USA
+    sites: [indeed, linkedin, glassdoor]
+    search_term: "ML engineer OR machine learning engineer"
+    location: "Remote"
+    country_indeed: "USA"
+    results_wanted: 50
+    hours_old: 168
+    enabled: true
+
+  - name: LLM Forward Deployed Remote
+    sites: [indeed, linkedin]
+    search_term: "LLM OR forward deployed engineer"
+    location: "Remote"
+    country_indeed: "USA"
+    results_wanted: 30
+    hours_old: 168
+    enabled: true
+
+  - name: Solutions Architect AI Remote
+    sites: [indeed, glassdoor]
+    search_term: "AI solutions architect"
+    location: "Remote"
+    country_indeed: "USA"
+    results_wanted: 30
+    hours_old: 336   # last 14 days
+    enabled: false
+
+  - name: Indeed only — broad AI net
+    sites: [indeed]
+    search_term: "(AI OR LLM OR agentic) engineer"
+    location: "Remote"
+    country_indeed: "USA"
+    results_wanted: 100
+    hours_old: 168
+    enabled: false
+
+# -- Title-filter notes --
+# For non-dev roles, override upstream's AI-heavy title_filter.positive with
+# role-appropriate keywords in your portals.yml, e.g.:
+#
+# title_filter:
+#   positive:
+#     - "Data Entry"
+#     - "Research Assistant"
+#     - "Administrative Assistant"
+#     - "Virtual Assistant"
+#     - "Transcription"
+#     - "Customer Support"
+#   negative:
+#     - "Commission Only"
+#     - "MLM"
+#     - "Sales Rep"
+#     - "Independent Contractor"  # when you specifically want W-2
+#     - "Entry Level Sales"
+
+# -- USAJOBS API (federal jobs, fully free, no card) --
+# Federal positions are not in JobSpy and not in any ATS scanner. The
+# USAJOBS API is canonical for US federal hiring and includes thousands
+# of remote-eligible roles. Ported during the strict re-audit pass to
+# fill the USAJOBS gap from the legacy job-search-agent.md.
+#
+# Setup:
+#   1. Read https://developer.usajobs.gov/general/quick-start
+#   2. The "API Request page" linked from there is currently broken
+#      (USAJOBS portal returns "WHOOPS! has encountered an error" as
+#      of 2026-04-27). When that's fixed, fill out the form there;
+#      until then, email apirequest@usajobs.gov directly with your
+#      use case and email address to request a key.
+#   3. Add to .env:
+#        USAJOBS_USER_AGENT=your_email@example.com
+#        USAJOBS_API_KEY=...
+#   4. Run: python scripts/usajobs_search.py "data engineer" "Washington, DC" 100000
+#      or set USAJOBS_OUTPUT=json for machine-readable output.
+
+usajobs:
+  enabled: false  # flip to true after you set USAJOBS_USER_AGENT / USAJOBS_API_KEY
+  script: scripts/usajobs_search.py
+  env_required: [USAJOBS_USER_AGENT, USAJOBS_API_KEY]
+  output_env: USAJOBS_OUTPUT
+  output_value: json
+  defaults:
+    results_per_page: 25
+    pages: 1
+    salary_min: 0
+  searches:
+    - keyword: "data engineer"
+      location: "Washington, DC"
+      salary_min: 100000
+    - keyword: "software engineer"
+      location: "Remote"
+      salary_min: 100000
+
+# -- Google Jobs via SERP API (broadest aggregator, mid-quality) --
+# Google Jobs aggregates LinkedIn/Indeed/employer sites. SERP API
+# returns structured JSON. Free tier: 100 searches/month at https://serpapi.com/.
+#
+# Setup:
+#   1. Sign up: https://serpapi.com/users/sign_up (free)
+#   2. Add to .env: SERPAPI_API_KEY=...
+#   3. Flip enabled below to true.
+
+google_jobs_serp:
+  enabled: true
+  script: scripts/google_jobs_serp.py
+  env_required: [SERPAPI_API_KEY]
+  output_env: SERP_JOBS_OUTPUT
+  output_value: json
+  defaults:
+    results: 10           # max 100; stay low to preserve free-tier quota (100/mo)
+    salary_min: 0
+  searches:
+    - query: "senior backend engineer remote"
+      # SerpAPI rejects literal "Remote" — omit location for global search
+      # and bake the remote intent into the query string instead.
+    - query: "platform engineer"
+      location: "United States"

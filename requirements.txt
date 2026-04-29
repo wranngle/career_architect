@@ -1,0 +1,7 @@
+# Python dependencies for CareerArchitect scripts.
+# The primary pipeline is Node.js (.mjs files + Playwright). Python is used
+# only for board-scraping via JobSpy and the commute distance analysis.
+
+python-jobspy>=1.1.70      # Indeed/LinkedIn/Glassdoor/ZipRecruiter/Google Jobs
+PyYAML>=6.0                # config/profile.yml, portals.yml
+requests>=2.31             # ad-hoc API calls from helper scripts

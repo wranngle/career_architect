@@ -1,0 +1,59 @@
+# wranngle/career_architect — minimal gitignore
+#
+# This repo is treated as cloud document storage, not a deployable
+# package. Everything that's "work product" gets committed and pushed
+# so it survives ephemeral Claude Code on the web sessions.
+#
+# Only THREE categories are excluded:
+#   1. Secrets that would be auto-scanned and burned if public
+#   2. Regeneratable build artifacts too large to track usefully
+#   3. Transient runtime state (locks, pids) that have no value at rest
+
+# 1 — Secrets (DO NOT COMMIT)
+# Repo is going public — restored upstream's .env-ignore policy.
+# User-data files (cv.md, config/profile.yml, modes/_profile.md,
+# article-digest.md, portals.yml, data/applications.md, data/pipeline.md,
+# reports/*.md, output/*.pdf, jds/*.md, interview-prep/*) remain tracked
+# from the prior cloud-doc-storage policy era. Re-add them here if you
+# want them out of new commits — they'll still be in history.
+.env
+.env.*
+
+# 2 — Regeneratable build artifacts
+node_modules/
+.next/
+out/
+build/
+dist/
+__pycache__/
+*.pyc
+*.pyo
+*.so
+*.egg-info/
+*.egg
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+.nyc_output/
+coverage/
+
+# 3 — Transient runtime state
+batch/.batch-state.lock/
+batch/batch-runner.pid
+batch/.resolved-prompt-*.md
+.resolved-prompt-*
+.update-dismissed
+.update-lock
+*.bak
+*.tmp
+*.temp
+career-dashboard
+
+# 4 — Stale per-day artifacts (regeneratable; don't pollute history)
+data/ranked-*.tsv
