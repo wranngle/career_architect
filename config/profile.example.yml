@@ -1,0 +1,110 @@
+# Career-Ops Profile Configuration
+# Copy this file to config/profile.yml and fill in your details.
+# This is the single source of truth for your personal data across all modes.
+
+candidate:
+  full_name: "Jane Smith"
+  email: "jane@example.com"
+  phone: "+1-555-0123"
+  location: "San Francisco, CA"
+  linkedin: "linkedin.com/in/janesmith"
+  portfolio_url: "https://janesmith.dev"
+  github: "github.com/janesmith"
+  twitter: "https://x.com/janesmith"
+  # (Optional) Canva resume design ID for visual CV generation via /career-ops pdf.
+  # Find it in your Canva design URL: https://www.canva.com/design/DAxxxxxxx/...
+  # The ID starts with "D" and is 11 characters long.
+  # canva_resume_design_id: "DAxxxxxxxxx"
+
+target_roles:
+  # Your North Star roles — what you're optimizing for
+  primary:
+    - "Senior AI Engineer"
+    - "Staff ML Engineer"
+  # Archetypes help the evaluation system score fit
+  archetypes:
+    - name: "AI/ML Engineer"
+      level: "Senior/Staff"
+      fit: "primary"        # primary = dream role, secondary = good fit, adjacent = stretch
+    - name: "AI Product Manager"
+      level: "Senior"
+      fit: "secondary"
+    - name: "Solutions Architect"
+      level: "Mid-Senior"
+      fit: "adjacent"
+
+narrative:
+  # Your professional headline (1 line)
+  headline: "ML Engineer turned AI product builder"
+  # Your exit story — what makes you unique
+  exit_story: "Built and sold my SaaS after 5 years. Now focused on applied AI at scale."
+  # Your top 3-5 superpowers
+  superpowers:
+    - "End-to-end ML pipelines"
+    - "Fast prototyping (idea to prod in 2 weeks)"
+    - "Cross-functional communication"
+  # Proof points — projects, articles, case studies with measurable impact
+  proof_points:
+    - name: "Project Alpha"
+      url: "https://janesmith.dev/project-alpha"
+      hero_metric: "Reduced inference latency 40%"
+    - name: "Open Source Tool"
+      url: "https://github.com/janesmith/tool"
+      hero_metric: "2K+ GitHub stars"
+  # Optional: dashboard/demo URL with credentials
+  # dashboard:
+  #   url: "https://janesmith.dev/demo"
+  #   password: "demo-2026"
+
+compensation:
+  target_range: "$150K-200K"     # Your target total comp
+  currency: "USD"
+  minimum: "$120K"               # Walk-away number
+  location_flexibility: "Remote preferred, 1 week/month on-site possible"
+
+location:
+  country: "United States"
+  city: "San Francisco"
+  timezone: "PST"
+  visa_status: "No sponsorship needed"
+  # For remote roles outside your country:
+  # onsite_availability: "1 week/month in any city"
+
+# -- CareerArchitect extensions (not in upstream Career-Ops) --
+
+# Home addresses for commute distance analysis (scripts/job-distance-analysis.py).
+# Each entry: label, street address, and precomputed lat/lon.
+# Lookup lat/lon once via Mapbox MCP or https://www.openstreetmap.org and paste here.
+home_addresses:
+  - label: "Home"
+    address: "123 Main St, Anytown, ST 12345"
+    lat: 40.0000
+    lon: -75.0000
+  # - label: "Secondary"
+  #   address: "456 Oak Ave, Othertown, ST 67890"
+  #   lat: 40.1000
+  #   lon: -75.1000
+
+# Commute rating thresholds (miles) for job-distance-analysis.py
+commute_thresholds:
+  excellent: 10
+  acceptable: 25
+  # anything above `acceptable` is flagged DIFFICULT
+
+# Hard filters applied by oferta / auto-pipeline modes before scoring.
+# Jobs failing these are dropped, not just downscored.
+hard_filters:
+  min_pay_hourly: 18         # USD/hour; set to null to disable
+  min_pay_annual: 37000      # USD/year; set to null to disable
+  exclude_compensation_types:
+    - "commission only"
+    - "MLM"
+    - "multi-level marketing"
+    - "1099 door-to-door"
+  remote_required: false     # set true if fully remote is a hard requirement
+  # ── added by verification pass ──────────────────────────────────────
+  seniority_min: null        # e.g. "senior" — drops "junior", "entry", "associate"
+  seniority_max: null        # e.g. "staff"  — drops "VP", "director", "head"
+  location_allowed: []       # e.g. ["US", "Canada", "Remote"] — empty = no filter
+  exclude_company_stages: [] # e.g. ["pre-seed"] — empty = no filter
+  english_only: true         # drop non-English JDs (detected from JD body)

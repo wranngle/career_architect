@@ -1,0 +1,44 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest", "--browser", "chromium", "--ignore-https-errors"]
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "env": {
+        "MEMORY_PATH": "${PWD}/.claude/memory/memory.json"
+      }
+    },
+    "exa": {
+      "command": "npx",
+      "args": ["-y", "exa-mcp-server"],
+      "env": {
+        "EXA_API_KEY": "${EXA_API_KEY}"
+      }
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    },
+    "mapbox": {
+      "command": "npx",
+      "args": ["-y", "@mapbox/mcp-server"],
+      "env": {
+        "MAPBOX_ACCESS_TOKEN": "${MAPBOX_ACCESS_TOKEN}"
+      }
+    },
+    "ref-tools": {
+      "command": "npx",
+      "args": ["-y", "ref-tools-mcp"],
+      "env": {
+        "REF_API_KEY": "${REF_API_KEY}"
+      }
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    }
+  }
+}

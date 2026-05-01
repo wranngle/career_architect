@@ -1,0 +1,52 @@
+{
+  "name": "career-architect",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI job search pipeline (Career-Ops port) with Next.js landing page",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "doctor": "node doctor.mjs",
+    "verify": "node verify-pipeline.mjs",
+    "normalize": "node normalize-statuses.mjs",
+    "dedup": "node dedup-tracker.mjs",
+    "merge": "node merge-tracker.mjs",
+    "pdf": "node generate-pdf.mjs",
+    "sync-check": "node cv-sync-check.mjs",
+    "update:check": "node update-system.mjs check",
+    "update": "node update-system.mjs apply",
+    "rollback": "node update-system.mjs rollback",
+    "liveness": "node check-liveness.mjs",
+    "scan": "node scan.mjs",
+    "gemini:eval": "node gemini-eval.mjs"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "@radix-ui/react-separator": "^1.0.3",
+    "@radix-ui/react-slot": "^1.0.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "dotenv": "^16.4.5",
+    "framer-motion": "^10.16.16",
+    "js-yaml": "^4.1.1",
+    "lucide-react": "^0.294.0",
+    "next": "14.0.4",
+    "playwright": "1.56.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "tailwind-merge": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
+  }
+}

@@ -1,15 +1,113 @@
-# career_architect
+# CareerArchitect
 
-This repository contains additive extensions for [santifer/career-ops](https://github.com/santifer/career-ops). It provides additional coverage for non-AI job categories and other utility scripts.
+A fork of [santifer/career-ops](https://github.com/santifer/career-ops) with
+a Next.js landing page and a few coverage extensions for non-AI job
+categories.
 
-## Contents
-- **`modes/hydrate.md`**: Additional mode for hydration.
-- **USAJOBS + Google-Jobs-SERP aggregators**: See `scripts/`.
-- **Generic external-aggregator pattern**: See `docs/scan-aggregators-pattern.md`.
-- **ATS quality bar**: See `docs/pdf-quality-bar.md`.
-- **MCP troubleshooting docs**: See `docs/mcp-troubleshooting.md`.
-- **5-tier search ladder**: See `docs/scan-tier-ladder.md`.
-- **Commute analysis**: `scripts/job-distance-analysis.py` rates each tracked job's distance from every address in your `home_addresses`.
+> **Looking for the additive bits as a clean overlay?** The non-personal
+> additions from this fork (the `hydrate` mode, USAJOBS + Google-Jobs-SERP
+> aggregators, the generic external-aggregator pattern for `scan.mjs`, the
+> ATS quality bar, the MCP troubleshooting docs, the 5-tier search
+> ladder) live as a separate, MIT-licensed public repo:
+> **[wranngle/CareerArchitect](https://github.com/wranngle/CareerArchitect)**
+> *(after the rename — see `BRANCHES (status)` below)*. That repo has
+> zero personal data; this one is my personal working tree and contains
+> my CV, profile, and application history.
+
+## Why a fork
+
+Upstream Career-Ops is tuned for senior AI/ML engineers searching
+Greenhouse/Ashby/Lever. This fork adds:
+
+- **Non-AI portal coverage** — `templates/portals.extensions.yml` has
+  WebSearch queries for neurodiversity boards (Mentra, Hire Autism,
+  Spectroomz, Exceptional Individuals, abilityJOBS), academic platforms,
+  and international aggregators (Seek, Jora, Bayt, Naukri).
+- **Commute analysis** — `scripts/job-distance-analysis.py` rates each
+  tracked job's distance from every address in your `home_addresses`.
+- **Hard quality filters** — minimum pay, MLM/commission-only exclusions
+  via a new `hard_filters` section in `config/profile.yml`.
+- **Landing page** — a Next.js site under `src/`, decoupled from the
+  pipeline; keep it, replace it, or delete it.
+
+Everything else (`.mjs` utilities, Go dashboard, skill modes, batch
+orchestrator, PDF generation) is upstream verbatim.
+
+## Install
+
+```bash
+# Prereqs: Node ≥18, Go ≥1.21, Python ≥3.11
+npm install
+npx playwright install chromium
+pip install -r requirements.txt
+npm run doctor                          # validates the environment
+
+# Config
+cp config/profile.example.yml config/profile.yml
+cp templates/portals.example.yml portals.yml
+# Optional: append sections from templates/portals.extensions.yml
+#           into portals.yml for non-AI board coverage.
+# Edit cv.md with your master resume content.
+# Copy .env.example to .env if you want Gemini evaluation.
+```
+
+## Use (inside Claude Code)
+
+```
+/career-ops                       # show all subcommands
+/career-ops <JD text or URL>      # auto-pipeline: evaluate → PDF → tracker
+/career-ops scan                  # scan all enabled portals
+/career-ops pdf                   # tailor cv.md for one JD, render PDF
+/career-ops tracker               # pipeline status
+/career-ops followup              # flag overdue follow-ups
+```
+
+Full list: `.claude/skills/career-ops/SKILL.md`.
+
+## Dashboard
+
+```bash
+cd dashboard && go build -o ../career-dashboard ./...
+./career-dashboard
+```
+
+## Landing page (optional)
+
+```bash
+npm run dev
+```
+
+## Non-goals
+
+Same as upstream: no database, no auto-submit, no queues, no vector DB.
+Claude evaluates and tailors; you submit via Simplify.jobs or any other
+manual path.
+
+## Branches (status)
+
+`main` is the only canonical branch. The repo is intentionally a single flat
+cloud document store — every branch ever opened has been reconciled into
+`main`, and nothing on disk lives only on a side branch.
+
+| Remote branch | Status | Why it still exists |
+|---|---|---|
+| `origin/main` | Canonical | Everything ships here. |
+| `origin/master` | Deprecated — merged into main | Old root-commit branch from initial scaffolding (commit `5c660f8`). All useful files were carried into main during the upstream port; the rest were intentionally removed (see `UPSTREAM.md`). Confirmed ancestor of main with zero unique commits. |
+| `origin/claude/setup-deployment-stack-Ig0PD` | Deprecated — merged into main | Earlier Claude session's deployment-stack work; superseded by the upstream port. Confirmed ancestor of main. |
+| `origin/claude/complete-verification-pass-pGa7Y` | Deprecated — merged into main | Earlier Claude session's verification pass; superseded. Confirmed ancestor of main. |
+| `origin/add-claude-github-actions-1765928276448` | Deprecated — closed PR #1 already merged | Source branch for the Claude Code Action install PR, kept by GitHub after merge. |
+
+These four can be deleted via the GitHub UI (Settings → Branches, or each
+branch page's trash icon) at any time — they're zero-information and only
+remain because the cloud sandbox proxy blocks `git push --delete` and the
+GitHub MCP exposed to in-sandbox sessions has no `delete_branch` tool.
 
 ## License
-MIT
+
+MIT, matching upstream.
+
+## Credits
+
+All non-trivial design credit belongs to Santiago Fernández de Valderrama
+([@santifer](https://github.com/santifer)). This fork layers coverage
+extensions and a landing page on top.
