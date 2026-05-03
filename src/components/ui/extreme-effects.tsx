@@ -1,159 +1,166 @@
-'use client'
+'use client';
 
-import React, { useEffect, useRef, useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
+import React, {
+  useEffect, useRef, useState, useMemo,
+} from 'react';
+import {motion} from 'framer-motion';
 
 // Neural Network Background with animated connections
 export const NeuralNetworkBackground: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  
-  const nodes = useMemo(() => {
-    return Array.from({ length: 50 }, (_, i) => ({
-      id: i,
-      x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
-      y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
-      vx: (Math.random() - 0.5) * 0.5,
-      vy: (Math.random() - 0.5) * 0.5,
-      pulse: Math.random() * Math.PI * 2,
-    }))
-  }, [])
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const nodes = useMemo(() => Array.from({length: 50}, (_, i) => ({
+    id: i,
+    x: Math.random() * (globalThis.window === undefined ? 1200 : window.innerWidth),
+    y: Math.random() * (globalThis.window === undefined ? 800 : window.innerHeight),
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: (Math.random() - 0.5) * 0.5,
+    pulse: Math.random() * Math.PI * 2,
+  })), []);
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return;
+    }
 
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      return;
+    }
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
 
-    resizeCanvas()
-    window.addEventListener('resize', resizeCanvas)
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-    let animationFrame: number
-    let time = 0
+    let animationFrame: number;
+    let time = 0;
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      time += 0.02
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      time += 0.02;
 
       // Update and draw nodes
-      nodes.forEach((node, i) => {
+      for (const [i, node] of nodes.entries()) {
         // Update position
-        node.x += node.vx
-        node.y += node.vy
-        node.pulse += 0.1
+        node.x += node.vx;
+        node.y += node.vy;
+        node.pulse += 0.1;
 
         // Bounce off edges
-        if (node.x < 0 || node.x > canvas.width) node.vx *= -1
-        if (node.y < 0 || node.y > canvas.height) node.vy *= -1
+        if (node.x < 0 || node.x > canvas.width) {
+          node.vx *= -1;
+        }
+
+        if (node.y < 0 || node.y > canvas.height) {
+          node.vy *= -1;
+        }
 
         // Keep in bounds
-        node.x = Math.max(0, Math.min(canvas.width, node.x))
-        node.y = Math.max(0, Math.min(canvas.height, node.y))
+        node.x = Math.max(0, Math.min(canvas.width, node.x));
+        node.y = Math.max(0, Math.min(canvas.height, node.y));
 
         // Draw connections to nearby nodes
-        nodes.slice(i + 1).forEach(otherNode => {
-          const dx = node.x - otherNode.x
-          const dy = node.y - otherNode.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
+        for (const otherNode of nodes.slice(i + 1)) {
+          const dx = node.x - otherNode.x;
+          const dy = node.y - otherNode.y;
+          const distance = Math.hypot(dx, dy);
 
           if (distance < 150) {
-            const opacity = 1 - distance / 150
-            const gradient = ctx.createLinearGradient(node.x, node.y, otherNode.x, otherNode.y)
-            gradient.addColorStop(0, `rgba(207, 60, 105, ${opacity * 0.3})`) // wviolet-500
-            gradient.addColorStop(0.5, `rgba(255, 95, 0, ${opacity * 0.4})`) // sunset-500
-            gradient.addColorStop(1, `rgba(255, 127, 0, ${opacity * 0.3})`) // sunset-400
+            const opacity = 1 - distance / 150;
+            const gradient = ctx.createLinearGradient(node.x, node.y, otherNode.x, otherNode.y);
+            gradient.addColorStop(0, `rgba(207, 60, 105, ${opacity * 0.3})`); // Wviolet-500
+            gradient.addColorStop(0.5, `rgba(255, 95, 0, ${opacity * 0.4})`); // Sunset-500
+            gradient.addColorStop(1, `rgba(255, 127, 0, ${opacity * 0.3})`); // Sunset-400
 
-            ctx.strokeStyle = gradient
-            ctx.lineWidth = 1
-            ctx.beginPath()
-            ctx.moveTo(node.x, node.y)
-            ctx.lineTo(otherNode.x, otherNode.y)
-            ctx.stroke()
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(node.x, node.y);
+            ctx.lineTo(otherNode.x, otherNode.y);
+            ctx.stroke();
 
             // Data packet animation
-            const progress = (Math.sin(time + i) + 1) / 2
-            const packetX = node.x + (otherNode.x - node.x) * progress
-            const packetY = node.y + (otherNode.y - node.y) * progress
-            
-            ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 0.8})`
-            ctx.beginPath()
-            ctx.arc(packetX, packetY, 2, 0, Math.PI * 2)
-            ctx.fill()
+            const progress = (Math.sin(time + i) + 1) / 2;
+            const packetX = node.x + (otherNode.x - node.x) * progress;
+            const packetY = node.y + (otherNode.y - node.y) * progress;
+
+            ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 0.8})`;
+            ctx.beginPath();
+            ctx.arc(packetX, packetY, 2, 0, Math.PI * 2);
+            ctx.fill();
           }
-        })
+        }
 
         // Draw node
-        const pulseIntensity = Math.sin(node.pulse) * 0.3 + 0.7
-        const gradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, 8)
-        gradient.addColorStop(0, `rgba(207, 60, 105, ${pulseIntensity})`)
-        gradient.addColorStop(0.5, `rgba(255, 95, 0, ${pulseIntensity * 0.7})`)
-        gradient.addColorStop(1, `rgba(207, 60, 105, 0)`)
+        const pulseIntensity = Math.sin(node.pulse) * 0.3 + 0.7;
+        const gradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, 8);
+        gradient.addColorStop(0, `rgba(207, 60, 105, ${pulseIntensity})`);
+        gradient.addColorStop(0.5, `rgba(255, 95, 0, ${pulseIntensity * 0.7})`);
+        gradient.addColorStop(1, 'rgba(207, 60, 105, 0)');
 
-        ctx.fillStyle = gradient
-        ctx.beginPath()
-        ctx.arc(node.x, node.y, 8, 0, Math.PI * 2)
-        ctx.fill()
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 8, 0, Math.PI * 2);
+        ctx.fill();
 
         // Inner core
-        ctx.fillStyle = `rgba(255, 255, 255, ${pulseIntensity})`
-        ctx.beginPath()
-        ctx.arc(node.x, node.y, 3, 0, Math.PI * 2)
-        ctx.fill()
-      })
+        ctx.fillStyle = `rgba(255, 255, 255, ${pulseIntensity})`;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
 
-      animationFrame = requestAnimationFrame(animate)
-    }
+      animationFrame = requestAnimationFrame(animate);
+    };
 
-    animate()
+    animate();
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas)
+      window.removeEventListener('resize', resizeCanvas);
       if (animationFrame) {
-        cancelAnimationFrame(animationFrame)
+        cancelAnimationFrame(animationFrame);
       }
-    }
-  }, [nodes])
+    };
+  }, [nodes]);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 opacity-20"
-      style={{ background: 'transparent' }}
+      className='fixed inset-0 pointer-events-none z-0 opacity-20'
+      style={{background: 'transparent'}}
     />
-  )
-}
+  );
+};
 
 // Quantum Particle Field with 3D perspective
 export const QuantumParticleField: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  
-  const particles = useMemo(() => {
-    return Array.from({ length: 200 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      z: Math.random() * 100,
-      size: Math.random() * 3 + 1,
-      speed: Math.random() * 0.5 + 0.1,
-      hue: (Math.random() * 70 + 330) % 360, // wviolet/magenta to sunset/orange range
-    }))
-  }, [])
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const particles = useMemo(() => Array.from({length: 200}, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    z: Math.random() * 100,
+    size: Math.random() * 3 + 1,
+    speed: Math.random() * 0.5 + 0.1,
+    hue: (Math.random() * 70 + 330) % 360, // Wviolet/magenta to sunset/orange range
+  })), []);
 
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 pointer-events-none z-0 opacity-30"
-      style={{ perspective: '1000px' }}
+      className='fixed inset-0 pointer-events-none z-0 opacity-30'
+      style={{perspective: '1000px'}}
     >
-      {particles.map((particle) => (
+      {particles.map(particle => (
         <motion.div
           key={particle.id}
-          className="absolute rounded-full"
+          className='absolute rounded-full'
           style={{
             width: particle.size,
             height: particle.size,
@@ -164,12 +171,12 @@ export const QuantumParticleField: React.FC = () => {
             x: [
               `${particle.x}vw`,
               `${(particle.x + 50) % 100}vw`,
-              `${particle.x}vw`
+              `${particle.x}vw`,
             ],
             y: [
               `${particle.y}vh`,
               `${(particle.y + 30) % 100}vh`,
-              `${particle.y}vh`
+              `${particle.y}vh`,
             ],
             rotateX: [0, 360],
             rotateY: [0, -360],
@@ -178,45 +185,43 @@ export const QuantumParticleField: React.FC = () => {
           transition={{
             duration: 20 + particle.speed * 10,
             repeat: Infinity,
-            ease: "linear",
+            ease: 'linear',
           }}
         />
       ))}
     </div>
-  )
-}
+  );
+};
 
 // DNA Helix Scroll Animation
-interface DNAHelixScrollProps {
-  className?: string
-  helixHeight?: number
-}
+type DNAHelixScrollProps = {
+  className?: string;
+  helixHeight?: number;
+};
 
-export const DNAHelixScroll: React.FC<DNAHelixScrollProps> = ({ 
-  className = '', 
-  helixHeight = 400 
+export const DNAHelixScroll: React.FC<DNAHelixScrollProps> = ({
+  className = '',
+  helixHeight = 400,
 }) => {
-  const helixPairs = useMemo(() => {
-    return Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      y: (i / 19) * helixHeight,
-      leftX: Math.sin((i / 19) * Math.PI * 4) * 30,
-      rightX: Math.sin((i / 19) * Math.PI * 4 + Math.PI) * 30,
-    }))
-  }, [helixHeight])
+  const helixPairs = useMemo(() => Array.from({length: 20}, (_, i) => ({
+    id: i,
+    y: (i / 19) * helixHeight,
+    leftX: Math.sin((i / 19) * Math.PI * 4) * 30,
+    rightX: Math.sin((i / 19) * Math.PI * 4 + Math.PI) * 30,
+  })), [helixHeight]);
 
   return (
-    <div className={`relative ${className}`} style={{ height: helixHeight }}>
+    <div className={`relative ${className}`} style={{height: helixHeight}}>
       {/* Left strand */}
       <motion.div
-        className="absolute left-0 top-0"
-        animate={{ rotateZ: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        className='absolute left-0 top-0'
+        animate={{rotateZ: 360}}
+        transition={{duration: 20, repeat: Infinity, ease: 'linear'}}
       >
         {helixPairs.map((pair, i) => (
           <motion.div
             key={`left-${pair.id}`}
-            className="absolute w-3 h-3 bg-gradient-to-r from-sunset-300 to-sunset-500 rounded-full"
+            className='absolute w-3 h-3 bg-gradient-to-r from-sunset-300 to-sunset-500 rounded-full'
             style={{
               left: 50 + pair.leftX,
               top: pair.y,
@@ -237,14 +242,14 @@ export const DNAHelixScroll: React.FC<DNAHelixScrollProps> = ({
 
       {/* Right strand */}
       <motion.div
-        className="absolute right-0 top-0"
-        animate={{ rotateZ: -360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        className='absolute right-0 top-0'
+        animate={{rotateZ: -360}}
+        transition={{duration: 20, repeat: Infinity, ease: 'linear'}}
       >
         {helixPairs.map((pair, i) => (
           <motion.div
             key={`right-${pair.id}`}
-            className="absolute w-3 h-3 bg-gradient-to-r from-wviolet-400 to-sunset-400 rounded-full"
+            className='absolute w-3 h-3 bg-gradient-to-r from-wviolet-400 to-sunset-400 rounded-full'
             style={{
               left: 50 + pair.rightX,
               top: pair.y,
@@ -267,7 +272,7 @@ export const DNAHelixScroll: React.FC<DNAHelixScrollProps> = ({
       {helixPairs.map((pair, i) => (
         <motion.div
           key={`connection-${pair.id}`}
-          className="absolute h-0.5 bg-gradient-to-r from-sunset-300 via-white to-wviolet-400"
+          className='absolute h-0.5 bg-gradient-to-r from-sunset-300 via-white to-wviolet-400'
           style={{
             left: 50 + Math.min(pair.leftX, pair.rightX),
             top: pair.y + 6,
@@ -285,41 +290,45 @@ export const DNAHelixScroll: React.FC<DNAHelixScrollProps> = ({
         />
       ))}
     </div>
-  )
-}
+  );
+};
 
 // Cyberpunk Text with glitch effects
-interface CyberpunkTextProps {
-  text: string
-  className?: string
-  glitchIntensity?: number
-  neonColor?: string
-}
+type CyberpunkTextProps = {
+  text: string;
+  className?: string;
+  glitchIntensity?: number;
+  neonColor?: string;
+};
 
 export const CyberpunkText: React.FC<CyberpunkTextProps> = ({
   text,
   className = '',
   glitchIntensity = 0.2,
-  neonColor = '#ff5f00'
+  neonColor = '#ff5f00',
 }) => {
-  const [isGlitching, setIsGlitching] = useState(false)
+  const [isGlitching, setIsGlitching] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (Math.random() < glitchIntensity) {
-        setIsGlitching(true)
-        setTimeout(() => setIsGlitching(false), 150)
+        setIsGlitching(true);
+        setTimeout(() => {
+          setIsGlitching(false);
+        }, 150);
       }
-    }, 2000)
+    }, 2000);
 
-    return () => clearInterval(interval)
-  }, [glitchIntensity])
+    return () => {
+      clearInterval(interval);
+    };
+  }, [glitchIntensity]);
 
   return (
     <div className={`relative inline-block ${className}`}>
       {/* Main text with neon glow */}
       <motion.span
-        className="relative z-10 font-bold"
+        className='relative z-10 font-bold'
         style={{
           color: neonColor,
           textShadow: `
@@ -329,15 +338,17 @@ export const CyberpunkText: React.FC<CyberpunkTextProps> = ({
             0 0 20px ${neonColor}
           `,
         }}
-        animate={isGlitching ? {
-          x: [0, -2, 2, 0],
-          textShadow: [
-            `0 0 5px ${neonColor}`,
-            `2px 0 5px #cf3c69, -2px 0 5px #ff5f00`,
-            `0 0 5px ${neonColor}`,
-          ],
-        } : {}}
-        transition={{ duration: 0.1 }}
+        animate={isGlitching
+          ? {
+            x: [0, -2, 2, 0],
+            textShadow: [
+              `0 0 5px ${neonColor}`,
+              '2px 0 5px #cf3c69, -2px 0 5px #ff5f00',
+              `0 0 5px ${neonColor}`,
+            ],
+          }
+          : {}}
+        transition={{duration: 0.1}}
       >
         {text}
       </motion.span>
@@ -346,7 +357,7 @@ export const CyberpunkText: React.FC<CyberpunkTextProps> = ({
       {isGlitching && (
         <>
           <span
-            className="absolute top-0 left-0 font-bold opacity-80"
+            className='absolute top-0 left-0 font-bold opacity-80'
             style={{
               color: '#cf3c69',
               transform: 'translateX(-2px)',
@@ -356,7 +367,7 @@ export const CyberpunkText: React.FC<CyberpunkTextProps> = ({
             {text}
           </span>
           <span
-            className="absolute top-0 left-0 font-bold opacity-80"
+            className='absolute top-0 left-0 font-bold opacity-80'
             style={{
               color: '#ff5f00',
               transform: 'translateX(2px)',
@@ -370,7 +381,7 @@ export const CyberpunkText: React.FC<CyberpunkTextProps> = ({
 
       {/* Neon border */}
       <div
-        className="absolute inset-0 border-2 border-transparent animate-pulse"
+        className='absolute inset-0 border-2 border-transparent animate-pulse'
         style={{
           borderImage: 'linear-gradient(45deg, #ff5f00, #cf3c69, #ff5f00) 1',
           boxShadow: `
@@ -380,47 +391,44 @@ export const CyberpunkText: React.FC<CyberpunkTextProps> = ({
         }}
       />
     </div>
-  )
-}
+  );
+};
 
 // Holographic Data Stream
-interface HolographicDataStreamProps {
-  streamCount?: number
-  className?: string
-}
+type HolographicDataStreamProps = {
+  streamCount?: number;
+  className?: string;
+};
 
 export const HolographicDataStream: React.FC<HolographicDataStreamProps> = ({
   streamCount = 6,
-  className = ''
+  className = '',
 }) => {
-  const streams = useMemo(() => {
-    return Array.from({ length: streamCount }, (_, i) => ({
-      id: i,
-      x: (i / (streamCount - 1)) * 100,
-      delay: i * 0.5,
-      data: Array.from({ length: 20 }, () => 
-        Math.random().toString(36).substring(2, 8)
-      ),
-    }))
-  }, [streamCount])
+  const streams = useMemo(() => Array.from({length: streamCount}, (_, i) => ({
+    id: i,
+    x: (i / (streamCount - 1)) * 100,
+    delay: i * 0.5,
+    data: Array.from({length: 20}, () =>
+      Math.random().toString(36).slice(2, 8)),
+  })), [streamCount]);
 
   return (
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
-      {streams.map((stream) => (
+      {streams.map(stream => (
         <div
           key={stream.id}
-          className="absolute top-0 h-full flex flex-col justify-around"
-          style={{ left: `${stream.x}%` }}
+          className='absolute top-0 h-full flex flex-col justify-around'
+          style={{left: `${stream.x}%`}}
         >
           {stream.data.map((data, dataIndex) => (
             <motion.div
               key={dataIndex}
-              className="text-xs font-mono opacity-60"
+              className='text-xs font-mono opacity-60'
               style={{
                 color: `hsl(${(330 + dataIndex * 5) % 360}, 100%, 70%)`,
                 textShadow: '0 0 5px currentColor',
               }}
-              initial={{ opacity: 0, y: -20 }}
+              initial={{opacity: 0, y: -20}}
               animate={{
                 opacity: [0, 0.8, 0],
                 y: ['0vh', '100vh'],
@@ -438,45 +446,42 @@ export const HolographicDataStream: React.FC<HolographicDataStreamProps> = ({
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
 // Matrix Rain Effect
-interface MatrixRainProps {
-  density?: number
-  className?: string
-}
+type MatrixRainProps = {
+  density?: number;
+  className?: string;
+};
 
 export const MatrixRain: React.FC<MatrixRainProps> = ({
   density = 20,
-  className = ''
+  className = '',
 }) => {
-  const drops = useMemo(() => {
-    return Array.from({ length: density }, (_, i) => ({
-      id: i,
-      x: (i / density) * 100,
-      chars: Array.from({ length: 15 }, () => 
-        String.fromCharCode(0x30A0 + Math.random() * 96)
-      ),
-    }))
-  }, [density])
+  const drops = useMemo(() => Array.from({length: density}, (_, i) => ({
+    id: i,
+    x: (i / density) * 100,
+    chars: Array.from({length: 15}, () =>
+      String.fromCharCode(0x30_A0 + Math.random() * 96)),
+  })), [density]);
 
   return (
     <div className={`fixed inset-0 pointer-events-none z-0 ${className}`}>
-      {drops.map((drop) => (
+      {drops.map(drop => (
         <div
           key={drop.id}
-          className="absolute top-0 flex flex-col"
-          style={{ left: `${drop.x}%` }}
+          className='absolute top-0 flex flex-col'
+          style={{left: `${drop.x}%`}}
         >
           {drop.chars.map((char, charIndex) => (
             <motion.span
               key={charIndex}
-              className="text-sunset-400 font-mono text-sm opacity-60"
+              className='text-sunset-400 font-mono text-sm opacity-60'
               style={{
                 textShadow: '0 0 5px #ff5f00',
               }}
-              initial={{ opacity: 0 }}
+              initial={{opacity: 0}}
               animate={{
                 opacity: [0, 1, 0],
                 y: ['0vh', '100vh'],
@@ -494,52 +499,50 @@ export const MatrixRain: React.FC<MatrixRainProps> = ({
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
 // Pulsing Energy Field
-export const PulsingEnergyField: React.FC = () => {
-  return (
-    <div className="fixed inset-0 pointer-events-none z-0">
-      {/* Energy waves */}
-      {[...Array(5)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute inset-0 border border-wviolet-500/20 rounded-full"
-          style={{
-            left: '50%',
-            top: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
-          animate={{
-            scale: [0, 4],
-            opacity: [0.5, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            delay: i * 1.2,
-            ease: 'easeOut',
-          }}
-        />
-      ))}
-      
-      {/* Central energy core */}
+export const PulsingEnergyField: React.FC = () => (
+  <div className='fixed inset-0 pointer-events-none z-0'>
+    {/* Energy waves */}
+    {Array.from({length: 5}).map((_, i) => (
       <motion.div
-        className="absolute left-1/2 top-1/2 w-2 h-2 bg-wviolet-400 rounded-full"
+        key={i}
+        className='absolute inset-0 border border-wviolet-500/20 rounded-full'
         style={{
+          left: '50%',
+          top: '50%',
           transform: 'translate(-50%, -50%)',
-          boxShadow: '0 0 20px #cf3c69, 0 0 40px #cf3c69',
         }}
         animate={{
-          scale: [1, 1.5, 1],
-          opacity: [0.8, 1, 0.8],
+          scale: [0, 4],
+          opacity: [0.5, 0],
         }}
         transition={{
-          duration: 2,
+          duration: 6,
           repeat: Infinity,
+          delay: i * 1.2,
+          ease: 'easeOut',
         }}
       />
-    </div>
-  )
-}
+    ))}
+
+    {/* Central energy core */}
+    <motion.div
+      className='absolute left-1/2 top-1/2 w-2 h-2 bg-wviolet-400 rounded-full'
+      style={{
+        transform: 'translate(-50%, -50%)',
+        boxShadow: '0 0 20px #cf3c69, 0 0 40px #cf3c69',
+      }}
+      animate={{
+        scale: [1, 1.5, 1],
+        opacity: [0.8, 1, 0.8],
+      }}
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+      }}
+    />
+  </div>
+);

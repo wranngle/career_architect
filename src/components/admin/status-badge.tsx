@@ -1,6 +1,5 @@
-import type { Status } from '@/lib/sample-data'
-import { STATUS_LABELS } from '@/lib/sample-data'
-import { cn } from '@/lib/utils'
+import {type Status, STATUS_LABELS} from '@/lib/sample-data';
+import {cn} from '@/lib/utils';
 
 const STATUS_CLASSES: Record<Status, string> = {
   // Map status to brand-aligned hues. Healthy/positive = sunset; signal = wviolet;
@@ -13,9 +12,9 @@ const STATUS_CLASSES: Record<Status, string> = {
   skip: 'bg-night-200 text-night-700 ring-night-300',
   rejected: 'bg-night-100 text-night-600 ring-night-200',
   discarded: 'bg-night-100 text-night-500 ring-night-200',
-}
+};
 
-export function StatusBadge({ status }: { status: Status }) {
+export function StatusBadge({status}: {status: Status}) {
   return (
     <span
       className={cn(
@@ -25,14 +24,18 @@ export function StatusBadge({ status }: { status: Status }) {
     >
       {STATUS_LABELS[status]}
     </span>
-  )
+  );
 }
 
-export function ScoreChip({ score }: { score: number }) {
-  let cls = 'bg-muted text-muted-foreground ring-border'
-  if (score >= 4.2) cls = 'bg-sunset-500/15 text-sunset-700 ring-sunset-500/30'
-  else if (score >= 3.8) cls = 'bg-sunset-300/30 text-sunset-800 ring-sunset-300'
-  else if (score < 3.0) cls = 'bg-wviolet-100 text-wviolet-700 ring-wviolet-200'
+export function ScoreChip({score}: {score: number}) {
+  let cls = 'bg-muted text-muted-foreground ring-border';
+  if (score >= 4.2) {
+    cls = 'bg-sunset-500/15 text-sunset-700 ring-sunset-500/30';
+  } else if (score >= 3.8) {
+    cls = 'bg-sunset-300/30 text-sunset-800 ring-sunset-300';
+  } else if (score < 3) {
+    cls = 'bg-wviolet-100 text-wviolet-700 ring-wviolet-200';
+  }
 
   return (
     <span
@@ -43,5 +46,5 @@ export function ScoreChip({ score }: { score: number }) {
     >
       {score.toFixed(1)}
     </span>
-  )
+  );
 }

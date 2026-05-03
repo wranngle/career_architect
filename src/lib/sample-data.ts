@@ -1,4 +1,4 @@
-// src/lib/sample-data.ts
+// Src/lib/sample-data.ts
 // Synthetic placeholder data for the /admin demo dashboard.
 // NO real customer or applicant data — every record below is fabricated.
 // Mirror the Go TUI's CareerApplication / PipelineMetrics / ProgressMetrics
@@ -12,24 +12,24 @@ export type Status =
   | 'offer'
   | 'rejected'
   | 'discarded'
-  | 'skip'
+  | 'skip';
 
 export type CareerApplication = {
-  number: number
-  date: string // YYYY-MM-DD
-  company: string
-  role: string
-  status: Status
-  score: number // 0–5
-  hasPDF: boolean
-  reportPath: string
-  notes: string
-  jobURL: string
-  archetype?: string
-  tldr?: string
-  remote?: string
-  compEstimate?: string
-}
+  number: number;
+  date: string; // YYYY-MM-DD
+  company: string;
+  role: string;
+  status: Status;
+  score: number; // 0–5
+  hasPDF: boolean;
+  reportPath: string;
+  notes: string;
+  jobURL: string;
+  archetype?: string;
+  tldr?: string;
+  remote?: string;
+  compEstimate?: string;
+};
 
 export const sampleApplications: CareerApplication[] = [
   {
@@ -102,7 +102,7 @@ export const sampleApplications: CareerApplication[] = [
     company: 'Sample Health Systems',
     role: 'Engineering Manager, Identity',
     status: 'rejected',
-    score: 4.0,
+    score: 4,
     hasPDF: true,
     reportPath: 'reports/2026-04-20-sample-health.md',
     notes: 'Rejected post-onsite — went with internal candidate.',
@@ -192,109 +192,104 @@ export const sampleApplications: CareerApplication[] = [
     remote: 'Remote (global)',
     compEstimate: '$190k–$230k',
   },
-]
+];
 
 // PipelineMetrics — aggregate roll-up.
 export type PipelineMetrics = {
-  total: number
-  byStatus: Record<Status, number>
-  avgScore: number
-  topScore: number
-  withPDF: number
-  actionable: number // total minus skip/rejected/discarded
-}
+  total: number;
+  byStatus: Record<Status, number>;
+  avgScore: number;
+  topScore: number;
+  withPDF: number;
+  actionable: number; // Total minus skip/rejected/discarded
+};
 
 export function buildPipelineMetrics(apps: CareerApplication[]): PipelineMetrics {
   const byStatus = apps.reduce<Record<string, number>>((acc, a) => {
-    acc[a.status] = (acc[a.status] ?? 0) + 1
-    return acc
-  }, {})
-  const scores = apps.map((a) => a.score).filter((s) => s > 0)
-  const avg = scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : 0
-  const top = scores.length ? Math.max(...scores) : 0
-  const withPDF = apps.filter((a) => a.hasPDF).length
-  const actionable = apps.filter(
-    (a) => !['skip', 'rejected', 'discarded'].includes(a.status),
-  ).length
+    acc[a.status] = (acc[a.status] ?? 0) + 1;
+    return acc;
+  }, {});
+  const scores = apps.map(a => a.score).filter(s => s > 0);
+  const avg = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
+  const top = scores.length > 0 ? Math.max(...scores) : 0;
+  const withPDF = apps.filter(a => a.hasPDF).length;
+  const actionable = apps.filter(a => !['skip', 'rejected', 'discarded'].includes(a.status)).length;
   return {
     total: apps.length,
-    byStatus: byStatus as Record<Status, number>,
+    byStatus,
     avgScore: Number(avg.toFixed(2)),
     topScore: Number(top.toFixed(2)),
     withPDF,
     actionable,
-  }
+  };
 }
 
 // ProgressMetrics — funnel + time-series.
-export type FunnelStage = { label: string; count: number; pct: number }
-export type ScoreBucket = { label: string; count: number }
-export type WeekActivity = { week: string; count: number }
+export type FunnelStage = {label: string; count: number; pct: number};
+export type ScoreBucket = {label: string; count: number};
+export type WeekActivity = {week: string; count: number};
 
 export type ProgressMetrics = {
-  funnelStages: FunnelStage[]
-  scoreBuckets: ScoreBucket[]
-  weeklyActivity: WeekActivity[]
-  responseRate: number
-  interviewRate: number
-  offerRate: number
-  avgScore: number
-  topScore: number
-  totalOffers: number
-  activeApps: number
-}
+  funnelStages: FunnelStage[];
+  scoreBuckets: ScoreBucket[];
+  weeklyActivity: WeekActivity[];
+  responseRate: number;
+  interviewRate: number;
+  offerRate: number;
+  avgScore: number;
+  topScore: number;
+  totalOffers: number;
+  activeApps: number;
+};
 
 export function buildProgressMetrics(apps: CareerApplication[]): ProgressMetrics {
-  const total = apps.length || 1
+  const total = apps.length || 1;
   const counts = (filter: (a: CareerApplication) => boolean) =>
-    apps.filter(filter).length
+    apps.filter(filter).length;
 
-  const applied = counts((a) =>
-    ['applied', 'responded', 'interview', 'offer', 'rejected'].includes(a.status),
-  )
-  const responded = counts((a) =>
-    ['responded', 'interview', 'offer'].includes(a.status),
-  )
-  const interview = counts((a) => ['interview', 'offer'].includes(a.status))
-  const offer = counts((a) => a.status === 'offer')
+  const applied = counts(a =>
+    ['applied', 'responded', 'interview', 'offer', 'rejected'].includes(a.status));
+  const responded = counts(a =>
+    ['responded', 'interview', 'offer'].includes(a.status));
+  const interview = counts(a => ['interview', 'offer'].includes(a.status));
+  const offer = counts(a => a.status === 'offer');
 
   const funnelStages: FunnelStage[] = [
-    { label: 'Evaluated', count: total, pct: 100 },
-    { label: 'Applied', count: applied, pct: (applied / total) * 100 },
-    { label: 'Responded', count: responded, pct: (responded / total) * 100 },
-    { label: 'Interview', count: interview, pct: (interview / total) * 100 },
-    { label: 'Offer', count: offer, pct: (offer / total) * 100 },
-  ]
+    {label: 'Evaluated', count: total, pct: 100},
+    {label: 'Applied', count: applied, pct: (applied / total) * 100},
+    {label: 'Responded', count: responded, pct: (responded / total) * 100},
+    {label: 'Interview', count: interview, pct: (interview / total) * 100},
+    {label: 'Offer', count: offer, pct: (offer / total) * 100},
+  ];
 
-  const buckets: { label: string; min: number; max: number }[] = [
-    { label: '4.5–5.0', min: 4.5, max: 5.01 },
-    { label: '4.0–4.4', min: 4.0, max: 4.5 },
-    { label: '3.5–3.9', min: 3.5, max: 4.0 },
-    { label: '3.0–3.4', min: 3.0, max: 3.5 },
-    { label: '<3.0', min: 0, max: 3.0 },
-  ]
-  const scoreBuckets: ScoreBucket[] = buckets.map((b) => ({
+  const buckets: Array<{label: string; min: number; max: number}> = [
+    {label: '4.5–5.0', min: 4.5, max: 5.01},
+    {label: '4.0–4.4', min: 4, max: 4.5},
+    {label: '3.5–3.9', min: 3.5, max: 4},
+    {label: '3.0–3.4', min: 3, max: 3.5},
+    {label: '<3.0', min: 0, max: 3},
+  ];
+  const scoreBuckets: ScoreBucket[] = buckets.map(b => ({
     label: b.label,
-    count: counts((a) => a.score >= b.min && a.score < b.max),
-  }))
+    count: counts(a => a.score >= b.min && a.score < b.max),
+  }));
 
   // Group apps by ISO-week-ish bucket using YYYY-Wxx (synthetic).
-  const weekMap = new Map<string, number>()
+  const weekMap = new Map<string, number>();
   for (const a of apps) {
-    const wk = isoWeekKey(a.date)
-    weekMap.set(wk, (weekMap.get(wk) ?? 0) + 1)
+    const wk = isoWeekKey(a.date);
+    weekMap.set(wk, (weekMap.get(wk) ?? 0) + 1);
   }
-  const weeklyActivity = Array.from(weekMap.entries())
-    .map(([week, count]) => ({ week, count }))
-    .sort((a, b) => (a.week < b.week ? 1 : -1))
 
-  const scores = apps.map((a) => a.score).filter((s) => s > 0)
-  const avg = scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : 0
-  const top = scores.length ? Math.max(...scores) : 0
+  const weeklyActivity = [...weekMap.entries()]
+    .map(([week, count]) => ({week, count}))
+    .sort((a, b) => (a.week < b.week ? 1 : -1));
 
-  const activeApps = counts(
-    (a) => !['skip', 'rejected', 'discarded'].includes(a.status),
-  )
+  const scores = apps.map(a => a.score).filter(s => s > 0);
+  const avg = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
+  const top = scores.length > 0 ? Math.max(...scores) : 0;
+
+  const activeApps = counts(a => !['skip', 'rejected', 'discarded'].includes(a.status));
 
   return {
     funnelStages,
@@ -307,39 +302,40 @@ export function buildProgressMetrics(apps: CareerApplication[]): ProgressMetrics
     topScore: Number(top.toFixed(2)),
     totalOffers: offer,
     activeApps,
-  }
+  };
 }
 
 function isoWeekKey(yyyyMmDd: string): string {
   // Lightweight ISO week label: YYYY-Wxx. Approximation; sufficient for demo.
-  const d = new Date(yyyyMmDd + 'T00:00:00Z')
-  if (Number.isNaN(d.getTime())) return 'unknown'
-  const target = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()))
-  const dayNum = (target.getUTCDay() + 6) % 7
-  target.setUTCDate(target.getUTCDate() - dayNum + 3)
-  const firstThursday = new Date(Date.UTC(target.getUTCFullYear(), 0, 4))
-  const week =
-    1 +
-    Math.round(
-      ((target.getTime() - firstThursday.getTime()) / 86400000 -
-        3 +
-        ((firstThursday.getUTCDay() + 6) % 7)) /
-        7,
-    )
-  return `${target.getUTCFullYear()}-W${String(week).padStart(2, '0')}`
+  const d = new Date(yyyyMmDd + 'T00:00:00Z');
+  if (Number.isNaN(d.getTime())) {
+    return 'unknown';
+  }
+
+  const target = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+  const dayNumber = (target.getUTCDay() + 6) % 7;
+  target.setUTCDate(target.getUTCDate() - dayNumber + 3);
+  const firstThursday = new Date(Date.UTC(target.getUTCFullYear(), 0, 4));
+  const week
+    = 1
+      + Math.round(((target.getTime() - firstThursday.getTime()) / 86_400_000
+        - 3
+        + ((firstThursday.getUTCDay() + 6) % 7))
+      / 7);
+  return `${target.getUTCFullYear()}-W${String(week).padStart(2, '0')}`;
 }
 
 // Sample scan history — synthetic batch run results (mirrors batch/ + scan.mjs UX).
 export type ScanRun = {
-  id: string
-  startedAt: string
-  durationSec: number
-  portalsScanned: number
-  newJobs: number
-  evaluated: number
-  status: 'completed' | 'partial' | 'failed'
-  notes: string
-}
+  id: string;
+  startedAt: string;
+  durationSec: number;
+  portalsScanned: number;
+  newJobs: number;
+  evaluated: number;
+  status: 'completed' | 'partial' | 'failed';
+  notes: string;
+};
 
 export const sampleScans: ScanRun[] = [
   {
@@ -392,7 +388,7 @@ export const sampleScans: ScanRun[] = [
     status: 'failed',
     notes: 'Playwright launch failure; rerun queued.',
   },
-]
+];
 
 export const STATUS_LABELS: Record<Status, string> = {
   evaluated: 'Evaluated',
@@ -403,4 +399,4 @@ export const STATUS_LABELS: Record<Status, string> = {
   rejected: 'Rejected',
   discarded: 'Discarded',
   skip: 'Skip',
-}
+};

@@ -57,3 +57,7 @@ career-dashboard
 
 # 4 — Stale per-day artifacts (regeneratable; don't pollute history)
 data/ranked-*.tsv
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+tsconfig.tsbuildinfo
