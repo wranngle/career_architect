@@ -96,7 +96,12 @@ const AnimatedBackground = () => (
 );
 
 // Magnetic button effect
-const MagneticButton = ({children, className, ...props}: any) => {
+type MagneticButtonProps = {
+  children: React.ReactNode;
+  className?: string;
+} & React.ComponentPropsWithoutRef<typeof Button>;
+
+const MagneticButton = ({children, className, ...props}: MagneticButtonProps) => {
   const [position, setPosition] = useState({x: 0, y: 0});
   const [isHovered, setIsHovered] = useState(false);
 
@@ -147,7 +152,13 @@ const MagneticButton = ({children, className, ...props}: any) => {
 };
 
 // Animated text reveal
-const AnimatedText = ({children, className, delay = 0}: any) => (
+type AnimatedTextProps = {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+};
+
+const AnimatedText = ({children, className, delay = 0}: AnimatedTextProps) => (
   <motion.div
     initial={{opacity: 0, y: 30}}
     animate={{opacity: 1, y: 0}}
@@ -159,7 +170,13 @@ const AnimatedText = ({children, className, delay = 0}: any) => (
 );
 
 // Floating card component
-const FloatingCard = ({children, delay = 0, className}: any) => (
+type FloatingCardProps = {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+};
+
+const FloatingCard = ({children, delay = 0, className}: FloatingCardProps) => (
   <motion.div
     initial={{opacity: 0, y: 50, scale: 0.9}}
     animate={{opacity: 1, y: 0, scale: 1}}

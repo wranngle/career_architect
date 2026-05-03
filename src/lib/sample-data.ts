@@ -4,8 +4,8 @@
 // Mirror the Go TUI's CareerApplication / PipelineMetrics / ProgressMetrics
 // shapes (see dashboard/internal/model/career.go).
 
-export type Status =
-  | 'evaluated'
+export type Status
+  = | 'evaluated'
   | 'applied'
   | 'responded'
   | 'interview'
@@ -205,10 +205,10 @@ export type PipelineMetrics = {
 };
 
 export function buildPipelineMetrics(apps: CareerApplication[]): PipelineMetrics {
-  const byStatus = apps.reduce<Record<string, number>>((acc, a) => {
-    acc[a.status] = (acc[a.status] ?? 0) + 1;
-    return acc;
-  }, {});
+  const byStatus: Record<string, number> = {};
+  for (const a of apps) {
+    byStatus[a.status] = (byStatus[a.status] ?? 0) + 1;
+  }
   const scores = apps.map(a => a.score).filter(s => s > 0);
   const avg = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
   const top = scores.length > 0 ? Math.max(...scores) : 0;
@@ -245,7 +245,7 @@ export type ProgressMetrics = {
 export function buildProgressMetrics(apps: CareerApplication[]): ProgressMetrics {
   const total = apps.length || 1;
   const counts = (filter: (a: CareerApplication) => boolean) =>
-    apps.filter(filter).length;
+    apps.filter(app => filter(app)).length;
 
   const applied = counts(a =>
     ['applied', 'responded', 'interview', 'offer', 'rejected'].includes(a.status));

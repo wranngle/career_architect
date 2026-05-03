@@ -7,8 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "xo --ignore '.next/**' --ignore 'dashboard/**' --ignore 'tokens/**' --ignore '*.mjs' --ignore 'next.config.js' --ignore 'tailwind.config.ts' --ignore 'postcss.config.js'",
-    "lint:fix": "xo --ignore '.next/**' --ignore 'dashboard/**' --ignore 'tokens/**' --ignore '*.mjs' --ignore 'next.config.js' --ignore 'tailwind.config.ts' --ignore 'postcss.config.js' --fix",
+    "lint": "xo --ignore '.next/**' --ignore 'dashboard/**' --ignore 'tokens/**' --ignore '*.mjs' --ignore 'next.config.js' --ignore 'tailwind.config.ts' --ignore 'postcss.config.js' --ignore 'next-env.d.ts'",
+    "lint:fix": "xo --ignore '.next/**' --ignore 'dashboard/**' --ignore 'tokens/**' --ignore '*.mjs' --ignore 'next.config.js' --ignore 'tailwind.config.ts' --ignore 'postcss.config.js' --ignore 'next-env.d.ts' --fix",
     "doctor": "node doctor.mjs",
     "verify": "node verify-pipeline.mjs",
     "normalize": "node normalize-statuses.mjs",
@@ -45,18 +45,12 @@
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
     "eslint-config-xo-typescript": "^9.0.0",
-    "postcss": "^8",
+    "postcss": "^8.5.10",
     "tailwindcss": "^3.3.0",
     "typescript": "^5",
     "xo": "^2.0.2"
   },
-  "xo": {
-    "space": 2,
-    "semicolon": true,
-    "prettier": false,
-    "rules": {
-      "@typescript-eslint/naming-convention": "off",
-      "react/react-in-jsx-scope": "off"
-    }
+  "overrides": {
+    "postcss": "^8.5.10"
   }
 }
