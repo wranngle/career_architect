@@ -27,12 +27,28 @@ type Theme struct {
 }
 
 // NewTheme creates a theme by name. Use "auto" or "" to detect from terminal background.
+//
+// Themes:
+//   - "catppuccin-mocha" / "catppuccin-latte": upstream Catppuccin variants
+//     (default, preserves the look from the santifer/career-ops upstream).
+//   - "wranngle" / "wranngle-light" / "wranngle-dark": Wranngle-branded
+//     variants that map the same slot structure onto the canonical Wranngle
+//     palette (see internal/theme/wranngle.go).
 func NewTheme(name string) Theme {
 	switch name {
 	case "catppuccin-mocha":
 		return newCatppuccinMocha()
 	case "catppuccin-latte":
 		return newCatppuccinLatte()
+	case "wranngle-light":
+		return newWranngleLight()
+	case "wranngle-dark":
+		return newWranngleDark()
+	case "wranngle":
+		if termenv.HasDarkBackground() {
+			return newWranngleDark()
+		}
+		return newWranngleLight()
 	case "auto", "":
 		if termenv.HasDarkBackground() {
 			return newCatppuccinMocha()

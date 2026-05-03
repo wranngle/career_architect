@@ -830,6 +830,71 @@ export default function CareerArchitectLandingPage() {
           />
         </div>
       </section>
+
+      {/* Footer — surfaces both the web admin demo and the terminal dashboard. */}
+      <footer className="bg-night-950 border-t border-night-800 text-sand-50">
+        <div className="max-w-7xl mx-auto px-6 py-10 grid gap-8 md:grid-cols-3">
+          <div>
+            <div className="font-display text-xl font-semibold tracking-tight">
+              Career Architect
+            </div>
+            <p className="mt-2 text-sm text-sand-200/80 max-w-xs">
+              Open-source AI job-search pipeline. Evaluate, tailor, scan, track —
+              all from your terminal or browser.
+            </p>
+          </div>
+          <div>
+            <div className="text-xs uppercase tracking-widest text-sand-300/70 mb-2">
+              Try it
+            </div>
+            <ul className="space-y-1.5 text-sm">
+              <li>
+                <a
+                  href="/admin"
+                  className="text-sand-50 hover:text-sunset-300 underline-offset-4 hover:underline"
+                >
+                  Admin demo (/admin) →
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/wranngle/career_architect#dashboard"
+                  className="text-sand-50 hover:text-sunset-300 underline-offset-4 hover:underline"
+                >
+                  Terminal dashboard (Go) →
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div className="text-xs uppercase tracking-widest text-sand-300/70 mb-2">
+              Source
+            </div>
+            <ul className="space-y-1.5 text-sm">
+              <li>
+                <a
+                  href="https://github.com/wranngle/career_architect"
+                  className="text-sand-50 hover:text-sunset-300 underline-offset-4 hover:underline"
+                >
+                  github.com/wranngle/career_architect
+                </a>
+              </li>
+              <li className="text-sand-300/70 text-xs">
+                Forked from{' '}
+                <a
+                  href="https://github.com/santifer/career-ops"
+                  className="text-sand-200/80 hover:text-sunset-300 underline-offset-4 hover:underline"
+                >
+                  santifer/career-ops
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="border-t border-night-800 px-6 py-4 text-center text-xs text-sand-300/60">
+          MIT licensed. Data shown in /admin is synthetic.
+        </div>
+      </footer>
     </div>
   )
 }

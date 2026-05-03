@@ -153,6 +153,7 @@ func (m appModel) View() string {
 
 func main() {
 	pathFlag := flag.String("path", ".", "Path to career-ops directory")
+	themeFlag := flag.String("theme", "auto", "Theme: auto, catppuccin-latte, catppuccin-mocha, wranngle, wranngle-light, wranngle-dark")
 	flag.Parse()
 
 	careerOpsPath := *pathFlag
@@ -169,7 +170,7 @@ func main() {
 	progressMetrics := data.ComputeProgressMetrics(apps)
 
 	// Batch-load all report summaries
-	t := theme.NewTheme("auto")
+	t := theme.NewTheme(*themeFlag)
 	pm := screens.NewPipelineModel(t, apps, metrics, careerOpsPath, 120, 40)
 
 	for _, app := range apps {

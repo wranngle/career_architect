@@ -1,0 +1,128 @@
+// tokens.tailwind.js — Wranngle design system, Tailwind config extension.
+// Generated from DESIGN.md. Do not edit by hand; update DESIGN.md and re-extract.
+//
+// Usage in tailwind.config.{ts,js}:
+//   import { wranngleTokens } from './tokens/tokens.tailwind.js'
+//   export default { theme: { extend: wranngleTokens } }
+
+export const wranngleTokens = {
+  colors: {
+    sunset: {
+      50:  '#fff3e7',
+      100: '#ffe0bf',
+      200: '#ffc179',
+      300: '#ff9e33',
+      400: '#ff7f00',
+      500: '#ff5f00',
+      600: '#ef4b00',
+      700: '#c73a00',
+      800: '#9f3000',
+      900: '#7d2700',
+      950: '#431300',
+    },
+    violet: {
+      50:  '#fdf1f5',
+      100: '#f9dce5',
+      200: '#f2b6c6',
+      300: '#ea8aa6',
+      400: '#dd6186',
+      500: '#cf3c69',
+      600: '#b92a56',
+      700: '#972144',
+      800: '#741a36',
+      900: '#561329',
+      950: '#2d0914',
+    },
+    sand: {
+      50:  '#fcfaf5',
+      100: '#f6f1e7',
+      200: '#ebdfc8',
+      300: '#dac39f',
+      400: '#c2a677',
+      500: '#ab8c5b',
+      600: '#957850',
+      700: '#7a6343',
+      800: '#625137',
+      900: '#4f412d',
+      950: '#292218',
+    },
+    night: {
+      50:  '#f2f0f3',
+      100: '#e4e1e7',
+      200: '#cbc7d3',
+      300: '#aaa4b8',
+      400: '#847d9a',
+      500: '#6a6380',
+      600: '#57516a',
+      700: '#464055',
+      800: '#393444',
+      900: '#201e28',
+      950: '#12111a',
+    },
+    action:        '#ff5f00',
+    'action-hover': '#ef4b00',
+    critical:      '#cf3c69',
+    warning:       '#ff9e33',
+    healthy:       '#5d8c61',
+    info:          '#3b82f6',
+    status: {
+      online:  '#22c55e',
+      away:    '#f59e0b',
+      busy:    '#ef4444',
+      offline: '#9ca3af',
+    },
+  },
+  fontFamily: {
+    display: ['"Bricolage Grotesque"', '"Outfit"', 'system-ui', 'sans-serif'],
+    body:    ['"Inter"', 'system-ui', 'sans-serif'],
+    mono:    ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', '"SF Mono"', 'Menlo', 'monospace'],
+  },
+  fontSize: {
+    xs:   ['0.6875rem', { lineHeight: '1.4' }],
+    sm:   ['0.75rem',   { lineHeight: '1.4' }],
+    base: ['0.875rem',  { lineHeight: '1.5' }],
+    lg:   ['1rem',      { lineHeight: '1.5' }],
+    xl:   ['1.25rem',   { lineHeight: '1.4' }],
+    '2xl': ['1.5rem',   { lineHeight: '1.3' }],
+    '3xl': ['2rem',     { lineHeight: '1.2' }],
+  },
+  spacing: {
+    1:  '0.25rem',
+    2:  '0.5rem',
+    3:  '0.75rem',
+    4:  '1rem',
+    5:  '1.25rem',
+    6:  '1.5rem',
+    8:  '2rem',
+    10: '2.5rem',
+    12: '3rem',
+  },
+  borderRadius: {
+    sm:   '4px',
+    md:   '8px',
+    lg:   '12px',
+    xl:   '16px',
+    '2xl': '24px',
+    pill: '9999px',
+  },
+  boxShadow: {
+    xs:    '0 1px 2px rgba(18, 17, 26, 0.04)',
+    sm:    '0 2px 4px rgba(18, 17, 26, 0.04), 0 1px 2px rgba(18, 17, 26, 0.02)',
+    md:    '0 4px 12px rgba(18, 17, 26, 0.06), 0 2px 4px rgba(18, 17, 26, 0.04)',
+    lg:    '0 8px 24px rgba(18, 17, 26, 0.08), 0 4px 8px rgba(18, 17, 26, 0.04)',
+    xl:    '0 16px 48px rgba(18, 17, 26, 0.12), 0 8px 16px rgba(18, 17, 26, 0.06)',
+    glow:  '0 0 24px rgba(255, 95, 0, 0.25)',
+    'inner-soft': 'inset 0 2px 4px rgba(18, 17, 26, 0.06)',
+  },
+  transitionTimingFunction: {
+    out:      'cubic-bezier(0.16, 1, 0.3, 1)',
+    'in-out': 'cubic-bezier(0.65, 0, 0.35, 1)',
+  },
+  transitionDuration: {
+    fast:   '150ms',
+    normal: '250ms',
+    slow:   '400ms',
+  },
+};
+
+export default wranngleTokens;

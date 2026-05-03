@@ -2,67 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+/* Wranngle design tokens (mirrored from gtm_ops/tokens — generated from DESIGN.md). */
+@import "../../tokens/tokens.css";
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+@layer base {
+  /* shadcn-convention HSL triplets mapped to Wranngle palette. */
+  :root {
+    --background: 43 54% 97%;            /* sand-50 #fcfaf5 — light page */
+    --foreground: 247 21% 8%;            /* night-950 #12111a — primary text */
+
+    --card: 0 0% 100%;                   /* white */
+    --card-foreground: 247 21% 8%;       /* night-950 */
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 247 21% 8%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 22 100% 50%;              /* sunset-500 #ff5f00 */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
+    --secondary: 339 60% 52%;            /* violet-500 #cf3c69 */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 38 50% 94%;                 /* sand-100 */
+    --muted-foreground: 250 11% 54%;     /* night-400 */
 
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
+    --accent: 31 100% 60%;               /* sunset-300 #ff9e33 */
+    --accent-foreground: 247 21% 8%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;            /* #ef4444 */
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 38 51% 85%;                /* sand-200 */
+    --input: 38 51% 85%;
+    --ring: 22 100% 50%;                 /* sunset-500 */
 
-    --radius: 0.5rem;
+    --radius: 0.5rem; /* 8px — token-aligned --radius-md */
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 247 21% 8%;            /* night-950 */
+    --foreground: 43 54% 97%;            /* sand-50 */
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 250 13% 14%;                 /* night-900 */
+    --card-foreground: 43 54% 97%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 250 13% 14%;
+    --popover-foreground: 43 54% 97%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 22 100% 50%;              /* sunset-500 stays brand */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 339 60% 52%;            /* violet-500 */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 250 13% 18%;
+    --muted-foreground: 250 11% 70%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 31 100% 60%;
+    --accent-foreground: 247 21% 8%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 250 13% 22%;
+    --input: 250 13% 22%;
+    --ring: 22 100% 50%;
   }
 }
 
@@ -72,10 +76,11 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar — branded sunset → violet. */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -85,12 +90,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #8b5cf6, #3b82f6);
+  background: linear-gradient(to bottom, #ff5f00, #cf3c69);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #7c3aed, #2563eb);
+  background: linear-gradient(to bottom, #ef4b00, #b92a56);
 }
 
 /* Smooth scroll behavior */

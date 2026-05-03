@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   keywords: 'career, resume, AI, job search, professional development, career coaching',
   authors: [{ name: 'Career Architect Team' }],
   viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#8b5cf6',
+  themeColor: '#ff5f00',
 }
 
 export default function RootLayout({

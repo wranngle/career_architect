@@ -72,12 +72,39 @@ Full list: `.claude/skills/career-ops/SKILL.md`.
 
 ## Dashboard
 
+Two surfaces, one data model. Use whichever fits the task.
+
+### Web (`/admin`) — recommended for first look
+
 ```bash
-cd dashboard && go build -o ../career-dashboard ./...
-./career-dashboard
+npm run dev
+# then open http://localhost:3000/admin
 ```
 
-## Landing page (optional)
+Renders the same Pipeline / Progress / Scans screens as the Go TUI, with
+synthetic placeholder data so reviewers can poke around without a tracker.md
+on disk. See [`src/app/admin/`](./src/app/admin) and the demo banner at the
+top of every admin page for the framing.
+
+### Terminal (Go TUI)
+
+```bash
+cd dashboard && go build -o ../career-dashboard ./...
+./career-dashboard --theme=wranngle   # or catppuccin-latte / catppuccin-mocha / auto
+```
+
+See [`dashboard/README.md`](./dashboard/README.md) for full theme + flag
+reference. The TUI reads tracker.md and `reports/` directly off disk.
+
+## Design tokens
+
+The Next.js layer pulls from
+[`tokens/tokens.css`](./tokens/tokens.css) (mirrored from the canonical
+Wranngle DESIGN.md). The TUI's `wranngle` theme maps the same palette onto
+the Catppuccin slot structure (see
+[`dashboard/internal/theme/wranngle.go`](./dashboard/internal/theme/wranngle.go)).
+
+## Landing page
 
 ```bash
 npm run dev
