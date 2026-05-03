@@ -53,11 +53,11 @@ const AnimatedBackground = () => {
   return (
     <div className="absolute inset-0 overflow-hidden">
       {/* Gradient mesh */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-purple-950/20 dark:via-blue-950/20 dark:to-indigo-950/20" />
+      <div className="absolute inset-0 bg-gradient-to-br from-wviolet-50 via-sunset-50 to-indigo-50 dark:from-wviolet-950/20 dark:via-sunset-950/20 dark:to-indigo-950/20" />
       
       {/* Floating orbs */}
       <motion.div
-        className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-purple-400/20 to-blue-600/20 rounded-full blur-3xl"
+        className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-wviolet-400/20 to-sunset-600/20 rounded-full blur-3xl"
         animate={{
           x: [0, 50, 0],
           y: [0, -50, 0],
@@ -71,7 +71,7 @@ const AnimatedBackground = () => {
       />
       
       <motion.div
-        className="absolute top-1/2 -left-32 w-80 h-80 bg-gradient-to-br from-blue-400/15 to-indigo-600/15 rounded-full blur-3xl"
+        className="absolute top-1/2 -left-32 w-80 h-80 bg-gradient-to-br from-sunset-400/15 to-indigo-600/15 rounded-full blur-3xl"
         animate={{
           x: [0, -30, 0],
           y: [0, 40, 0],
@@ -86,10 +86,10 @@ const AnimatedBackground = () => {
       
       {/* Geometric patterns */}
       <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
-        <div className="absolute top-20 left-20 w-4 h-4 border border-purple-500 rotate-45" />
-        <div className="absolute top-40 right-32 w-6 h-6 border border-blue-500 rounded-full" />
+        <div className="absolute top-20 left-20 w-4 h-4 border border-wviolet-500 rotate-45" />
+        <div className="absolute top-40 right-32 w-6 h-6 border border-sunset-500 rounded-full" />
         <div className="absolute bottom-32 left-1/3 w-3 h-3 bg-indigo-500 rounded-full" />
-        <div className="absolute bottom-20 right-20 w-5 h-5 border border-purple-500" />
+        <div className="absolute bottom-20 right-20 w-5 h-5 border border-wviolet-500" />
       </div>
     </div>
   )
@@ -122,7 +122,7 @@ const MagneticButton = ({ children, className, ...props }: any) => {
     >
       <Button
         className={cn(
-          "relative overflow-hidden group bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 border-0 text-white font-semibold px-8 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300",
+          "relative overflow-hidden group bg-gradient-to-r from-wviolet-600 to-sunset-600 hover:from-wviolet-700 hover:to-sunset-700 border-0 text-white font-semibold px-8 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300",
           className
         )}
         onMouseMove={handleMouseMove}
@@ -208,11 +208,11 @@ export default function CareerArchitectLandingPage() {
               className="flex items-center space-x-3"
               whileHover={{ scale: 1.05 }}
             >
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 bg-gradient-to-br from-wviolet-600 via-sunset-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
                 <Zap className="w-7 h-7 text-white" />
               </div>
               <div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                <span className="text-2xl font-bold bg-gradient-to-r from-wviolet-600 via-sunset-600 to-indigo-600 bg-clip-text text-transparent">
                   Career Architect
                 </span>
                 <div className="text-xs text-gray-600 dark:text-gray-300 font-medium">AI-Powered Career Transformation</div>
@@ -223,7 +223,7 @@ export default function CareerArchitectLandingPage() {
             <div className="hidden lg:flex items-center space-x-8">
               {/* Solutions Dropdown */}
               <div className="relative group">
-                <button className="flex items-center space-x-1 text-gray-800 dark:text-white hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20">
+                <button className="flex items-center space-x-1 text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20">
                   <span>Solutions</span>
                   <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" />
                 </button>
@@ -235,15 +235,15 @@ export default function CareerArchitectLandingPage() {
                       <div>
                         <h3 className="font-bold text-gray-900 dark:text-white mb-3 text-lg">For Professionals</h3>
                         <div className="space-y-3">
-                          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors">
                             <div className="font-medium">Resume Builder</div>
                             <div className="text-sm text-gray-500">AI-powered resume optimization</div>
                           </a>
-                          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors">
                             <div className="font-medium">Career Coaching</div>
                             <div className="text-sm text-gray-500">Personalized career guidance</div>
                           </a>
-                          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors">
                             <div className="font-medium">Interview Prep</div>
                             <div className="text-sm text-gray-500">Mock interviews & feedback</div>
                           </a>
@@ -252,15 +252,15 @@ export default function CareerArchitectLandingPage() {
                       <div>
                         <h3 className="font-bold text-gray-900 dark:text-white mb-3 text-lg">For Companies</h3>
                         <div className="space-y-3">
-                          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors">
                             <div className="font-medium">Talent Matching</div>
                             <div className="text-sm text-gray-500">Find perfect candidates</div>
                           </a>
-                          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors">
                             <div className="font-medium">Bulk Screening</div>
                             <div className="text-sm text-gray-500">AI-powered candidate screening</div>
                           </a>
-                          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                          <a href="#" className="block text-gray-700 dark:text-gray-300 hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors">
                             <div className="font-medium">Analytics</div>
                             <div className="text-sm text-gray-500">Hiring insights & metrics</div>
                           </a>
@@ -271,17 +271,17 @@ export default function CareerArchitectLandingPage() {
                 </div>
               </div>
 
-              <a href="#features" className="text-gray-800 dark:text-white hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20">Features</a>
-              <a href="#testimonials" className="text-gray-800 dark:text-white hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20">Success Stories</a>
-              <a href="#pricing" className="text-gray-800 dark:text-white hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20">Pricing</a>
+              <a href="#features" className="text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20">Features</a>
+              <a href="#testimonials" className="text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20">Success Stories</a>
+              <a href="#pricing" className="text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20">Pricing</a>
             </div>
 
             {/* CTA Buttons */}
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" className="hidden md:block text-gray-800 dark:text-white hover:text-purple-600 dark:hover:text-purple-400 hover:bg-white/20 font-semibold">
+              <Button variant="ghost" className="hidden md:block text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 hover:bg-white/20 font-semibold">
                 Sign In
               </Button>
-              <MorphingButton morphColor="#8b5cf6" className="shadow-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-2">
+              <MorphingButton morphColor="#8b5cf6" className="shadow-lg bg-gradient-to-r from-wviolet-600 to-sunset-600 text-white px-6 py-2">
                 Get Started Free
               </MorphingButton>
             </div>
@@ -308,7 +308,7 @@ export default function CareerArchitectLandingPage() {
           <div className="text-center max-w-4xl mx-auto">
             {/* Badge */}
             <AnimatedText delay={0.2}>
-              <Badge className="mb-8 px-4 py-2 text-sm bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 border-purple-200 rounded-full">
+              <Badge className="mb-8 px-4 py-2 text-sm bg-gradient-to-r from-wviolet-100 to-sunset-100 text-wviolet-700 border-wviolet-200 rounded-full">
                 <Sparkles className="w-4 h-4 mr-2" />
                 AI-Powered Career Transformation
               </Badge>
@@ -367,7 +367,7 @@ export default function CareerArchitectLandingPage() {
                 <div className="absolute inset-0 bg-black/20 dark:bg-black/40 rounded-2xl -z-10 blur-2xl"></div>
                 <div className="text-center relative z-10 p-4">
                   <motion.div 
-                    className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-purple-700 bg-clip-text text-transparent mb-2 text-shadow-lg"
+                    className="text-4xl font-bold bg-gradient-to-r from-wviolet-500 to-wviolet-700 bg-clip-text text-transparent mb-2 text-shadow-lg"
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 1.2 }}
@@ -378,7 +378,7 @@ export default function CareerArchitectLandingPage() {
                 </div>
                 <div className="text-center relative z-10 p-4">
                   <motion.div 
-                    className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-blue-700 bg-clip-text text-transparent mb-2 text-shadow-lg"
+                    className="text-4xl font-bold bg-gradient-to-r from-sunset-500 to-sunset-700 bg-clip-text text-transparent mb-2 text-shadow-lg"
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 1.4 }}
@@ -424,7 +424,7 @@ export default function CareerArchitectLandingPage() {
                 <GlassmorphismCard className="text-center h-full" intensity={0.15}>
                   <FloatingIcon3D floatIntensity={1.2} className="mx-auto mb-6">
                     <motion.div
-                      className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center"
+                      className="w-16 h-16 bg-gradient-to-br from-wviolet-500 to-wviolet-600 rounded-2xl flex items-center justify-center"
                       whileHover={{ rotate: 5, scale: 1.1 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
@@ -446,7 +446,7 @@ export default function CareerArchitectLandingPage() {
                 <GlassmorphismCard className="text-center h-full" intensity={0.15}>
                   <FloatingIcon3D floatIntensity={1.2} className="mx-auto mb-6">
                     <motion.div
-                      className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center"
+                      className="w-16 h-16 bg-gradient-to-br from-sunset-500 to-sunset-600 rounded-2xl flex items-center justify-center"
                       whileHover={{ rotate: -5, scale: 1.1 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
@@ -488,7 +488,7 @@ export default function CareerArchitectLandingPage() {
       </section>
 
       {/* Product Showcase Section */}
-      <section className="relative z-10 py-24 px-6 bg-gradient-to-br from-gray-50 to-purple-50/30 dark:from-gray-900 dark:to-purple-950/30">
+      <section className="relative z-10 py-24 px-6 bg-gradient-to-br from-gray-50 to-wviolet-50/30 dark:from-gray-900 dark:to-wviolet-950/30">
         <div className="max-w-7xl mx-auto">
           <AnimatedText className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
@@ -510,7 +510,7 @@ export default function CareerArchitectLandingPage() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-br from-wviolet-500 to-wviolet-600 rounded-xl flex items-center justify-center flex-shrink-0">
                   <Upload className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -529,7 +529,7 @@ export default function CareerArchitectLandingPage() {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-br from-sunset-500 to-sunset-600 rounded-xl flex items-center justify-center flex-shrink-0">
                   <Link className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -569,7 +569,7 @@ export default function CareerArchitectLandingPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden border border-purple-100 dark:border-purple-900">
+              <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden border border-wviolet-100 dark:border-wviolet-900">
                 {/* Mock Interface */}
                 <div className="p-6 border-b border-gray-100 dark:border-gray-800">
                   <div className="flex items-center space-x-3">
@@ -594,11 +594,11 @@ export default function CareerArchitectLandingPage() {
                       <div>
                         <div className="flex justify-between text-sm mb-2">
                           <span>Leadership Experience</span>
-                          <span className="text-purple-600">95%</span>
+                          <span className="text-wviolet-600">95%</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <motion.div 
-                            className="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full"
+                            className="bg-gradient-to-r from-wviolet-500 to-wviolet-600 h-2 rounded-full"
                             initial={{ width: 0 }}
                             whileInView={{ width: "95%" }}
                             transition={{ duration: 1.5, delay: 0.5 }}
@@ -610,11 +610,11 @@ export default function CareerArchitectLandingPage() {
                       <div>
                         <div className="flex justify-between text-sm mb-2">
                           <span>Strategic Keywords</span>
-                          <span className="text-blue-600">87%</span>
+                          <span className="text-sunset-600">87%</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <motion.div 
-                            className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full"
+                            className="bg-gradient-to-r from-sunset-500 to-sunset-600 h-2 rounded-full"
                             initial={{ width: 0 }}
                             whileInView={{ width: "87%" }}
                             transition={{ duration: 1.5, delay: 0.7 }}
@@ -641,14 +641,14 @@ export default function CareerArchitectLandingPage() {
                     </div>
 
                     <motion.div
-                      className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-950/50 dark:to-blue-950/50 rounded-lg p-4"
+                      className="bg-gradient-to-r from-wviolet-50 to-sunset-50 dark:from-wviolet-950/50 dark:to-sunset-950/50 rounded-lg p-4"
                       initial={{ opacity: 0, scale: 0.95 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.5, delay: 1.2 }}
                       viewport={{ once: true }}
                     >
                       <div className="flex items-start space-x-3">
-                        <Sparkles className="w-5 h-5 text-purple-600 mt-0.5" />
+                        <Sparkles className="w-5 h-5 text-wviolet-600 mt-0.5" />
                         <div>
                           <h4 className="font-semibold text-sm mb-1">AI Recommendation</h4>
                           <p className="text-sm text-gray-600 dark:text-gray-300">
@@ -664,12 +664,12 @@ export default function CareerArchitectLandingPage() {
 
               {/* Floating elements */}
               <motion.div
-                className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full"
+                className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-br from-wviolet-400 to-wviolet-600 rounded-full"
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 3, repeat: Infinity }}
               />
               <motion.div
-                className="absolute -bottom-6 -left-6 w-6 h-6 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full"
+                className="absolute -bottom-6 -left-6 w-6 h-6 bg-gradient-to-br from-sunset-400 to-sunset-600 rounded-full"
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 4, repeat: Infinity }}
               />
@@ -705,7 +705,7 @@ export default function CareerArchitectLandingPage() {
                   An absolute game-changer for any mid-career professional."
                 </blockquote>
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-gradient-to-br from-wviolet-400 to-wviolet-600 rounded-full flex items-center justify-center">
                     <span className="text-white font-bold">SM</span>
                   </div>
                   <div>
@@ -730,7 +730,7 @@ export default function CareerArchitectLandingPage() {
                   I was previously rejected for. I start next month."
                 </blockquote>
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-gradient-to-br from-sunset-400 to-sunset-600 rounded-full flex items-center justify-center">
                     <span className="text-white font-bold">DL</span>
                   </div>
                   <div>
@@ -782,7 +782,7 @@ export default function CareerArchitectLandingPage() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="relative z-10 py-24 px-6 bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-600">
+      <section className="relative z-10 py-24 px-6 bg-gradient-to-br from-wviolet-600 via-sunset-600 to-indigo-600">
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedText>
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
@@ -797,7 +797,7 @@ export default function CareerArchitectLandingPage() {
           </AnimatedText>
 
           <AnimatedText delay={0.4} className="mb-12">
-            <MagneticButton className="bg-white text-purple-600 hover:bg-gray-50 shadow-xl">
+            <MagneticButton className="bg-white text-wviolet-600 hover:bg-gray-50 shadow-xl">
               <Award className="w-5 h-5 mr-2" />
               Become Inevitable
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
