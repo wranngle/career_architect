@@ -23,7 +23,8 @@ interface ParticleSystemProps {
 
 export const ParticleSystem = ({ 
   particleCount = 100, 
-  colors = ['#8b5cf6', '#3b82f6', '#6366f1', '#a855f7'],
+  // Wranngle palette: wviolet-500, sunset-500, wviolet-600, wviolet-400
+  colors = ['#cf3c69', '#ff5f00', '#b92a56', '#dd6186'],
   className = '' 
 }: ParticleSystemProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -127,7 +128,7 @@ export const ParticleSystem = ({
             
             ctx.save()
             ctx.globalAlpha = opacity
-            ctx.strokeStyle = '#8b5cf6'
+            ctx.strokeStyle = '#cf3c69'
             ctx.lineWidth = 0.5
             ctx.beginPath()
             ctx.moveTo(p1.x, p1.y)
@@ -247,13 +248,13 @@ export const FloatingShapes = () => {
           }}
         >
           {shape.id % 3 === 0 && (
-            <div className="w-full h-full border-2 border-purple-400 rotate-45" />
+            <div className="w-full h-full border-2 border-wviolet-400 rotate-45" />
           )}
           {shape.id % 3 === 1 && (
-            <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-400 rounded-full" />
+            <div className="w-full h-full bg-gradient-to-br from-sunset-400 to-wviolet-400 rounded-full" />
           )}
           {shape.id % 3 === 2 && (
-            <div className="w-full h-full bg-gradient-to-br from-indigo-400 to-blue-400 transform rotate-45 rounded-lg" />
+            <div className="w-full h-full bg-gradient-to-br from-wviolet-400 to-sunset-400 transform rotate-45 rounded-lg" />
           )}
         </motion.div>
       ))}

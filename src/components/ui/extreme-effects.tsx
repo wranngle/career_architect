@@ -64,9 +64,9 @@ export const NeuralNetworkBackground: React.FC = () => {
           if (distance < 150) {
             const opacity = 1 - distance / 150
             const gradient = ctx.createLinearGradient(node.x, node.y, otherNode.x, otherNode.y)
-            gradient.addColorStop(0, `rgba(147, 51, 234, ${opacity * 0.3})`) // purple
-            gradient.addColorStop(0.5, `rgba(59, 130, 246, ${opacity * 0.4})`) // blue
-            gradient.addColorStop(1, `rgba(236, 72, 153, ${opacity * 0.3})`) // pink
+            gradient.addColorStop(0, `rgba(207, 60, 105, ${opacity * 0.3})`) // wviolet-500
+            gradient.addColorStop(0.5, `rgba(255, 95, 0, ${opacity * 0.4})`) // sunset-500
+            gradient.addColorStop(1, `rgba(255, 127, 0, ${opacity * 0.3})`) // sunset-400
 
             ctx.strokeStyle = gradient
             ctx.lineWidth = 1
@@ -90,9 +90,9 @@ export const NeuralNetworkBackground: React.FC = () => {
         // Draw node
         const pulseIntensity = Math.sin(node.pulse) * 0.3 + 0.7
         const gradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, 8)
-        gradient.addColorStop(0, `rgba(147, 51, 234, ${pulseIntensity})`)
-        gradient.addColorStop(0.5, `rgba(59, 130, 246, ${pulseIntensity * 0.7})`)
-        gradient.addColorStop(1, `rgba(147, 51, 234, 0)`)
+        gradient.addColorStop(0, `rgba(207, 60, 105, ${pulseIntensity})`)
+        gradient.addColorStop(0.5, `rgba(255, 95, 0, ${pulseIntensity * 0.7})`)
+        gradient.addColorStop(1, `rgba(207, 60, 105, 0)`)
 
         ctx.fillStyle = gradient
         ctx.beginPath()
@@ -140,7 +140,7 @@ export const QuantumParticleField: React.FC = () => {
       z: Math.random() * 100,
       size: Math.random() * 3 + 1,
       speed: Math.random() * 0.5 + 0.1,
-      hue: Math.random() * 60 + 180, // cyan to purple range
+      hue: (Math.random() * 70 + 330) % 360, // wviolet/magenta to sunset/orange range
     }))
   }, [])
 
@@ -216,11 +216,11 @@ export const DNAHelixScroll: React.FC<DNAHelixScrollProps> = ({
         {helixPairs.map((pair, i) => (
           <motion.div
             key={`left-${pair.id}`}
-            className="absolute w-3 h-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"
+            className="absolute w-3 h-3 bg-gradient-to-r from-sunset-300 to-sunset-500 rounded-full"
             style={{
               left: 50 + pair.leftX,
               top: pair.y,
-              boxShadow: '0 0 10px rgba(34, 211, 238, 0.6)',
+              boxShadow: '0 0 10px rgba(255, 158, 51, 0.6)',
             }}
             animate={{
               scale: [1, 1.2, 1],
@@ -244,11 +244,11 @@ export const DNAHelixScroll: React.FC<DNAHelixScrollProps> = ({
         {helixPairs.map((pair, i) => (
           <motion.div
             key={`right-${pair.id}`}
-            className="absolute w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full"
+            className="absolute w-3 h-3 bg-gradient-to-r from-wviolet-400 to-sunset-400 rounded-full"
             style={{
               left: 50 + pair.rightX,
               top: pair.y,
-              boxShadow: '0 0 10px rgba(147, 51, 234, 0.6)',
+              boxShadow: '0 0 10px rgba(207, 60, 105, 0.6)',
             }}
             animate={{
               scale: [1, 1.2, 1],
@@ -267,7 +267,7 @@ export const DNAHelixScroll: React.FC<DNAHelixScrollProps> = ({
       {helixPairs.map((pair, i) => (
         <motion.div
           key={`connection-${pair.id}`}
-          className="absolute h-0.5 bg-gradient-to-r from-cyan-400 via-white to-purple-400"
+          className="absolute h-0.5 bg-gradient-to-r from-sunset-300 via-white to-wviolet-400"
           style={{
             left: 50 + Math.min(pair.leftX, pair.rightX),
             top: pair.y + 6,
@@ -300,7 +300,7 @@ export const CyberpunkText: React.FC<CyberpunkTextProps> = ({
   text,
   className = '',
   glitchIntensity = 0.2,
-  neonColor = '#00ffff'
+  neonColor = '#ff5f00'
 }) => {
   const [isGlitching, setIsGlitching] = useState(false)
 
@@ -333,7 +333,7 @@ export const CyberpunkText: React.FC<CyberpunkTextProps> = ({
           x: [0, -2, 2, 0],
           textShadow: [
             `0 0 5px ${neonColor}`,
-            `2px 0 5px #ff00ff, -2px 0 5px #00ffff`,
+            `2px 0 5px #cf3c69, -2px 0 5px #ff5f00`,
             `0 0 5px ${neonColor}`,
           ],
         } : {}}
@@ -348,7 +348,7 @@ export const CyberpunkText: React.FC<CyberpunkTextProps> = ({
           <span
             className="absolute top-0 left-0 font-bold opacity-80"
             style={{
-              color: '#ff00ff',
+              color: '#cf3c69',
               transform: 'translateX(-2px)',
               clipPath: 'polygon(0 0, 100% 0, 100% 45%, 0 45%)',
             }}
@@ -358,7 +358,7 @@ export const CyberpunkText: React.FC<CyberpunkTextProps> = ({
           <span
             className="absolute top-0 left-0 font-bold opacity-80"
             style={{
-              color: '#00ffff',
+              color: '#ff5f00',
               transform: 'translateX(2px)',
               clipPath: 'polygon(0 55%, 100% 55%, 100% 100%, 0 100%)',
             }}
@@ -372,10 +372,10 @@ export const CyberpunkText: React.FC<CyberpunkTextProps> = ({
       <div
         className="absolute inset-0 border-2 border-transparent animate-pulse"
         style={{
-          borderImage: 'linear-gradient(45deg, #00ffff, #ff00ff, #00ffff) 1',
+          borderImage: 'linear-gradient(45deg, #ff5f00, #cf3c69, #ff5f00) 1',
           boxShadow: `
-            inset 0 0 10px rgba(0, 255, 255, 0.3),
-            0 0 10px rgba(255, 0, 255, 0.3)
+            inset 0 0 10px rgba(255, 95, 0, 0.3),
+            0 0 10px rgba(207, 60, 105, 0.3)
           `,
         }}
       />
@@ -417,7 +417,7 @@ export const HolographicDataStream: React.FC<HolographicDataStreamProps> = ({
               key={dataIndex}
               className="text-xs font-mono opacity-60"
               style={{
-                color: `hsl(${180 + dataIndex * 10}, 100%, 70%)`,
+                color: `hsl(${(330 + dataIndex * 5) % 360}, 100%, 70%)`,
                 textShadow: '0 0 5px currentColor',
               }}
               initial={{ opacity: 0, y: -20 }}
@@ -472,9 +472,9 @@ export const MatrixRain: React.FC<MatrixRainProps> = ({
           {drop.chars.map((char, charIndex) => (
             <motion.span
               key={charIndex}
-              className="text-green-400 font-mono text-sm opacity-60"
+              className="text-sunset-400 font-mono text-sm opacity-60"
               style={{
-                textShadow: '0 0 5px #00ff00',
+                textShadow: '0 0 5px #ff5f00',
               }}
               initial={{ opacity: 0 }}
               animate={{
@@ -505,7 +505,7 @@ export const PulsingEnergyField: React.FC = () => {
       {[...Array(5)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute inset-0 border border-purple-500/20 rounded-full"
+          className="absolute inset-0 border border-wviolet-500/20 rounded-full"
           style={{
             left: '50%',
             top: '50%',
@@ -526,10 +526,10 @@ export const PulsingEnergyField: React.FC = () => {
       
       {/* Central energy core */}
       <motion.div
-        className="absolute left-1/2 top-1/2 w-2 h-2 bg-purple-400 rounded-full"
+        className="absolute left-1/2 top-1/2 w-2 h-2 bg-wviolet-400 rounded-full"
         style={{
           transform: 'translate(-50%, -50%)',
-          boxShadow: '0 0 20px #a855f7, 0 0 40px #a855f7',
+          boxShadow: '0 0 20px #cf3c69, 0 0 40px #cf3c69',
         }}
         animate={{
           scale: [1, 1.5, 1],

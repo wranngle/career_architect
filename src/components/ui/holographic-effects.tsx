@@ -53,10 +53,10 @@ export const HolographicText = ({
       >
         {/* Base text */}
         <motion.span
-          className="relative z-10 bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent font-bold"
+          className="relative z-10 bg-gradient-to-r from-wviolet-400 via-sunset-400 to-sunset-300 bg-clip-text text-transparent font-bold"
           style={{
-            filter: `drop-shadow(0 0 ${glowIntensity.get() * 20}px rgba(139, 92, 246, 0.8))`,
-            textShadow: '0 0 30px rgba(139, 92, 246, 0.5)',
+            filter: `drop-shadow(0 0 ${glowIntensity.get() * 20}px rgba(207, 60, 105, 0.8))`,
+            textShadow: '0 0 30px rgba(207, 60, 105, 0.5)',
           }}
         >
           {text}
@@ -66,7 +66,7 @@ export const HolographicText = ({
         {[...Array(3)].map((_, i) => (
           <motion.span
             key={i}
-            className="absolute inset-0 bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent font-bold opacity-30"
+            className="absolute inset-0 bg-gradient-to-r from-wviolet-400 via-sunset-400 to-sunset-300 bg-clip-text text-transparent font-bold opacity-30"
             style={{
               transform: `translateZ(${-10 * (i + 1)}px) translateX(${i * 2}px)`,
               filter: `blur(${i}px)`,
@@ -87,7 +87,7 @@ export const HolographicText = ({
         
         {/* Scanning line effect */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent"
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-sunset-300/20 to-transparent"
           animate={{
             x: ['-100%', '200%'],
           }}
@@ -104,10 +104,10 @@ export const HolographicText = ({
 }
 
 // Advanced Loading Animation
-export const PremiumLoader = ({ 
+export const PremiumLoader = ({
   isLoading = true,
   size = 60,
-  color = '#8b5cf6' 
+  color = '#cf3c69'
 }: {
   isLoading?: boolean
   size?: number
@@ -184,7 +184,7 @@ export const MorphingButton = ({
   children, 
   onClick,
   className = '',
-  morphColor = '#8b5cf6' 
+  morphColor = '#cf3c69'
 }: {
   children: React.ReactNode
   onClick?: () => void
@@ -213,9 +213,9 @@ export const MorphingButton = ({
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}
       style={{
-        background: isHovered 
-          ? `linear-gradient(45deg, ${morphColor}, #3b82f6, ${morphColor})`
-          : `linear-gradient(45deg, ${morphColor}cc, #3b82f6cc)`,
+        background: isHovered
+          ? `linear-gradient(45deg, ${morphColor}, #ff5f00, ${morphColor})`
+          : `linear-gradient(45deg, ${morphColor}cc, #ff5f00cc)`,
       }}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
@@ -226,7 +226,7 @@ export const MorphingButton = ({
         animate={isHovered ? {
           background: [
             `radial-gradient(circle at 20% 80%, ${morphColor} 0%, transparent 50%)`,
-            `radial-gradient(circle at 80% 20%, #3b82f6 0%, transparent 50%)`,
+            `radial-gradient(circle at 80% 20%, #ff5f00 0%, transparent 50%)`,
             `radial-gradient(circle at 40% 40%, ${morphColor} 0%, transparent 50%)`,
           ]
         } : {}}

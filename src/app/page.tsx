@@ -53,7 +53,7 @@ const AnimatedBackground = () => {
   return (
     <div className="absolute inset-0 overflow-hidden">
       {/* Gradient mesh */}
-      <div className="absolute inset-0 bg-gradient-to-br from-wviolet-50 via-sunset-50 to-indigo-50 dark:from-wviolet-950/20 dark:via-sunset-950/20 dark:to-indigo-950/20" />
+      <div className="absolute inset-0 bg-gradient-to-br from-sunset-50 to-wviolet-50 dark:from-sunset-950/20 dark:to-wviolet-950/20" />
       
       {/* Floating orbs */}
       <motion.div
@@ -71,7 +71,7 @@ const AnimatedBackground = () => {
       />
       
       <motion.div
-        className="absolute top-1/2 -left-32 w-80 h-80 bg-gradient-to-br from-sunset-400/15 to-indigo-600/15 rounded-full blur-3xl"
+        className="absolute top-1/2 -left-32 w-80 h-80 bg-gradient-to-br from-sunset-400/15 to-wviolet-600/15 rounded-full blur-3xl"
         animate={{
           x: [0, -30, 0],
           y: [0, 40, 0],
@@ -88,7 +88,7 @@ const AnimatedBackground = () => {
       <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
         <div className="absolute top-20 left-20 w-4 h-4 border border-wviolet-500 rotate-45" />
         <div className="absolute top-40 right-32 w-6 h-6 border border-sunset-500 rounded-full" />
-        <div className="absolute bottom-32 left-1/3 w-3 h-3 bg-indigo-500 rounded-full" />
+        <div className="absolute bottom-32 left-1/3 w-3 h-3 bg-wviolet-500 rounded-full" />
         <div className="absolute bottom-20 right-20 w-5 h-5 border border-wviolet-500" />
       </div>
     </div>
@@ -208,11 +208,11 @@ export default function CareerArchitectLandingPage() {
               className="flex items-center space-x-3"
               whileHover={{ scale: 1.05 }}
             >
-              <div className="w-12 h-12 bg-gradient-to-br from-wviolet-600 via-sunset-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 bg-gradient-to-br from-sunset-600 to-wviolet-600 rounded-xl flex items-center justify-center shadow-lg">
                 <Zap className="w-7 h-7 text-white" />
               </div>
               <div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-wviolet-600 via-sunset-600 to-indigo-600 bg-clip-text text-transparent">
+                <span className="text-2xl font-bold bg-gradient-to-r from-sunset-600 to-wviolet-600 bg-clip-text text-transparent">
                   Career Architect
                 </span>
                 <div className="text-xs text-gray-600 dark:text-gray-300 font-medium">AI-Powered Career Transformation</div>
@@ -281,7 +281,7 @@ export default function CareerArchitectLandingPage() {
               <Button variant="ghost" className="hidden md:block text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 hover:bg-white/20 font-semibold">
                 Sign In
               </Button>
-              <MorphingButton morphColor="#8b5cf6" className="shadow-lg bg-gradient-to-r from-wviolet-600 to-sunset-600 text-white px-6 py-2">
+              <MorphingButton morphColor="#cf3c69" className="shadow-lg bg-gradient-to-r from-wviolet-600 to-sunset-600 text-white px-6 py-2">
                 Get Started Free
               </MorphingButton>
             </div>
@@ -327,7 +327,7 @@ export default function CareerArchitectLandingPage() {
                   text="Build Your Future." 
                   className="block text-5xl md:text-7xl"
                   glitchIntensity={0.3}
-                  neonColor="#8b5cf6"
+                  neonColor="#cf3c69"
                 />
               </h1>
             </AnimatedText>
@@ -347,14 +347,14 @@ export default function CareerArchitectLandingPage() {
             <AnimatedText delay={0.8}>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
                 <MagneticHover strength={0.2}>
-                  <MorphingButton morphColor="#8b5cf6" className="flex items-center">
+                  <MorphingButton morphColor="#cf3c69" className="flex items-center">
                     Start Designing My Future
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </MorphingButton>
                 </MagneticHover>
                 
                 <MagneticHover strength={0.15}>
-                  <MorphingButton morphColor="#3b82f6" className="flex items-center bg-white/10 backdrop-blur-xl border border-white/20">
+                  <MorphingButton morphColor="#ff5f00" className="flex items-center bg-white/10 backdrop-blur-xl border border-white/20">
                     Watch Demo
                   </MorphingButton>
                 </MagneticHover>
@@ -389,7 +389,7 @@ export default function CareerArchitectLandingPage() {
                 </div>
                 <div className="text-center relative z-10 p-4">
                   <motion.div 
-                    className="text-4xl font-bold bg-gradient-to-r from-indigo-500 to-indigo-700 bg-clip-text text-transparent mb-2 text-shadow-lg"
+                    className="text-4xl font-bold bg-gradient-to-r from-wviolet-500 to-wviolet-700 bg-clip-text text-transparent mb-2 text-shadow-lg"
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 1.6 }}
@@ -468,7 +468,7 @@ export default function CareerArchitectLandingPage() {
                 <GlassmorphismCard className="text-center h-full" intensity={0.15}>
                   <FloatingIcon3D floatIntensity={1.2} className="mx-auto mb-6">
                     <motion.div
-                      className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center"
+                      className="w-16 h-16 bg-gradient-to-br from-wviolet-500 to-wviolet-600 rounded-2xl flex items-center justify-center"
                       whileHover={{ rotate: 5, scale: 1.1 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
@@ -548,7 +548,7 @@ export default function CareerArchitectLandingPage() {
                 transition={{ duration: 0.6, delay: 0.6 }}
                 viewport={{ once: true }}
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-gradient-to-br from-wviolet-500 to-wviolet-600 rounded-xl flex items-center justify-center flex-shrink-0">
                   <Zap className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -626,11 +626,11 @@ export default function CareerArchitectLandingPage() {
                       <div>
                         <div className="flex justify-between text-sm mb-2">
                           <span>Impact Metrics</span>
-                          <span className="text-indigo-600">92%</span>
+                          <span className="text-wviolet-600">92%</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <motion.div 
-                            className="bg-gradient-to-r from-indigo-500 to-indigo-600 h-2 rounded-full"
+                            className="bg-gradient-to-r from-wviolet-500 to-wviolet-600 h-2 rounded-full"
                             initial={{ width: 0 }}
                             whileInView={{ width: "92%" }}
                             transition={{ duration: 1.5, delay: 0.9 }}
@@ -755,7 +755,7 @@ export default function CareerArchitectLandingPage() {
                   actually respond to. Worth every penny."
                 </blockquote>
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-gradient-to-br from-wviolet-400 to-wviolet-600 rounded-full flex items-center justify-center">
                     <span className="text-white font-bold">RC</span>
                   </div>
                   <div>
@@ -782,7 +782,7 @@ export default function CareerArchitectLandingPage() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="relative z-10 py-24 px-6 bg-gradient-to-br from-wviolet-600 via-sunset-600 to-indigo-600">
+      <section className="relative z-10 py-24 px-6 bg-gradient-to-br from-sunset-600 to-wviolet-600">
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedText>
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">

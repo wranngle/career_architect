@@ -19,16 +19,17 @@ export const LiquidMorphBackground = () => {
 
     // Liquid morph animation variables
     let time = 0
-    const colors = ['#8b5cf6', '#3b82f6', '#6366f1', '#a855f7', '#ec4899']
+    // Wranngle palette: wviolet-500, sunset-500, wviolet-600, wviolet-400, sunset-400
+    const colors = ['#cf3c69', '#ff5f00', '#b92a56', '#dd6186', '#ff7f00']
     
     const animate = () => {
       time += 0.01
       
       // Clear canvas with gradient
       const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
-      gradient.addColorStop(0, 'rgba(139, 92, 246, 0.03)')
-      gradient.addColorStop(0.5, 'rgba(59, 130, 246, 0.02)')
-      gradient.addColorStop(1, 'rgba(168, 85, 247, 0.03)')
+      gradient.addColorStop(0, 'rgba(207, 60, 105, 0.03)')
+      gradient.addColorStop(0.5, 'rgba(255, 95, 0, 0.02)')
+      gradient.addColorStop(1, 'rgba(221, 97, 134, 0.03)')
       
       ctx.fillStyle = gradient
       ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -199,8 +200,8 @@ export const LiquidButton = ({
     onClick?.()
   }
 
-  const baseClasses = variant === 'primary' 
-    ? 'bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 text-white'
+  const baseClasses = variant === 'primary'
+    ? 'bg-gradient-to-r from-sunset-600 to-wviolet-600 text-white'
     : 'bg-white/10 backdrop-blur-xl border border-white/20 text-gray-800 dark:text-white'
 
   return (
@@ -209,7 +210,7 @@ export const LiquidButton = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}
-      whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(139, 92, 246, 0.3)' }}
+      whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(207, 60, 105, 0.3)' }}
       whileTap={{ scale: 0.95 }}
     >
       {/* Liquid background animation */}
@@ -218,10 +219,10 @@ export const LiquidButton = ({
         animate={{
           opacity: isHovered ? 1 : 0,
           background: [
-            'linear-gradient(45deg, #8b5cf6, #3b82f6)',
-            'linear-gradient(90deg, #3b82f6, #6366f1)',
-            'linear-gradient(135deg, #6366f1, #8b5cf6)',
-            'linear-gradient(180deg, #8b5cf6, #3b82f6)'
+            'linear-gradient(45deg, #cf3c69, #ff5f00)',
+            'linear-gradient(90deg, #ff5f00, #b92a56)',
+            'linear-gradient(135deg, #b92a56, #cf3c69)',
+            'linear-gradient(180deg, #cf3c69, #ff5f00)'
           ]
         }}
         transition={{ duration: 2, repeat: Infinity }}
