@@ -153,6 +153,24 @@ for (const f of systemFiles) {
   }
 }
 
+// Check UI constraints file exists and contains expected section headers
+if (fileExists('docs/ui-constraints.md')) {
+  pass('System file exists: docs/ui-constraints.md');
+  const uiConstraints = readFile('docs/ui-constraints.md');
+  if (uiConstraints.includes('## Hard No')) {
+    pass('docs/ui-constraints.md contains section: ## Hard No');
+  } else {
+    fail('docs/ui-constraints.md missing section: ## Hard No');
+  }
+  if (uiConstraints.includes('## Specifically Banned')) {
+    pass('docs/ui-constraints.md contains section: ## Specifically Banned');
+  } else {
+    fail('docs/ui-constraints.md missing section: ## Specifically Banned');
+  }
+} else {
+  fail('Missing system file: docs/ui-constraints.md');
+}
+
 // Check user files are NOT tracked (gitignored).
 // Fork-only: this CareerArchitect fork is a personal cloud document store,
 // not a redistributable system, and intentionally commits user-layer files

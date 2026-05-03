@@ -31,6 +31,7 @@ For Codex-specific setup, see `docs/CODEX.md`.
 > | `config/profile.example.yml` — extension block | `home_addresses`, `commute_thresholds`, `hard_filters` |
 > | `modes/hydrate.md` | Aggressive profile-hydration mode — scrapes LinkedIn/GitHub/website/socials and explicitly demands what can't be scraped. Run BEFORE `oferta`/`scan` if profile is thin. |
 > | `requirements.txt`, `.mcp.json`, `UPSTREAM.md` | Fork scaffolding |
+> | `docs/ui-constraints.md` | UI design constraints (Uncodixfy ruleset) — applied by AI agents when editing `src/` or `templates/cv-template.html` |
 >
 > **Fork-only mode triggers** (the upstream "Skill Modes" table does not list these):
 >
@@ -44,6 +45,7 @@ For Codex-specific setup, see `docs/CODEX.md`.
 >
 > 1. Do not pollute. Avoid temp / empty / intermediate files; clean up.
 > 2. Prefer atomic file ops (`Read` / `Edit` / `Write`) over shell redirects.
+> 3. When editing `src/` components or `templates/cv-template.html`, read and apply `docs/ui-constraints.md`. Treat `tokens/tokens.css` as the tier-1 color source (exhausted before the built-in palettes).
 >
 > **Features documented below but NOT shipped in this fork** — sections
 > reference these but the files genuinely do not exist; do not try to read
