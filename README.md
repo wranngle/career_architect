@@ -4,6 +4,12 @@ A fork of [santifer/career-ops](https://github.com/santifer/career-ops) with
 a Next.js landing page and a few coverage extensions for non-AI job
 categories.
 
+## Demo
+
+🎬 _Loom walkthrough coming soon — JD evaluation, tailored CV generation, scanner + tracker flow._
+
+<!-- Replace with: <a href="https://www.loom.com/share/<id>"><img src="https://cdn.loom.com/sessions/thumbnails/<id>-with-play.gif" alt="Career Architect demo"></a> -->
+
 > **Looking for the additive bits as a clean overlay?** The non-personal
 > additions from this fork (the `hydrate` mode, USAJOBS + Google-Jobs-SERP
 > aggregators, the generic external-aggregator pattern for `scan.mjs`, the
