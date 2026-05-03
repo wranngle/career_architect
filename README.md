@@ -1,11 +1,11 @@
 # career-architect
 
-> a local pipeline that diffs job descriptions against your private yaml profile to compile targeted latex resumes
+> ai job search pipeline (career-ops port) with next.js landing page.
 
-[![License](https://img.shields.io/github/license/wranngle/career_architect?color=A371F7)](./LICENSE) ![Status](https://img.shields.io/badge/status-experimental-orange.svg)
+[![License](https://img.shields.io/github/license/wranngle/career_architect?color=A371F7)](./LICENSE) ![Status](https://img.shields.io/badge/status-active-brightgreen.svg)
 
 > [!NOTE]
-> Experiment. Built to learn one specific thing. Code may not survive.
+> Active personal project. Used in my own workflow. Issues triaged on a personal-time cadence.
 
 ## Quick start
 
@@ -13,11 +13,6 @@
 git clone https://github.com/wranngle/career_architect.git
 cd career_architect
 npm install
-npx playwright install chromium
-pip install -r requirements.txt
-cp config/profile.example.yml config/profile.yml
-cp templates/portals.example.yml portals.yml
-npm run doctor
 ```
 
 ## What it does
