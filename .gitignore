@@ -61,3 +61,7 @@ data/ranked-*.tsv
 # TypeScript incremental build cache
 *.tsbuildinfo
 tsconfig.tsbuildinfo
+
+# Transient bootstrap files
+/logs
+/old
