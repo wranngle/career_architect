@@ -33,6 +33,11 @@ Greenhouse/Ashby/Lever. This fork adds:
   tracked job's distance from every address in your `home_addresses`.
 - **Hard quality filters** — minimum pay, MLM/commission-only exclusions
   via a new `hard_filters` section in `config/profile.yml`.
+- **ElevenLabs voice job coach** — `npm run voice-coach` provisions a
+  personal Conversational AI agent grounded in your `cv.md` + profile
+  + target JD. Mock interviews, story drilling, JD prep, and
+  negotiation rehearsal by voice. Requires `ELEVENLABS_API_KEY`. See
+  [`modes/voice-coach.md`](./modes/voice-coach.md).
 - **Landing page** — a Next.js site under `src/`, decoupled from the
   pipeline; keep it, replace it, or delete it.
 

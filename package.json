@@ -21,7 +21,8 @@
     "rollback": "node update-system.mjs rollback",
     "liveness": "node check-liveness.mjs",
     "scan": "node scan.mjs",
-    "gemini:eval": "node gemini-eval.mjs"
+    "gemini:eval": "node gemini-eval.mjs",
+    "voice-coach": "node voice-coach.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
