@@ -5,10 +5,10 @@ import './globals.css';
 const inter = Inter({subsets: ['latin']});
 
 export const metadata: Metadata = {
-  title: 'Career Architect - Build Your Future, Not Just a Resume',
-  description: 'Go from overlooked to in-demand. Our AI Career Architect transforms your experience into the professional identity that lands you the job you deserve.',
-  keywords: 'career, resume, AI, job search, professional development, career coaching',
-  authors: [{name: 'Career Architect Team'}],
+  title: 'Career Architect — an open-source job-search pipeline you can read',
+  description: 'MIT-licensed tooling that scores a job description against your CV, drafts a tailored variant, and tracks where every application went. Local-first. No SaaS. Built by Cody Arnold.',
+  keywords: 'open source, job search, resume, CV, AI, career, MIT, local-first, n8n, automation',
+  authors: [{name: 'Cody Arnold', url: 'https://github.com/wranngle'}],
 };
 
 export const viewport: Viewport = {
