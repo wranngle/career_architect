@@ -58,6 +58,9 @@ career-dashboard
 # 4 — Stale per-day artifacts (regeneratable; don't pollute history)
 data/ranked-*.tsv
 
+# 5 — Voice-coach provisioning record (per-user agent IDs; written by voice-coach.mjs)
+data/voice-coach-agent.json
+
 # TypeScript incremental build cache
 *.tsbuildinfo
 tsconfig.tsbuildinfo

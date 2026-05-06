@@ -32,6 +32,7 @@ For Codex-specific setup, see `docs/CODEX.md`.
 > | `modes/hydrate.md` | Aggressive profile-hydration mode — scrapes LinkedIn/GitHub/website/socials and explicitly demands what can't be scraped. Run BEFORE `oferta`/`scan` if profile is thin. |
 > | `requirements.txt`, `.mcp.json`, `UPSTREAM.md` | Fork scaffolding |
 > | `docs/ui-constraints.md` | UI design constraints (Uncodixfy ruleset) — applied by AI agents when editing `src/` or `templates/cv-template.html` |
+> | `voice-coach.mjs` + `templates/voice-coach-system-prompt.md` + `modes/voice-coach.md` | Provisions a personal ElevenLabs Conversational AI voice job-coach agent grounded in `cv.md` + `config/profile.yml` (+ optional `--jd`). Requires `ELEVENLABS_API_KEY`. Records agent IDs in `data/voice-coach-agent.json`. |
 >
 > **Fork-only mode triggers** (the upstream "Skill Modes" table does not list these):
 >
@@ -40,6 +41,7 @@ For Codex-specific setup, see `docs/CODEX.md`.
 > | Says "hydrate", "build my profile", "import my LinkedIn", "onboard me" | `hydrate` |
 > | Has `cv.md` shorter than ~600 chars OR an unmodified `_profile.md` template | `hydrate` (run silently before any other mode) |
 > | Gets an `oferta` evaluation flagged "low confidence — profile too thin" | `hydrate` (then re-run `oferta`) |
+> | Says "voice coach", "phone coach", "mock interview by voice", "talk to a coach" | `voice-coach` |
 >
 > **Corrective rules (fork-specific):**
 >
