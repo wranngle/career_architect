@@ -86,10 +86,12 @@ npm run dev
 # then open http://localhost:3000/admin
 ```
 
-Renders the same Pipeline / Progress / Scans screens as the Go TUI, with
-synthetic placeholder data so reviewers can poke around without a tracker.md
-on disk. See [`src/app/admin/`](./src/app/admin) and the demo banner at the
-top of every admin page for the framing.
+Renders the same Pipeline / Progress / Scans screens as the Go TUI, plus a
+public-safe Profile readiness view for cross-surface CV, LinkedIn, portfolio,
+GitHub, and application-answer coherence. All screens use synthetic
+placeholder data so reviewers can poke around without a tracker.md on disk.
+See [`src/app/admin/`](./src/app/admin) and the demo banner at the top of
+every admin page for the framing.
 
 ### Terminal (Go TUI)
 
