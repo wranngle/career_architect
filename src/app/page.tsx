@@ -11,7 +11,6 @@ import {
   Upload,
   Link,
   Zap,
-  Star,
   ArrowRight,
   CheckCircle,
   Sparkles,
@@ -230,7 +229,7 @@ export default function CareerArchitectLandingPage() {
                 <span className='text-2xl font-bold bg-gradient-to-r from-sunset-600 to-wviolet-600 bg-clip-text text-transparent'>
                   Career Architect
                 </span>
-                <div className='text-xs text-gray-600 dark:text-gray-300 font-medium'>AI-Powered Career Transformation</div>
+                <div className='text-xs text-gray-600 dark:text-gray-300 font-medium'>Open-source job-search pipeline</div>
               </div>
             </motion.div>
 
@@ -286,9 +285,9 @@ export default function CareerArchitectLandingPage() {
                 </div>
               </div>
 
-              <a href='#features' className='text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20'>Features</a>
-              <a href='#testimonials' className='text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20'>Success Stories</a>
-              <a href='#pricing' className='text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20'>Pricing</a>
+              <a href='#features' className='text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20'>How it works</a>
+              <a href='#testimonials' className='text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20'>Honest take</a>
+              <a href='https://github.com/wranngle/career_architect' className='text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20'>Source</a>
             </div>
 
             {/* CTA Buttons */}
@@ -325,7 +324,7 @@ export default function CareerArchitectLandingPage() {
             <AnimatedText delay={0.2}>
               <Badge className='mb-8 px-4 py-2 text-sm bg-gradient-to-r from-wviolet-100 to-sunset-100 text-wviolet-700 border-wviolet-200 rounded-full'>
                 <Sparkles className='w-4 h-4 mr-2' />
-                AI-Powered Career Transformation
+                MIT-licensed · runs on your laptop
               </Badge>
             </AnimatedText>
 
@@ -334,12 +333,12 @@ export default function CareerArchitectLandingPage() {
               <h1 className='text-5xl md:text-7xl font-bold tracking-tight mb-8 relative'>
                 <div className='absolute inset-0 bg-black/40 dark:bg-black/60 rounded-2xl -z-10 blur-3xl'></div>
                 <TextRevealAnimation
-                  text="Don't Just Build a Resume."
+                  text='A career pipeline'
                   className='block mb-2 text-gray-900 dark:text-white text-shadow-lg'
                   delay={0.4}
                 />
                 <CyberpunkText
-                  text='Build Your Future.'
+                  text='you can read.'
                   className='block text-5xl md:text-7xl'
                   glitchIntensity={0.3}
                   neonColor='#cf3c69'
@@ -352,8 +351,9 @@ export default function CareerArchitectLandingPage() {
               <div className='relative mb-12'>
                 <div className='absolute inset-0 bg-black/30 dark:bg-black/50 rounded-xl -z-10 blur-2xl'></div>
                 <p className='text-xl md:text-2xl text-gray-900 dark:text-gray-100 font-semibold leading-relaxed px-4 py-2 text-shadow-md'>
-                  Go from overlooked to in-demand. Our AI Career Architect transforms your experience
-                  into the professional identity that lands you the job you deserve.
+                  Open-source tooling that scores a job description against your CV, drafts a tailored
+                  variant, and tracks where every application went. The prompts, rubric, and code are
+                  all in the repo. Your data stays on your machine.
                 </p>
               </div>
             </AnimatedText>
@@ -363,14 +363,14 @@ export default function CareerArchitectLandingPage() {
               <div className='flex flex-col sm:flex-row items-center justify-center gap-4 mb-16'>
                 <MagneticHover strength={0.2}>
                   <MorphingButton morphColor='#cf3c69' className='flex items-center'>
-                    Start Designing My Future
+                    Read the source
                     <ArrowRight className='w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform' />
                   </MorphingButton>
                 </MagneticHover>
 
                 <MagneticHover strength={0.15}>
                   <MorphingButton morphColor='#ff5f00' className='flex items-center bg-white/10 backdrop-blur-xl border border-white/20'>
-                    Watch Demo
+                    Try the /admin demo
                   </MorphingButton>
                 </MagneticHover>
               </div>
@@ -382,36 +382,36 @@ export default function CareerArchitectLandingPage() {
                 <div className='absolute inset-0 bg-black/20 dark:bg-black/40 rounded-2xl -z-10 blur-2xl'></div>
                 <div className='text-center relative z-10 p-4'>
                   <motion.div
-                    className='text-4xl font-bold bg-gradient-to-r from-wviolet-500 to-wviolet-700 bg-clip-text text-transparent mb-2 text-shadow-lg'
+                    className='text-3xl md:text-4xl font-bold bg-gradient-to-r from-wviolet-500 to-wviolet-700 bg-clip-text text-transparent mb-2 text-shadow-lg'
                     initial={{opacity: 0, scale: 0.5}}
                     animate={{opacity: 1, scale: 1}}
                     transition={{duration: 0.8, delay: 1.2}}
                   >
-                    10,000+
+                    MIT
                   </motion.div>
-                  <div className='text-sm font-semibold text-gray-900 dark:text-gray-100'>Careers Transformed</div>
+                  <div className='text-sm font-semibold text-gray-900 dark:text-gray-100'>Open source · fork freely</div>
                 </div>
                 <div className='text-center relative z-10 p-4'>
                   <motion.div
-                    className='text-4xl font-bold bg-gradient-to-r from-sunset-500 to-sunset-700 bg-clip-text text-transparent mb-2 text-shadow-lg'
+                    className='text-3xl md:text-4xl font-bold bg-gradient-to-r from-sunset-500 to-sunset-700 bg-clip-text text-transparent mb-2 text-shadow-lg'
                     initial={{opacity: 0, scale: 0.5}}
                     animate={{opacity: 1, scale: 1}}
                     transition={{duration: 0.8, delay: 1.4}}
                   >
-                    89%
+                    Local-first
                   </motion.div>
-                  <div className='text-sm font-semibold text-gray-900 dark:text-gray-100'>Interview Rate</div>
+                  <div className='text-sm font-semibold text-gray-900 dark:text-gray-100'>Your CV stays on disk</div>
                 </div>
                 <div className='text-center relative z-10 p-4'>
                   <motion.div
-                    className='text-4xl font-bold bg-gradient-to-r from-wviolet-500 to-wviolet-700 bg-clip-text text-transparent mb-2 text-shadow-lg'
+                    className='text-3xl md:text-4xl font-bold bg-gradient-to-r from-wviolet-500 to-wviolet-700 bg-clip-text text-transparent mb-2 text-shadow-lg'
                     initial={{opacity: 0, scale: 0.5}}
                     animate={{opacity: 1, scale: 1}}
                     transition={{duration: 0.8, delay: 1.6}}
                   >
-                    $15k+
+                    No SaaS
                   </motion.div>
-                  <div className='text-sm font-semibold text-gray-900 dark:text-gray-100'>Avg Salary Increase</div>
+                  <div className='text-sm font-semibold text-gray-900 dark:text-gray-100'>No login · no upload</div>
                 </div>
               </div>
             </AnimatedText>
@@ -424,11 +424,11 @@ export default function CareerArchitectLandingPage() {
         <div className='max-w-7xl mx-auto'>
           <AnimatedText className='text-center mb-16'>
             <h2 className='text-4xl md:text-5xl font-bold mb-6'>
-              Transform Your Career Story
+              Three pieces of the loop
             </h2>
             <p className='text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto'>
-              Stop playing the resume lottery. Our AI understands what employers actually want
-              and transforms your experience into compelling career narratives.
+              Evaluate, tailor, track. Each step is a small script you can read, edit, and rerun.
+              Nothing is hidden behind a service.
             </p>
           </AnimatedText>
 
@@ -446,10 +446,10 @@ export default function CareerArchitectLandingPage() {
                       <Brain className='w-8 h-8 text-white' />
                     </motion.div>
                   </FloatingIcon3D>
-                  <h3 className='text-2xl font-bold mb-4'>Translate Your Value</h3>
+                  <h3 className='text-2xl font-bold mb-4'>Evaluate</h3>
                   <p className='text-gray-600 dark:text-gray-300 leading-relaxed'>
-                    Turn years of experience into the strategic language that recruiters and AI
-                    are actually looking for. Stop being misunderstood by algorithms.
+                    Score a job description against your CV with a 10-dimension rubric. The prompt
+                    and weights are checked into the repo — disagree with one, change it.
                   </p>
                 </GlassmorphismCard>
               </FloatingCard>
@@ -468,10 +468,10 @@ export default function CareerArchitectLandingPage() {
                       <Target className='w-8 h-8 text-white' />
                     </motion.div>
                   </FloatingIcon3D>
-                  <h3 className='text-2xl font-bold mb-4'>Eliminate the Guesswork</h3>
+                  <h3 className='text-2xl font-bold mb-4'>Tailor</h3>
                   <p className='text-gray-600 dark:text-gray-300 leading-relaxed'>
-                    Get a data-driven blueprint to beat the resume black hole. Know exactly what skills
-                    and keywords to highlight for every single application.
+                    Generate a JD-specific CV variant in markdown or PDF. You see the diff before
+                    anything leaves your machine — no auto-submit, no surprises.
                   </p>
                 </GlassmorphismCard>
               </FloatingCard>
@@ -490,10 +490,10 @@ export default function CareerArchitectLandingPage() {
                       <Shield className='w-8 h-8 text-white' />
                     </motion.div>
                   </FloatingIcon3D>
-                  <h3 className='text-2xl font-bold mb-4'>Reclaim Your Confidence</h3>
+                  <h3 className='text-2xl font-bold mb-4'>Track</h3>
                   <p className='text-gray-600 dark:text-gray-300 leading-relaxed'>
-                    Walk into every application and interview with the unshakeable confidence
-                    that you are the ideal candidate for the role.
+                    Log applications, dedupe portal scans, keep an honest pipeline view in your
+                    terminal or at <code className='font-mono text-sm'>/admin</code>. One source of truth.
                   </p>
                 </GlassmorphismCard>
               </FloatingCard>
@@ -507,11 +507,11 @@ export default function CareerArchitectLandingPage() {
         <div className='max-w-7xl mx-auto'>
           <AnimatedText className='text-center mb-16'>
             <h2 className='text-4xl md:text-5xl font-bold mb-6'>
-              See Your Transformation in Seconds
+              Walk through a real evaluation
             </h2>
             <p className='text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto'>
-              Watch our AI instantly deconstruct any role and architect a new, powerful resume
-              that makes you the inevitable choice.
+              Paste a JD URL. The pipeline scores it against your CV, names what's missing, and
+              writes a tailored variant. Every step is a file you can open.
             </p>
           </AnimatedText>
 
@@ -529,10 +529,10 @@ export default function CareerArchitectLandingPage() {
                   <Upload className='w-6 h-6 text-white' />
                 </div>
                 <div>
-                  <h3 className='text-xl font-bold mb-2'>1. Upload Your Current Resume</h3>
+                  <h3 className='text-xl font-bold mb-2'>1. Point it at your CV</h3>
                   <p className='text-gray-600 dark:text-gray-300'>
-                    Drop in the document that's been letting you down. Our AI instantly analyzes
-                    your experience and identifies hidden strengths.
+                    A markdown file you already own — <code className='font-mono text-sm'>cv.md</code>.
+                    No upload, no parsing surprises.
                   </p>
                 </div>
               </motion.div>
@@ -548,10 +548,10 @@ export default function CareerArchitectLandingPage() {
                   <Link className='w-6 h-6 text-white' />
                 </div>
                 <div>
-                  <h3 className='text-xl font-bold mb-2'>2. Add Your Dream Job</h3>
+                  <h3 className='text-xl font-bold mb-2'>2. Drop in a job description</h3>
                   <p className='text-gray-600 dark:text-gray-300'>
-                    Paste the link to a job you want. Our AI decodes the hidden requirements
-                    and maps them to your unique experience.
+                    Paste a URL or the raw JD. The evaluator scores it against your CV and tells
+                    you why — strengths, gaps, and the rubric line that fired.
                   </p>
                 </div>
               </motion.div>
@@ -567,10 +567,10 @@ export default function CareerArchitectLandingPage() {
                   <Zap className='w-6 h-6 text-white' />
                 </div>
                 <div>
-                  <h3 className='text-xl font-bold mb-2'>3. Receive Your Blueprint</h3>
+                  <h3 className='text-xl font-bold mb-2'>3. Get a tailored variant</h3>
                   <p className='text-gray-600 dark:text-gray-300'>
-                    Get a powerful, strategic resume that speaks the language of leadership
-                    and positions you as the perfect candidate.
+                    A markdown CV variant + PDF, tuned to that JD. Diff against the master, edit
+                    by hand, then send through whatever portal you actually use.
                   </p>
                 </div>
               </motion.div>
@@ -698,98 +698,73 @@ export default function CareerArchitectLandingPage() {
         <div className='max-w-7xl mx-auto'>
           <AnimatedText className='text-center mb-16'>
             <h2 className='text-4xl md:text-5xl font-bold mb-6'>
-              Success Stories That Inspire
+              An honest take
             </h2>
             <p className='text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto'>
-              Real professionals who transformed their careers with our AI Career Architect
+              No fabricated testimonials. Here's what this project is, what it isn't, and who it's for.
             </p>
           </AnimatedText>
 
           <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
-            {/* Testimonial 1 */}
+            {/* What it is */}
             <FloatingCard delay={0.2}>
               <CardContent className='p-8'>
-                <div className='flex items-center mb-4'>
-                  {Array.from({length: 5}).map((_, i) => (
-                    <Star key={i} className='w-5 h-5 text-yellow-400 fill-current' />
-                  ))}
+                <div className='text-xs uppercase tracking-widest text-wviolet-600 dark:text-wviolet-400 mb-3 font-semibold'>
+                  What it is
                 </div>
-                <blockquote className='text-gray-700 dark:text-gray-300 mb-6 leading-relaxed'>
-                  "I went from feeling stuck and invisible to landing three interviews for senior roles
-                  in two weeks. This tool didn't just change my resume; it changed how I talk about myself.
-                  An absolute game-changer for any mid-career professional."
-                </blockquote>
-                <div className='flex items-center space-x-4'>
-                  <div className='w-12 h-12 bg-gradient-to-br from-wviolet-400 to-wviolet-600 rounded-full flex items-center justify-center'>
-                    <span className='text-white font-bold'>SM</span>
-                  </div>
-                  <div>
-                    <div className='font-semibold'>Stephanie M.</div>
-                    <div className='text-sm text-gray-500'>Marketing Director</div>
-                  </div>
-                </div>
+                <h3 className='text-xl font-bold mb-4'>An MIT-licensed pipeline a single person can run.</h3>
+                <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>
+                  Forked from <a className='underline underline-offset-4 hover:text-wviolet-600' href='https://github.com/santifer/career-ops'>santifer/career-ops</a>.
+                  Built in public. The evaluator prompt, scoring rubric, portal scanner, and
+                  dashboard are all in the repo. Bring your own LLM key (or skip the LLM
+                  bits entirely).
+                </p>
               </CardContent>
             </FloatingCard>
 
-            {/* Testimonial 2 */}
+            {/* What it isn't */}
             <FloatingCard delay={0.4}>
               <CardContent className='p-8'>
-                <div className='flex items-center mb-4'>
-                  {Array.from({length: 5}).map((_, i) => (
-                    <Star key={i} className='w-5 h-5 text-yellow-400 fill-current' />
-                  ))}
+                <div className='text-xs uppercase tracking-widest text-sunset-600 dark:text-sunset-400 mb-3 font-semibold'>
+                  What it isn't
                 </div>
-                <blockquote className='text-gray-700 dark:text-gray-300 mb-6 leading-relaxed'>
-                  "The AI analysis is terrifyingly accurate. It showed me exactly why I wasn't getting
-                  past the first screen. After using the Architect, I got a call back for a dream job
-                  I was previously rejected for. I start next month."
-                </blockquote>
-                <div className='flex items-center space-x-4'>
-                  <div className='w-12 h-12 bg-gradient-to-br from-sunset-400 to-sunset-600 rounded-full flex items-center justify-center'>
-                    <span className='text-white font-bold'>DL</span>
-                  </div>
-                  <div>
-                    <div className='font-semibold'>David L.</div>
-                    <div className='text-sm text-gray-500'>Senior Product Manager</div>
-                  </div>
-                </div>
+                <h3 className='text-xl font-bold mb-4'>Not a SaaS. Not a black box. Not a job board.</h3>
+                <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>
+                  No account, no upload, no auto-submit, no queue, no vector DB. The model
+                  scores and drafts; you read the diff and decide what to send. Nothing
+                  ever leaves your laptop unless you push it there yourself.
+                </p>
               </CardContent>
             </FloatingCard>
 
-            {/* Testimonial 3 */}
+            {/* Who it's for */}
             <FloatingCard delay={0.6}>
               <CardContent className='p-8'>
-                <div className='flex items-center mb-4'>
-                  {Array.from({length: 5}).map((_, i) => (
-                    <Star key={i} className='w-5 h-5 text-yellow-400 fill-current' />
-                  ))}
+                <div className='text-xs uppercase tracking-widest text-wviolet-600 dark:text-wviolet-400 mb-3 font-semibold'>
+                  Who it's for
                 </div>
-                <blockquote className='text-gray-700 dark:text-gray-300 mb-6 leading-relaxed'>
-                  "Finally, a tool that understands the strategic value I bring. The AI translated
-                  my 15 years of experience into compelling leadership language that recruiters
-                  actually respond to. Worth every penny."
-                </blockquote>
-                <div className='flex items-center space-x-4'>
-                  <div className='w-12 h-12 bg-gradient-to-br from-wviolet-400 to-wviolet-600 rounded-full flex items-center justify-center'>
-                    <span className='text-white font-bold'>RC</span>
-                  </div>
-                  <div>
-                    <div className='font-semibold'>Rachel C.</div>
-                    <div className='text-sm text-gray-500'>Operations Director</div>
-                  </div>
-                </div>
+                <h3 className='text-xl font-bold mb-4'>Mid- and senior-career people who like to read the source.</h3>
+                <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>
+                  If you've been burned by resume tools that hide their prompt and want a
+                  pipeline you can audit, edit, and own — this is built for that. Comfortable
+                  with a terminal helps; not required (there's a <code className='font-mono text-sm'>/admin</code> view).
+                </p>
               </CardContent>
             </FloatingCard>
           </div>
 
           {/* Trust Indicators */}
           <AnimatedText delay={0.8} className='text-center mt-16'>
-            <div className='flex items-center justify-center space-x-8 opacity-60'>
-              <span className='text-sm text-gray-500'>As featured in:</span>
-              <div className='flex items-center space-x-6'>
-                <div className='font-semibold text-gray-400'>Forbes</div>
-                <div className='font-semibold text-gray-400'>Harvard Business Review</div>
-                <div className='font-semibold text-gray-400'>Fast Company</div>
+            <div className='flex flex-col md:flex-row items-center justify-center gap-3 md:gap-8 opacity-70'>
+              <span className='text-sm text-gray-500'>Built in public:</span>
+              <div className='flex items-center gap-6 text-sm'>
+                <a className='font-semibold text-gray-500 hover:text-wviolet-600 underline-offset-4 hover:underline' href='https://github.com/wranngle/career_architect'>
+                  github.com/wranngle/career_architect
+                </a>
+                <span className='text-gray-400'>MIT license</span>
+                <a className='font-semibold text-gray-500 hover:text-wviolet-600 underline-offset-4 hover:underline' href='https://github.com/santifer/career-ops'>
+                  fork of santifer/career-ops
+                </a>
               </div>
             </div>
           </AnimatedText>
@@ -801,27 +776,27 @@ export default function CareerArchitectLandingPage() {
         <div className='max-w-4xl mx-auto text-center'>
           <AnimatedText>
             <h2 className='text-4xl md:text-6xl font-bold text-white mb-6'>
-              Your career is too important to leave to chance.
+              Read the code. Run it locally. Fork it.
             </h2>
           </AnimatedText>
 
           <AnimatedText delay={0.2}>
             <p className='text-xl md:text-2xl text-white/90 mb-8'>
-              Stop applying. Start architecting.
+              MIT licensed. No account, no upload, no surprises.
             </p>
           </AnimatedText>
 
           <AnimatedText delay={0.4} className='mb-12'>
             <MagneticButton className='bg-white text-wviolet-600 hover:bg-gray-50 shadow-xl'>
               <Award className='w-5 h-5 mr-2' />
-              Become Inevitable
+              Open the repo
               <ArrowRight className='w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform' />
             </MagneticButton>
           </AnimatedText>
 
           <AnimatedText delay={0.6}>
             <p className='text-white/70 text-sm'>
-              Join 10,000+ professionals who've transformed their careers • No credit card required
+              github.com/wranngle/career_architect · MIT license · prereqs: Node ≥18, Go ≥1.21, Python ≥3.11
             </p>
           </AnimatedText>
         </div>
@@ -843,6 +818,75 @@ export default function CareerArchitectLandingPage() {
             animate={{scale: [1, 2, 1], opacity: [0.4, 0.8, 0.4]}}
             transition={{duration: 3, repeat: Infinity, delay: 2}}
           />
+        </div>
+      </section>
+
+      {/* Maker blurb — built by Cody Arnold. */}
+      <section className='relative z-10 py-20 px-6 bg-white dark:bg-gray-950'>
+        <div className='max-w-5xl mx-auto'>
+          {(() => {
+            const linkClass
+              = 'inline-flex items-center gap-1.5 font-semibold text-wviolet-700'
+              + ' dark:text-wviolet-300 hover:text-wviolet-900 dark:hover:text-wviolet-100'
+              + ' underline-offset-4 hover:underline';
+            const cardClass
+              = 'rounded-3xl border border-wviolet-100 dark:border-wviolet-900/40'
+              + ' bg-gradient-to-br from-white to-wviolet-50/40'
+              + ' dark:from-gray-900 dark:to-wviolet-950/30 shadow-xl p-8 md:p-12';
+            return (
+              <div className={cardClass}>
+                <div className='flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12'>
+                  <div className='flex-shrink-0'>
+                    <div className='relative'>
+                      <div className='absolute inset-0 bg-gradient-to-br from-wviolet-500/30 to-sunset-500/30 rounded-full blur-2xl -z-10' />
+                      <img
+                        src='/cody.jpg'
+                        alt='Cody Arnold'
+                        width={160}
+                        height={160}
+                        className='w-40 h-40 rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-lg'
+                      />
+                    </div>
+                  </div>
+                  <div className='flex-1 text-center md:text-left'>
+                    <div className='text-xs uppercase tracking-widest text-wviolet-600 dark:text-wviolet-400 font-semibold mb-2'>
+                      Built by
+                    </div>
+                    <h3 className='text-2xl md:text-3xl font-bold mb-3'>
+                      Cody Arnold — automation engineer, Fort Wayne, IN
+                    </h3>
+                    <p className='text-gray-700 dark:text-gray-300 leading-relaxed mb-5'>
+                      Ten-plus years building automation across 500+ SMB environments at an MSP, well
+                      before the recent AI hype wave. Now writing agent-first infrastructure
+                      in public — n8n, Python, PowerShell, Vapi, ElevenLabs Conversational AI, RAG.
+                      This pipeline is what I run on my own job search; it's open-sourced so you can
+                      see exactly what's inside the box you're trusting.
+                    </p>
+                    <div className='flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm'>
+                      <a
+                        href='https://github.com/wranngle/career_architect'
+                        className={linkClass}
+                      >
+                        GitHub →
+                      </a>
+                      <a
+                        href='https://linkedin.com/in/codyarnold96'
+                        className={linkClass}
+                      >
+                        LinkedIn →
+                      </a>
+                      <a
+                        href='mailto:cody@wranngle.com'
+                        className={linkClass}
+                      >
+                        cody@wranngle.com
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
         </div>
       </section>
 

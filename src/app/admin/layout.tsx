@@ -5,6 +5,7 @@ const NAV = [
   {href: '/admin', label: 'Overview'},
   {href: '/admin/pipeline', label: 'Pipeline'},
   {href: '/admin/progress', label: 'Progress'},
+  {href: '/admin/profile', label: 'Profile'},
   {href: '/admin/scans', label: 'Scans'},
 ];
 

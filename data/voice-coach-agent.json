@@ -1,0 +1,20 @@
+[
+  {
+    "agent_id": "agent_5001kqxm8212f5hv99qrk78wj1gm",
+    "name": "Career Architect — Voice Coach (demo)",
+    "created_at": "2026-05-06T03:10:34.140Z",
+    "target_company": "ElevenLabs",
+    "target_role": "Automations Engineer",
+    "candidate_name": "Demo Candidate",
+    "coach_name": "Coach Avery",
+    "voice_id": "pFZP5JQG7iQjIQuC4Bku",
+    "llm": "claude-opus-4-7",
+    "knowledge_base": [
+      {
+        "id": "hHJt2vLCBnfvwIubB7vX",
+        "name": "JD — elevenlabs-automations-engineer-2026-04-27"
+      }
+    ],
+    "demo": true
+  }
+]
