@@ -1,959 +1,196 @@
-'use client';
-
-import {useState, useEffect} from 'react';
+import Image from 'next/image';
 import {
-  motion, useScroll, useTransform, AnimatePresence,
-} from 'framer-motion';
-import {
-  Brain,
-  Target,
-  Shield,
-  Upload,
-  Link,
-  Zap,
   ArrowRight,
-  CheckCircle,
-  Sparkles,
-  TrendingUp,
-  Users,
-  Award,
-  ChevronDown,
+  FileText,
+  Github,
+  Monitor,
+  ShieldCheck,
+  Terminal,
 } from 'lucide-react';
-import {Button} from '@/components/ui/button';
-import {Card, CardContent} from '@/components/ui/card';
-import {Badge} from '@/components/ui/badge';
-import {Separator} from '@/components/ui/separator';
-import {cn} from '@/lib/utils';
-import {ParticleSystem, CursorFollower, FloatingShapes} from '@/components/ui/particle-system';
-import {ParallaxElement, MagneticHover} from '@/components/ui/scroll-animations';
-import {
-  LiquidMorphBackground,
-  GlassmorphismCard,
-  LiquidButton,
-  NeumorphismCard,
-  TextRevealAnimation,
-} from '@/components/ui/ultra-advanced-effects';
-import {
-  HolographicText,
-  PremiumLoader,
-  MorphingButton,
-  FloatingIcon3D,
-} from '@/components/ui/holographic-effects';
-import {
-  NeuralNetworkBackground,
-  QuantumParticleField,
-  DNAHelixScroll,
-  CyberpunkText,
-  HolographicDataStream,
-  MatrixRain,
-  PulsingEnergyField,
-} from '@/components/ui/extreme-effects';
+import demoGif from '../../docs/demo.gif';
 
-// Advanced background components
-const AnimatedBackground = () => (
-  <div className='absolute inset-0 overflow-hidden'>
-    {/* Gradient mesh */}
-    <div className='absolute inset-0 bg-gradient-to-br from-sunset-50 to-wviolet-50 dark:from-sunset-950/20 dark:to-wviolet-950/20' />
+const workflow = [
+  {
+    title: 'Evaluate',
+    body: 'Score a job description against your CV with the same rubric the report uses. Low-fit roles get called low-fit.',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'Tailor',
+    body: 'Generate a focused CV variant, then review the diff before anything goes near an application portal.',
+    icon: FileText,
+  },
+  {
+    title: 'Track',
+    body: 'Keep applications, follow-ups, scans, reports, and PDFs in files you can inspect with a terminal.',
+    icon: Monitor,
+  },
+];
 
-    {/* Floating orbs */}
-    <motion.div
-      className='absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-wviolet-400/20 to-sunset-600/20 rounded-full blur-3xl'
-      animate={{
-        x: [0, 50, 0],
-        y: [0, -50, 0],
-        scale: [1, 1.1, 1],
-      }}
-      transition={{
-        duration: 20,
-        repeat: Infinity,
-        ease: 'easeInOut',
-      }}
-    />
+const commands = [
+  ['npm run doctor', 'check local prerequisites'],
+  ['npm run scan', 'scan configured portals'],
+  ['npm run verify', 'validate tracker/report integrity'],
+  ['npm run dev', 'open the web demo'],
+];
 
-    <motion.div
-      className='absolute top-1/2 -left-32 w-80 h-80 bg-gradient-to-br from-sunset-400/15 to-wviolet-600/15 rounded-full blur-3xl'
-      animate={{
-        x: [0, -30, 0],
-        y: [0, 40, 0],
-        scale: [1, 0.9, 1],
-      }}
-      transition={{
-        duration: 25,
-        repeat: Infinity,
-        ease: 'easeInOut',
-      }}
-    />
-
-    {/* Geometric patterns */}
-    <div className='absolute inset-0 opacity-[0.03] dark:opacity-[0.05]'>
-      <div className='absolute top-20 left-20 w-4 h-4 border border-wviolet-500 rotate-45' />
-      <div className='absolute top-40 right-32 w-6 h-6 border border-sunset-500 rounded-full' />
-      <div className='absolute bottom-32 left-1/3 w-3 h-3 bg-wviolet-500 rounded-full' />
-      <div className='absolute bottom-20 right-20 w-5 h-5 border border-wviolet-500' />
-    </div>
-  </div>
-);
-
-// Magnetic button effect
-type MagneticButtonProps = {
-  children: React.ReactNode;
-  className?: string;
-} & React.ComponentPropsWithoutRef<typeof Button>;
-
-const MagneticButton = ({children, className, ...props}: MagneticButtonProps) => {
-  const [position, setPosition] = useState({x: 0, y: 0});
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const deltaX = e.clientX - centerX;
-    const deltaY = e.clientY - centerY;
-
-    setPosition({x: deltaX * 0.15, y: deltaY * 0.15});
-  };
-
-  const handleMouseLeave = () => {
-    setPosition({x: 0, y: 0});
-    setIsHovered(false);
-  };
-
-  return (
-    <motion.div
-      animate={{x: position.x, y: position.y}}
-      transition={{type: 'spring', stiffness: 300, damping: 30}}
-    >
-      <Button
-        className={cn(
-          'relative overflow-hidden group bg-gradient-to-r from-wviolet-600 to-sunset-600 hover:from-wviolet-700 hover:to-sunset-700 border-0 text-white font-semibold px-8 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300',
-          className,
-        )}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => {
-          setIsHovered(true);
-        }}
-        onMouseLeave={handleMouseLeave}
-        {...props}
-      >
-        <motion.div
-          className='absolute inset-0 bg-gradient-to-r from-white/20 to-transparent'
-          initial={{x: '-100%'}}
-          whileHover={{x: '100%'}}
-          transition={{duration: 0.6}}
-        />
-        <span className='relative z-10 flex items-center gap-2'>
-          {children}
-        </span>
-      </Button>
-    </motion.div>
-  );
-};
-
-// Animated text reveal
-type AnimatedTextProps = {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-};
-
-const AnimatedText = ({children, className, delay = 0}: AnimatedTextProps) => (
-  <motion.div
-    initial={{opacity: 0, y: 30}}
-    animate={{opacity: 1, y: 0}}
-    transition={{duration: 0.8, delay, ease: 'easeOut'}}
-    className={className}
-  >
-    {children}
-  </motion.div>
-);
-
-// Floating card component
-type FloatingCardProps = {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-};
-
-const FloatingCard = ({children, delay = 0, className}: FloatingCardProps) => (
-  <motion.div
-    initial={{opacity: 0, y: 50, scale: 0.9}}
-    animate={{opacity: 1, y: 0, scale: 1}}
-    transition={{duration: 0.8, delay, ease: 'easeOut'}}
-    whileHover={{y: -10, scale: 1.02}}
-    className={cn('group cursor-pointer', className)}
-  >
-    <Card className='h-full border-0 shadow-lg hover:shadow-2xl transition-all duration-500 bg-white/80 backdrop-blur-sm dark:bg-gray-900/80'>
-      {children}
-    </Card>
-  </motion.div>
-);
+const boundaries = [
+  'No auto-submit. The user reviews and sends applications.',
+  'No hidden queue. Reports, tracker rows, and generated CVs stay on disk.',
+  'No fake SaaS shell. The web UI is a local demo, not an account system.',
+];
 
 export default function CareerArchitectLandingPage() {
-  const {scrollY} = useScroll();
-  const y1 = useTransform(scrollY, [0, 300], [0, 50]);
-  const y2 = useTransform(scrollY, [0, 300], [0, -50]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0.8]);
-
   return (
-    <div className='min-h-screen bg-white dark:bg-gray-950 relative overflow-hidden'>
-      {/* Ultra-Advanced Visual Effects */}
-      <LiquidMorphBackground />
-      <NeuralNetworkBackground />
-      <QuantumParticleField />
-      <PulsingEnergyField />
-      <ParticleSystem particleCount={120} />
-      <FloatingShapes />
-      <CursorFollower />
-      <AnimatedBackground />
-      <MatrixRain density={25} />
-
-      {/* Navigation - Mega Menu */}
-      <motion.nav
-        className='relative z-50 backdrop-blur-xl bg-white/10 border-b border-white/20 shadow-2xl'
-        initial={{opacity: 0, y: -20}}
-        animate={{opacity: 1, y: 0}}
-        transition={{duration: 0.6}}
-      >
-        <div className='max-w-7xl mx-auto px-6 py-4'>
-          <div className='flex items-center justify-between'>
-            {/* Logo */}
-            <motion.div
-              className='flex items-center space-x-3'
-              whileHover={{scale: 1.05}}
+    <main className='min-h-screen bg-background text-foreground'>
+      <header className='border-b border-border bg-card'>
+        <div className='mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4'>
+          <a href='/' className='font-display text-lg font-semibold tracking-tight'>
+            Career Architect
+          </a>
+          <nav className='flex items-center gap-4 text-sm'>
+            <a className='text-muted-foreground hover:text-foreground' href='/admin'>
+              Admin demo
+            </a>
+            <a
+              className='text-muted-foreground hover:text-foreground'
+              href='https://github.com/wranngle/career_architect'
             >
-              <div className='w-12 h-12 bg-gradient-to-br from-sunset-600 to-wviolet-600 rounded-xl flex items-center justify-center shadow-lg'>
-                <Zap className='w-7 h-7 text-white' />
-              </div>
-              <div>
-                <span className='text-2xl font-bold bg-gradient-to-r from-sunset-600 to-wviolet-600 bg-clip-text text-transparent'>
-                  Career Architect
-                </span>
-                <div className='text-xs text-gray-600 dark:text-gray-300 font-medium'>Open-source job-search pipeline</div>
-              </div>
-            </motion.div>
-
-            {/* Mega Menu Items */}
-            <div className='hidden lg:flex items-center space-x-8'>
-              {/* Solutions Dropdown */}
-              <div className='relative group'>
-                <button className='flex items-center space-x-1 text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20'>
-                  <span>Solutions</span>
-                  <ChevronDown className='w-4 h-4 group-hover:rotate-180 transition-transform duration-300' />
-                </button>
-
-                {/* Mega Menu Dropdown */}
-                <div className='absolute top-full left-0 mt-2 w-96 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0'>
-                  <div className='p-6'>
-                    <div className='grid grid-cols-2 gap-6'>
-                      <div>
-                        <h3 className='font-bold text-gray-900 dark:text-white mb-3 text-lg'>For Professionals</h3>
-                        <div className='space-y-3'>
-                          <a href='#' className='block text-gray-700 dark:text-gray-300 hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors'>
-                            <div className='font-medium'>Resume Builder</div>
-                            <div className='text-sm text-gray-500'>AI-powered resume optimization</div>
-                          </a>
-                          <a href='#' className='block text-gray-700 dark:text-gray-300 hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors'>
-                            <div className='font-medium'>Career Coaching</div>
-                            <div className='text-sm text-gray-500'>Personalized career guidance</div>
-                          </a>
-                          <a href='#' className='block text-gray-700 dark:text-gray-300 hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors'>
-                            <div className='font-medium'>Interview Prep</div>
-                            <div className='text-sm text-gray-500'>Mock interviews & feedback</div>
-                          </a>
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className='font-bold text-gray-900 dark:text-white mb-3 text-lg'>For Companies</h3>
-                        <div className='space-y-3'>
-                          <a href='#' className='block text-gray-700 dark:text-gray-300 hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors'>
-                            <div className='font-medium'>Talent Matching</div>
-                            <div className='text-sm text-gray-500'>Find perfect candidates</div>
-                          </a>
-                          <a href='#' className='block text-gray-700 dark:text-gray-300 hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors'>
-                            <div className='font-medium'>Bulk Screening</div>
-                            <div className='text-sm text-gray-500'>AI-powered candidate screening</div>
-                          </a>
-                          <a href='#' className='block text-gray-700 dark:text-gray-300 hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors'>
-                            <div className='font-medium'>Analytics</div>
-                            <div className='text-sm text-gray-500'>Hiring insights & metrics</div>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <a href='#features' className='text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20'>How it works</a>
-              <a href='#testimonials' className='text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20'>Honest take</a>
-              <a href='https://github.com/wranngle/career_architect' className='text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 transition-colors font-semibold text-lg px-4 py-2 rounded-lg hover:bg-white/20'>Source</a>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className='flex items-center space-x-4'>
-              <Button variant='ghost' className='hidden md:block text-gray-800 dark:text-white hover:text-wviolet-600 dark:hover:text-wviolet-400 hover:bg-white/20 font-semibold'>
-                Sign In
-              </Button>
-              <MorphingButton morphColor='#cf3c69' className='shadow-lg bg-gradient-to-r from-wviolet-600 to-sunset-600 text-white px-6 py-2'>
-                Get Started Free
-              </MorphingButton>
-            </div>
-          </div>
+              Source
+            </a>
+          </nav>
         </div>
-      </motion.nav>
+      </header>
 
-      {/* Hero Section */}
-      <section className='relative z-10 pt-20 pb-32 px-6'>
-        {/* Extreme Visual Effects for Hero */}
-        <HolographicDataStream
-          streamCount={8}
-          className='absolute inset-0 pointer-events-none'
-        />
-        <DNAHelixScroll
-          className='absolute right-10 top-20 opacity-30'
-          helixHeight={600}
-        />
-
-        <motion.div
-          className='max-w-7xl mx-auto relative'
-          style={{y: y1, opacity}}
-        >
-          <div className='text-center max-w-4xl mx-auto'>
-            {/* Badge */}
-            <AnimatedText delay={0.2}>
-              <Badge className='mb-8 px-4 py-2 text-sm bg-gradient-to-r from-wviolet-100 to-sunset-100 text-wviolet-700 border-wviolet-200 rounded-full'>
-                <Sparkles className='w-4 h-4 mr-2' />
-                MIT-licensed · runs on your laptop
-              </Badge>
-            </AnimatedText>
-
-            {/* Main Headline */}
-            <AnimatedText delay={0.4}>
-              <h1 className='text-5xl md:text-7xl font-bold tracking-tight mb-8 relative'>
-                <div className='absolute inset-0 bg-black/40 dark:bg-black/60 rounded-2xl -z-10 blur-3xl'></div>
-                <TextRevealAnimation
-                  text='A career pipeline'
-                  className='block mb-2 text-gray-900 dark:text-white text-shadow-lg'
-                  delay={0.4}
-                />
-                <CyberpunkText
-                  text='you can read.'
-                  className='block text-5xl md:text-7xl'
-                  glitchIntensity={0.3}
-                  neonColor='#cf3c69'
-                />
-              </h1>
-            </AnimatedText>
-
-            {/* Subtext */}
-            <AnimatedText delay={0.6}>
-              <div className='relative mb-12'>
-                <div className='absolute inset-0 bg-black/30 dark:bg-black/50 rounded-xl -z-10 blur-2xl'></div>
-                <p className='text-xl md:text-2xl text-gray-900 dark:text-gray-100 font-semibold leading-relaxed px-4 py-2 text-shadow-md'>
-                  Open-source tooling that scores a job description against your CV, drafts a tailored
-                  variant, and tracks where every application went. The prompts, rubric, and code are
-                  all in the repo. Your data stays on your machine.
-                </p>
-              </div>
-            </AnimatedText>
-
-            {/* CTA Buttons */}
-            <AnimatedText delay={0.8}>
-              <div className='flex flex-col sm:flex-row items-center justify-center gap-4 mb-16'>
-                <MagneticHover strength={0.2}>
-                  <MorphingButton morphColor='#cf3c69' className='flex items-center'>
-                    Read the source
-                    <ArrowRight className='w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform' />
-                  </MorphingButton>
-                </MagneticHover>
-
-                <MagneticHover strength={0.15}>
-                  <MorphingButton morphColor='#ff5f00' className='flex items-center bg-white/10 backdrop-blur-xl border border-white/20'>
-                    Try the /admin demo
-                  </MorphingButton>
-                </MagneticHover>
-              </div>
-            </AnimatedText>
-
-            {/* Social Proof Numbers */}
-            <AnimatedText delay={1}>
-              <div className='grid grid-cols-3 gap-8 max-w-2xl mx-auto relative'>
-                <div className='absolute inset-0 bg-black/20 dark:bg-black/40 rounded-2xl -z-10 blur-2xl'></div>
-                <div className='text-center relative z-10 p-4'>
-                  <motion.div
-                    className='text-3xl md:text-4xl font-bold bg-gradient-to-r from-wviolet-500 to-wviolet-700 bg-clip-text text-transparent mb-2 text-shadow-lg'
-                    initial={{opacity: 0, scale: 0.5}}
-                    animate={{opacity: 1, scale: 1}}
-                    transition={{duration: 0.8, delay: 1.2}}
-                  >
-                    MIT
-                  </motion.div>
-                  <div className='text-sm font-semibold text-gray-900 dark:text-gray-100'>Open source · fork freely</div>
-                </div>
-                <div className='text-center relative z-10 p-4'>
-                  <motion.div
-                    className='text-3xl md:text-4xl font-bold bg-gradient-to-r from-sunset-500 to-sunset-700 bg-clip-text text-transparent mb-2 text-shadow-lg'
-                    initial={{opacity: 0, scale: 0.5}}
-                    animate={{opacity: 1, scale: 1}}
-                    transition={{duration: 0.8, delay: 1.4}}
-                  >
-                    Local-first
-                  </motion.div>
-                  <div className='text-sm font-semibold text-gray-900 dark:text-gray-100'>Your CV stays on disk</div>
-                </div>
-                <div className='text-center relative z-10 p-4'>
-                  <motion.div
-                    className='text-3xl md:text-4xl font-bold bg-gradient-to-r from-wviolet-500 to-wviolet-700 bg-clip-text text-transparent mb-2 text-shadow-lg'
-                    initial={{opacity: 0, scale: 0.5}}
-                    animate={{opacity: 1, scale: 1}}
-                    transition={{duration: 0.8, delay: 1.6}}
-                  >
-                    No SaaS
-                  </motion.div>
-                  <div className='text-sm font-semibold text-gray-900 dark:text-gray-100'>No login · no upload</div>
-                </div>
-              </div>
-            </AnimatedText>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Value Proposition Section */}
-      <section id='features' className='relative z-10 py-24 px-6'>
-        <div className='max-w-7xl mx-auto'>
-          <AnimatedText className='text-center mb-16'>
-            <h2 className='text-4xl md:text-5xl font-bold mb-6'>
-              Three pieces of the loop
-            </h2>
-            <p className='text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto'>
-              Evaluate, tailor, track. Each step is a small script you can read, edit, and rerun.
-              Nothing is hidden behind a service.
+      <section className='border-b border-border bg-night-950 text-sand-50'>
+        <div className='mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl content-center gap-10 px-6 py-16 lg:grid-cols-[0.92fr_1.08fr] lg:items-center'>
+          <div className='max-w-2xl'>
+            <h1 className='font-display text-4xl font-semibold leading-tight tracking-tight md:text-6xl'>
+              A local job-search pipeline you can audit.
+            </h1>
+            <p className='mt-6 text-lg leading-relaxed text-sand-100 md:text-xl'>
+              Career Architect evaluates job descriptions against your CV, drafts
+              tailored variants, scans configured portals, and keeps the tracker
+              in plain files.
             </p>
-          </AnimatedText>
-
-          <div className='grid md:grid-cols-3 gap-8'>
-            {/* Feature 1 */}
-            <ParallaxElement speed={0.2}>
-              <FloatingCard delay={0.2}>
-                <GlassmorphismCard className='text-center h-full' intensity={0.15}>
-                  <FloatingIcon3D floatIntensity={1.2} className='mx-auto mb-6'>
-                    <motion.div
-                      className='w-16 h-16 bg-gradient-to-br from-wviolet-500 to-wviolet-600 rounded-2xl flex items-center justify-center'
-                      whileHover={{rotate: 5, scale: 1.1}}
-                      transition={{type: 'spring', stiffness: 300}}
-                    >
-                      <Brain className='w-8 h-8 text-white' />
-                    </motion.div>
-                  </FloatingIcon3D>
-                  <h3 className='text-2xl font-bold mb-4'>Evaluate</h3>
-                  <p className='text-gray-600 dark:text-gray-300 leading-relaxed'>
-                    Score a job description against your CV with a 10-dimension rubric. The prompt
-                    and weights are checked into the repo — disagree with one, change it.
-                  </p>
-                </GlassmorphismCard>
-              </FloatingCard>
-            </ParallaxElement>
-
-            {/* Feature 2 */}
-            <ParallaxElement speed={0.1}>
-              <FloatingCard delay={0.4}>
-                <GlassmorphismCard className='text-center h-full' intensity={0.15}>
-                  <FloatingIcon3D floatIntensity={1.2} className='mx-auto mb-6'>
-                    <motion.div
-                      className='w-16 h-16 bg-gradient-to-br from-sunset-500 to-sunset-600 rounded-2xl flex items-center justify-center'
-                      whileHover={{rotate: -5, scale: 1.1}}
-                      transition={{type: 'spring', stiffness: 300}}
-                    >
-                      <Target className='w-8 h-8 text-white' />
-                    </motion.div>
-                  </FloatingIcon3D>
-                  <h3 className='text-2xl font-bold mb-4'>Tailor</h3>
-                  <p className='text-gray-600 dark:text-gray-300 leading-relaxed'>
-                    Generate a JD-specific CV variant in markdown or PDF. You see the diff before
-                    anything leaves your machine — no auto-submit, no surprises.
-                  </p>
-                </GlassmorphismCard>
-              </FloatingCard>
-            </ParallaxElement>
-
-            {/* Feature 3 */}
-            <ParallaxElement speed={0.3}>
-              <FloatingCard delay={0.6}>
-                <GlassmorphismCard className='text-center h-full' intensity={0.15}>
-                  <FloatingIcon3D floatIntensity={1.2} className='mx-auto mb-6'>
-                    <motion.div
-                      className='w-16 h-16 bg-gradient-to-br from-wviolet-500 to-wviolet-600 rounded-2xl flex items-center justify-center'
-                      whileHover={{rotate: 5, scale: 1.1}}
-                      transition={{type: 'spring', stiffness: 300}}
-                    >
-                      <Shield className='w-8 h-8 text-white' />
-                    </motion.div>
-                  </FloatingIcon3D>
-                  <h3 className='text-2xl font-bold mb-4'>Track</h3>
-                  <p className='text-gray-600 dark:text-gray-300 leading-relaxed'>
-                    Log applications, dedupe portal scans, keep an honest pipeline view in your
-                    terminal or at <code className='font-mono text-sm'>/admin</code>. One source of truth.
-                  </p>
-                </GlassmorphismCard>
-              </FloatingCard>
-            </ParallaxElement>
-          </div>
-        </div>
-      </section>
-
-      {/* Product Showcase Section */}
-      <section className='relative z-10 py-24 px-6 bg-gradient-to-br from-gray-50 to-wviolet-50/30 dark:from-gray-900 dark:to-wviolet-950/30'>
-        <div className='max-w-7xl mx-auto'>
-          <AnimatedText className='text-center mb-16'>
-            <h2 className='text-4xl md:text-5xl font-bold mb-6'>
-              Walk through a real evaluation
-            </h2>
-            <p className='text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto'>
-              Paste a JD URL. The pipeline scores it against your CV, names what's missing, and
-              writes a tailored variant. Every step is a file you can open.
-            </p>
-          </AnimatedText>
-
-          <div className='grid lg:grid-cols-2 gap-16 items-center'>
-            {/* Process Steps */}
-            <div className='space-y-8'>
-              <motion.div
-                className='flex items-start space-x-4'
-                initial={{opacity: 0, x: -50}}
-                whileInView={{opacity: 1, x: 0}}
-                transition={{duration: 0.6, delay: 0.2}}
-                viewport={{once: true}}
+            <div className='mt-8 flex flex-wrap gap-3'>
+              <a
+                href='https://github.com/wranngle/career_architect'
+                className='inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-sunset-600'
               >
-                <div className='w-12 h-12 bg-gradient-to-br from-wviolet-500 to-wviolet-600 rounded-xl flex items-center justify-center flex-shrink-0'>
-                  <Upload className='w-6 h-6 text-white' />
-                </div>
-                <div>
-                  <h3 className='text-xl font-bold mb-2'>1. Point it at your CV</h3>
-                  <p className='text-gray-600 dark:text-gray-300'>
-                    A markdown file you already own — <code className='font-mono text-sm'>cv.md</code>.
-                    No upload, no parsing surprises.
-                  </p>
-                </div>
-              </motion.div>
-
-              <motion.div
-                className='flex items-start space-x-4'
-                initial={{opacity: 0, x: -50}}
-                whileInView={{opacity: 1, x: 0}}
-                transition={{duration: 0.6, delay: 0.4}}
-                viewport={{once: true}}
+                <Github className='h-4 w-4' aria-hidden />
+                Read the source
+                <ArrowRight className='h-4 w-4' aria-hidden />
+              </a>
+              <a
+                href='/admin'
+                className='inline-flex items-center gap-2 rounded-md border border-sand-300/30 px-4 py-2 text-sm font-semibold text-sand-50 hover:border-sand-100'
               >
-                <div className='w-12 h-12 bg-gradient-to-br from-sunset-500 to-sunset-600 rounded-xl flex items-center justify-center flex-shrink-0'>
-                  <Link className='w-6 h-6 text-white' />
-                </div>
-                <div>
-                  <h3 className='text-xl font-bold mb-2'>2. Drop in a job description</h3>
-                  <p className='text-gray-600 dark:text-gray-300'>
-                    Paste a URL or the raw JD. The evaluator scores it against your CV and tells
-                    you why — strengths, gaps, and the rubric line that fired.
-                  </p>
-                </div>
-              </motion.div>
-
-              <motion.div
-                className='flex items-start space-x-4'
-                initial={{opacity: 0, x: -50}}
-                whileInView={{opacity: 1, x: 0}}
-                transition={{duration: 0.6, delay: 0.6}}
-                viewport={{once: true}}
-              >
-                <div className='w-12 h-12 bg-gradient-to-br from-wviolet-500 to-wviolet-600 rounded-xl flex items-center justify-center flex-shrink-0'>
-                  <Zap className='w-6 h-6 text-white' />
-                </div>
-                <div>
-                  <h3 className='text-xl font-bold mb-2'>3. Get a tailored variant</h3>
-                  <p className='text-gray-600 dark:text-gray-300'>
-                    A markdown CV variant + PDF, tuned to that JD. Diff against the master, edit
-                    by hand, then send through whatever portal you actually use.
-                  </p>
-                </div>
-              </motion.div>
+                <Monitor className='h-4 w-4' aria-hidden />
+                Open /admin
+              </a>
             </div>
+          </div>
 
-            {/* Demo Preview */}
-            <motion.div
-              className='relative'
-              initial={{opacity: 0, y: 50}}
-              whileInView={{opacity: 1, y: 0}}
-              transition={{duration: 0.8, delay: 0.2}}
-              viewport={{once: true}}
-            >
-              <div className='relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden border border-wviolet-100 dark:border-wviolet-900'>
-                {/* Mock Interface */}
-                <div className='p-6 border-b border-gray-100 dark:border-gray-800'>
-                  <div className='flex items-center space-x-3'>
-                    <div className='w-3 h-3 bg-red-400 rounded-full'></div>
-                    <div className='w-3 h-3 bg-yellow-400 rounded-full'></div>
-                    <div className='w-3 h-3 bg-green-400 rounded-full'></div>
-                  </div>
-                </div>
-
-                <div className='p-8'>
-                  <div className='space-y-6'>
-                    <div className='flex items-center justify-between'>
-                      <div className='text-sm text-gray-500'>Resume Analysis</div>
-                      <div className='flex items-center space-x-2'>
-                        <div className='w-2 h-2 bg-green-400 rounded-full animate-pulse'></div>
-                        <span className='text-sm text-green-600'>89% Match</span>
-                      </div>
-                    </div>
-
-                    {/* Mock Progress Bars */}
-                    <div className='space-y-4'>
-                      <div>
-                        <div className='flex justify-between text-sm mb-2'>
-                          <span>Leadership Experience</span>
-                          <span className='text-wviolet-600'>95%</span>
-                        </div>
-                        <div className='w-full bg-gray-200 rounded-full h-2'>
-                          <motion.div
-                            className='bg-gradient-to-r from-wviolet-500 to-wviolet-600 h-2 rounded-full'
-                            initial={{width: 0}}
-                            whileInView={{width: '95%'}}
-                            transition={{duration: 1.5, delay: 0.5}}
-                            viewport={{once: true}}
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <div className='flex justify-between text-sm mb-2'>
-                          <span>Strategic Keywords</span>
-                          <span className='text-sunset-600'>87%</span>
-                        </div>
-                        <div className='w-full bg-gray-200 rounded-full h-2'>
-                          <motion.div
-                            className='bg-gradient-to-r from-sunset-500 to-sunset-600 h-2 rounded-full'
-                            initial={{width: 0}}
-                            whileInView={{width: '87%'}}
-                            transition={{duration: 1.5, delay: 0.7}}
-                            viewport={{once: true}}
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <div className='flex justify-between text-sm mb-2'>
-                          <span>Impact Metrics</span>
-                          <span className='text-wviolet-600'>92%</span>
-                        </div>
-                        <div className='w-full bg-gray-200 rounded-full h-2'>
-                          <motion.div
-                            className='bg-gradient-to-r from-wviolet-500 to-wviolet-600 h-2 rounded-full'
-                            initial={{width: 0}}
-                            whileInView={{width: '92%'}}
-                            transition={{duration: 1.5, delay: 0.9}}
-                            viewport={{once: true}}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <motion.div
-                      className='bg-gradient-to-r from-wviolet-50 to-sunset-50 dark:from-wviolet-950/50 dark:to-sunset-950/50 rounded-lg p-4'
-                      initial={{opacity: 0, scale: 0.95}}
-                      whileInView={{opacity: 1, scale: 1}}
-                      transition={{duration: 0.5, delay: 1.2}}
-                      viewport={{once: true}}
-                    >
-                      <div className='flex items-start space-x-3'>
-                        <Sparkles className='w-5 h-5 text-wviolet-600 mt-0.5' />
-                        <div>
-                          <h4 className='font-semibold text-sm mb-1'>AI Recommendation</h4>
-                          <p className='text-sm text-gray-600 dark:text-gray-300'>
-                            Reframe "Managed marketing team" as "Led high-performing marketing team
-                            to execute integrated campaigns, driving 15% MQL increase YoY"
-                          </p>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating elements */}
-              <motion.div
-                className='absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-br from-wviolet-400 to-wviolet-600 rounded-full'
-                animate={{y: [0, -10, 0]}}
-                transition={{duration: 3, repeat: Infinity}}
-              />
-              <motion.div
-                className='absolute -bottom-6 -left-6 w-6 h-6 bg-gradient-to-br from-sunset-400 to-sunset-600 rounded-full'
-                animate={{y: [0, 10, 0]}}
-                transition={{duration: 4, repeat: Infinity}}
-              />
-            </motion.div>
+          <div className='overflow-hidden rounded-lg border border-night-700 bg-night-900'>
+            <Image
+              src={demoGif}
+              alt='Terminal dashboard showing scored job applications grouped by status'
+              className='h-auto w-full'
+              priority
+              unoptimized
+            />
           </div>
         </div>
       </section>
 
-      {/* Social Proof / Testimonials Section */}
-      <section id='testimonials' className='relative z-10 py-24 px-6'>
-        <div className='max-w-7xl mx-auto'>
-          <AnimatedText className='text-center mb-16'>
-            <h2 className='text-4xl md:text-5xl font-bold mb-6'>
-              An honest take
-            </h2>
-            <p className='text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto'>
-              No fabricated testimonials. Here's what this project is, what it isn't, and who it's for.
-            </p>
-          </AnimatedText>
-
-          <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
-            {/* What it is */}
-            <FloatingCard delay={0.2}>
-              <CardContent className='p-8'>
-                <div className='text-xs uppercase tracking-widest text-wviolet-600 dark:text-wviolet-400 mb-3 font-semibold'>
-                  What it is
-                </div>
-                <h3 className='text-xl font-bold mb-4'>An MIT-licensed pipeline a single person can run.</h3>
-                <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>
-                  Forked from <a className='underline underline-offset-4 hover:text-wviolet-600' href='https://github.com/santifer/career-ops'>santifer/career-ops</a>.
-                  Built in public. The evaluator prompt, scoring rubric, portal scanner, and
-                  dashboard are all in the repo. Bring your own LLM key (or skip the LLM
-                  bits entirely).
-                </p>
-              </CardContent>
-            </FloatingCard>
-
-            {/* What it isn't */}
-            <FloatingCard delay={0.4}>
-              <CardContent className='p-8'>
-                <div className='text-xs uppercase tracking-widest text-sunset-600 dark:text-sunset-400 mb-3 font-semibold'>
-                  What it isn't
-                </div>
-                <h3 className='text-xl font-bold mb-4'>Not a SaaS. Not a black box. Not a job board.</h3>
-                <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>
-                  No account, no upload, no auto-submit, no queue, no vector DB. The model
-                  scores and drafts; you read the diff and decide what to send. Nothing
-                  ever leaves your laptop unless you push it there yourself.
-                </p>
-              </CardContent>
-            </FloatingCard>
-
-            {/* Who it's for */}
-            <FloatingCard delay={0.6}>
-              <CardContent className='p-8'>
-                <div className='text-xs uppercase tracking-widest text-wviolet-600 dark:text-wviolet-400 mb-3 font-semibold'>
-                  Who it's for
-                </div>
-                <h3 className='text-xl font-bold mb-4'>Mid- and senior-career people who like to read the source.</h3>
-                <p className='text-gray-700 dark:text-gray-300 leading-relaxed'>
-                  If you've been burned by resume tools that hide their prompt and want a
-                  pipeline you can audit, edit, and own — this is built for that. Comfortable
-                  with a terminal helps; not required (there's a <code className='font-mono text-sm'>/admin</code> view).
-                </p>
-              </CardContent>
-            </FloatingCard>
-          </div>
-
-          {/* Trust Indicators */}
-          <AnimatedText delay={0.8} className='text-center mt-16'>
-            <div className='flex flex-col md:flex-row items-center justify-center gap-3 md:gap-8 opacity-70'>
-              <span className='text-sm text-gray-500'>Built in public:</span>
-              <div className='flex items-center gap-6 text-sm'>
-                <a className='font-semibold text-gray-500 hover:text-wviolet-600 underline-offset-4 hover:underline' href='https://github.com/wranngle/career_architect'>
-                  github.com/wranngle/career_architect
-                </a>
-                <span className='text-gray-400'>MIT license</span>
-                <a className='font-semibold text-gray-500 hover:text-wviolet-600 underline-offset-4 hover:underline' href='https://github.com/santifer/career-ops'>
-                  fork of santifer/career-ops
-                </a>
-              </div>
-            </div>
-          </AnimatedText>
-        </div>
-      </section>
-
-      {/* Final CTA Section */}
-      <section className='relative z-10 py-24 px-6 bg-gradient-to-br from-sunset-600 to-wviolet-600'>
-        <div className='max-w-4xl mx-auto text-center'>
-          <AnimatedText>
-            <h2 className='text-4xl md:text-6xl font-bold text-white mb-6'>
-              Read the code. Run it locally. Fork it.
-            </h2>
-          </AnimatedText>
-
-          <AnimatedText delay={0.2}>
-            <p className='text-xl md:text-2xl text-white/90 mb-8'>
-              MIT licensed. No account, no upload, no surprises.
-            </p>
-          </AnimatedText>
-
-          <AnimatedText delay={0.4} className='mb-12'>
-            <MagneticButton className='bg-white text-wviolet-600 hover:bg-gray-50 shadow-xl'>
-              <Award className='w-5 h-5 mr-2' />
-              Open the repo
-              <ArrowRight className='w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform' />
-            </MagneticButton>
-          </AnimatedText>
-
-          <AnimatedText delay={0.6}>
-            <p className='text-white/70 text-sm'>
-              github.com/wranngle/career_architect · MIT license · prereqs: Node ≥18, Go ≥1.21, Python ≥3.11
-            </p>
-          </AnimatedText>
-        </div>
-
-        {/* Background Elements */}
-        <div className='absolute inset-0 overflow-hidden'>
-          <motion.div
-            className='absolute top-20 left-20 w-2 h-2 bg-white/30 rounded-full'
-            animate={{scale: [1, 1.5, 1], opacity: [0.3, 0.6, 0.3]}}
-            transition={{duration: 4, repeat: Infinity}}
-          />
-          <motion.div
-            className='absolute top-40 right-32 w-3 h-3 bg-white/20 rounded-full'
-            animate={{scale: [1, 1.2, 1], opacity: [0.2, 0.5, 0.2]}}
-            transition={{duration: 5, repeat: Infinity, delay: 1}}
-          />
-          <motion.div
-            className='absolute bottom-32 left-1/4 w-1 h-1 bg-white/40 rounded-full'
-            animate={{scale: [1, 2, 1], opacity: [0.4, 0.8, 0.4]}}
-            transition={{duration: 3, repeat: Infinity, delay: 2}}
-          />
-        </div>
-      </section>
-
-      {/* Maker blurb — built by Cody Arnold. */}
-      <section className='relative z-10 py-20 px-6 bg-white dark:bg-gray-950'>
-        <div className='max-w-5xl mx-auto'>
-          {(() => {
-            const linkClass
-              = 'inline-flex items-center gap-1.5 font-semibold text-wviolet-700'
-              + ' dark:text-wviolet-300 hover:text-wviolet-900 dark:hover:text-wviolet-100'
-              + ' underline-offset-4 hover:underline';
-            const cardClass
-              = 'rounded-3xl border border-wviolet-100 dark:border-wviolet-900/40'
-              + ' bg-gradient-to-br from-white to-wviolet-50/40'
-              + ' dark:from-gray-900 dark:to-wviolet-950/30 shadow-xl p-8 md:p-12';
+      <section className='border-b border-border bg-card'>
+        <div className='mx-auto grid max-w-7xl gap-8 px-6 py-14 md:grid-cols-3'>
+          {workflow.map(item => {
+            const Icon = item.icon;
             return (
-              <div className={cardClass}>
-                <div className='flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12'>
-                  <div className='flex-shrink-0'>
-                    <div className='relative'>
-                      <div className='absolute inset-0 bg-gradient-to-br from-wviolet-500/30 to-sunset-500/30 rounded-full blur-2xl -z-10' />
-                      <img
-                        src='/cody.jpg'
-                        alt='Cody Arnold'
-                        width={160}
-                        height={160}
-                        className='w-40 h-40 rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-lg'
-                      />
-                    </div>
-                  </div>
-                  <div className='flex-1 text-center md:text-left'>
-                    <div className='text-xs uppercase tracking-widest text-wviolet-600 dark:text-wviolet-400 font-semibold mb-2'>
-                      Built by
-                    </div>
-                    <h3 className='text-2xl md:text-3xl font-bold mb-3'>
-                      Cody Arnold — automation engineer, Fort Wayne, IN
-                    </h3>
-                    <p className='text-gray-700 dark:text-gray-300 leading-relaxed mb-5'>
-                      Ten-plus years building automation across 500+ SMB environments at an MSP, well
-                      before the recent AI hype wave. Now writing agent-first infrastructure
-                      in public — n8n, Python, PowerShell, Vapi, ElevenLabs Conversational AI, RAG.
-                      This pipeline is what I run on my own job search; it's open-sourced so you can
-                      see exactly what's inside the box you're trusting.
-                    </p>
-                    <div className='flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm'>
-                      <a
-                        href='https://github.com/wranngle/career_architect'
-                        className={linkClass}
-                      >
-                        GitHub →
-                      </a>
-                      <a
-                        href='https://linkedin.com/in/codyarnold96'
-                        className={linkClass}
-                      >
-                        LinkedIn →
-                      </a>
-                      <a
-                        href='mailto:cody@wranngle.com'
-                        className={linkClass}
-                      >
-                        cody@wranngle.com
-                      </a>
-                    </div>
-                  </div>
-                </div>
+              <div key={item.title} className='border-l border-border pl-5'>
+                <Icon className='mb-4 h-5 w-5 text-primary' aria-hidden />
+                <h2 className='font-display text-xl font-semibold tracking-tight'>
+                  {item.title}
+                </h2>
+                <p className='mt-3 text-sm leading-relaxed text-muted-foreground'>
+                  {item.body}
+                </p>
               </div>
             );
-          })()}
+          })}
         </div>
       </section>
 
-      {/* Footer — surfaces both the web admin demo and the terminal dashboard. */}
-      <footer className='bg-night-950 border-t border-night-800 text-sand-50'>
-        <div className='max-w-7xl mx-auto px-6 py-10 grid gap-8 md:grid-cols-3'>
+      <section className='border-b border-border'>
+        <div className='mx-auto grid max-w-7xl gap-10 px-6 py-14 lg:grid-cols-[0.9fr_1.1fr]'>
           <div>
-            <div className='font-display text-xl font-semibold tracking-tight'>
-              Career Architect
-            </div>
-            <p className='mt-2 text-sm text-sand-200/80 max-w-xs'>
-              Open-source AI job-search pipeline. Evaluate, tailor, scan, track —
-              all from your terminal or browser.
+            <h2 className='font-display text-3xl font-semibold tracking-tight'>
+              The useful surface is the file tree.
+            </h2>
+            <p className='mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground'>
+              The scripts write reports to <code className='font-mono'>reports/</code>,
+              CV variants to <code className='font-mono'>output/</code>, pending URLs
+              to <code className='font-mono'>data/pipeline.md</code>, and tracker rows
+              to <code className='font-mono'>data/applications.md</code>.
             </p>
           </div>
-          <div>
-            <div className='text-xs uppercase tracking-widest text-sand-300/70 mb-2'>
-              Try it
+          <div className='rounded-lg border border-border bg-card p-5'>
+            <div className='mb-4 flex items-center gap-2 text-sm font-medium'>
+              <Terminal className='h-4 w-4 text-primary' aria-hidden />
+              Common commands
             </div>
-            <ul className='space-y-1.5 text-sm'>
-              <li>
-                <a
-                  href='/admin'
-                  className='text-sand-50 hover:text-sunset-300 underline-offset-4 hover:underline'
-                >
-                  Admin demo (/admin) →
-                </a>
-              </li>
-              <li>
-                <a
-                  href='https://github.com/wranngle/career_architect#dashboard'
-                  className='text-sand-50 hover:text-sunset-300 underline-offset-4 hover:underline'
-                >
-                  Terminal dashboard (Go) →
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <div className='text-xs uppercase tracking-widest text-sand-300/70 mb-2'>
-              Source
-            </div>
-            <ul className='space-y-1.5 text-sm'>
-              <li>
-                <a
-                  href='https://github.com/wranngle/career_architect'
-                  className='text-sand-50 hover:text-sunset-300 underline-offset-4 hover:underline'
-                >
-                  github.com/wranngle/career_architect
-                </a>
-              </li>
-              <li className='text-sand-300/70 text-xs'>
-                Forked from{' '}
-                <a
-                  href='https://github.com/santifer/career-ops'
-                  className='text-sand-200/80 hover:text-sunset-300 underline-offset-4 hover:underline'
-                >
-                  santifer/career-ops
-                </a>
-              </li>
-            </ul>
+            <dl className='divide-y divide-border'>
+              {commands.map(([command, description]) => (
+                <div key={command} className='grid gap-2 py-3 sm:grid-cols-[12rem_1fr]'>
+                  <dt className='font-mono text-sm text-foreground'>{command}</dt>
+                  <dd className='text-sm text-muted-foreground'>{description}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
-        <div className='border-t border-night-800 px-6 py-4 text-center text-xs text-sand-300/60'>
-          MIT licensed. Data shown in /admin is synthetic.
+      </section>
+
+      <section className='border-b border-border bg-card'>
+        <div className='mx-auto grid max-w-7xl gap-8 px-6 py-14 lg:grid-cols-[0.8fr_1.2fr]'>
+          <h2 className='font-display text-3xl font-semibold tracking-tight'>
+            Sharp boundaries beat fake automation.
+          </h2>
+          <ul className='grid gap-3 text-sm leading-relaxed text-muted-foreground'>
+            {boundaries.map(boundary => (
+              <li key={boundary} className='flex gap-3'>
+                <span className='mt-2 h-1.5 w-1.5 shrink-0 rounded-sm bg-primary' />
+                <span>{boundary}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <footer className='bg-night-950 text-sand-50'>
+        <div className='mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-sm md:flex-row md:items-center md:justify-between'>
+          <p className='text-sand-200'>
+            MIT licensed. Forked from santifer/career-ops.
+          </p>
+          <div className='flex flex-wrap gap-4'>
+            <a className='hover:text-sunset-300' href='/admin'>Admin demo</a>
+            <a
+              className='hover:text-sunset-300'
+              href='https://github.com/wranngle/career_architect'
+            >
+              GitHub
+            </a>
+            <a
+              className='hover:text-sunset-300'
+              href='https://github.com/santifer/career-ops'
+            >
+              Upstream
+            </a>
+          </div>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }

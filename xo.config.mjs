@@ -3,10 +3,8 @@
 // Note: XO's config-discovery (cosmiconfig) stops at the first match, so
 // `package.json#xo` would shadow this file. Keep XO config in this file only.
 //
-// Project-wide rule disables (false positives for this Next.js + bundler setup),
-// then targeted file-level disables for the canvas/animation modules where
-// XO's TS-resolver mis-infers any-typed values. `tsc --noEmit` remains the
-// authoritative type-safety gate.
+// Project-wide rule disables for this Next.js + bundler setup, plus a small
+// file-level parser false-positive override for the sample data helper.
 
 /** @type {import('xo').FlatXoConfig} */
 const config = [
@@ -32,6 +30,9 @@ const config = [
       'unicorn/prevent-abbreviations': 'off',
       // tsconfig target is es2017; toSorted/replaceAll are es2023
       'unicorn/no-array-sort': 'off',
+      'unicorn/prefer-string-replace-all': 'off',
+      // tsconfig target is es2017; RegExp v flag requires es2024
+      'require-unicode-regexp': 'off',
       // Reduce is fine for typed accumulator patterns; readability call
       'unicorn/no-array-reduce': 'off',
       // String.fromCharCode is fine for BMP code points
@@ -41,17 +42,6 @@ const config = [
     },
   },
   // File-level overrides
-  {
-    files: ['src/components/ui/extreme-effects.tsx'],
-    rules: {
-      // useMemo + canvas particle objects: XO TS-resolver widens to any,
-      // but tsc --noEmit is clean. Real type safety is enforced by tsc.
-      '@typescript-eslint/no-unsafe-member-access': 'off',
-      '@typescript-eslint/no-unsafe-argument': 'off',
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/restrict-plus-operands': 'off',
-    },
-  },
   {
     files: ['src/lib/sample-data.ts'],
     rules: {

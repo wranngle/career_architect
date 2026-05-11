@@ -8,11 +8,9 @@ import {
 } from 'lucide-react';
 import {
   buildProfileReadinessMetrics,
-  sampleProfileSignals,
-  samplePublicSurfaceChecks,
-  sampleRoleVocabularyRows,
   type ProfileSignalStatus,
 } from '@/lib/sample-data';
+import {getProfileReadiness} from '@/lib/career-data';
 import {Bar, MetricTile} from '@/components/admin/metric-tile';
 import {cn} from '@/lib/utils';
 
@@ -29,24 +27,24 @@ const STATUS_LABELS: Record<ProfileSignalStatus, string> = {
 };
 
 export default function ProfileReadinessPage() {
-  const metrics = buildProfileReadinessMetrics();
-  const blockers = sampleProfileSignals.filter(signal => signal.status === 'blocked');
-  const watchItems = sampleProfileSignals.filter(signal => signal.status === 'watch');
+  const readiness = getProfileReadiness();
+  const metrics = buildProfileReadinessMetrics(readiness.signals);
+  const blockers = readiness.signals.filter(signal => signal.status === 'blocked');
+  const watchItems = readiness.signals.filter(signal => signal.status === 'watch');
 
   return (
     <div className='flex flex-col gap-8 pt-2'>
       <header className='flex flex-col gap-2'>
         <div className='flex items-center gap-2 text-sm font-medium text-primary'>
           <ShieldCheck className='h-4 w-4' aria-hidden />
-          Public-safe profile system
+          Local setup checks
         </div>
         <h1 className='font-display text-3xl font-semibold tracking-tight'>
           Profile readiness
         </h1>
         <p className='max-w-3xl text-sm leading-relaxed text-muted-foreground'>
-          Deprivatized signal map for keeping the CV, LinkedIn profile,
-          portfolio, GitHub, and application answers precise, coherent, and
-          hiring-manager legible.
+          Computed from the local CV, profile config, scanner config, and
+          personalization files. Source: {readiness.source}.
         </p>
       </header>
 
@@ -60,7 +58,7 @@ export default function ProfileReadinessPage() {
         <MetricTile
           label='Public safe'
           value={`${metrics.publicSafe}/${metrics.total}`}
-          hint='synthetic profile signals'
+          hint='local setup signals'
           accent='secondary'
         />
         <MetricTile
@@ -71,7 +69,7 @@ export default function ProfileReadinessPage() {
         />
         <MetricTile
           label='Vocabulary rows'
-          value={sampleRoleVocabularyRows.length}
+          value={readiness.roleVocabularyRows.length}
           hint='target-role language map'
           accent='primary'
         />
@@ -97,12 +95,12 @@ export default function ProfileReadinessPage() {
           </div>
 
           <ul className='divide-y divide-border'>
-            {sampleProfileSignals.map(signal => (
+            {readiness.signals.map(signal => (
               <li key={signal.id} className='grid gap-3 py-4 first:pt-0 last:pb-0 md:grid-cols-[1fr_9rem]'>
                 <div className='min-w-0'>
                   <div className='flex flex-wrap items-center gap-2'>
                     <h3 className='font-medium text-foreground'>{signal.label}</h3>
-                    <span className='rounded-md bg-muted px-2 py-0.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground'>
+                    <span className='rounded-md bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground'>
                       {signal.category}
                     </span>
                   </div>
@@ -171,7 +169,7 @@ export default function ProfileReadinessPage() {
             </h2>
           </div>
           <ul className='divide-y divide-border'>
-            {samplePublicSurfaceChecks.map(check => (
+            {readiness.publicSurfaceChecks.map(check => (
               <li key={check.surface} className='py-4 first:pt-0 last:pb-0'>
                 <div className='flex flex-wrap items-center justify-between gap-3'>
                   <h3 className='font-medium text-foreground'>{check.surface}</h3>
@@ -198,20 +196,20 @@ export default function ProfileReadinessPage() {
           <div className='overflow-x-auto'>
             <table className='min-w-full text-left text-sm'>
               <thead>
-                <tr className='border-b border-border text-xs uppercase tracking-wider text-muted-foreground'>
+                <tr className='border-b border-border text-xs text-muted-foreground'>
                   <th className='pb-3 pr-4 font-medium'>Employer language</th>
                   <th className='pb-3 pr-4 font-medium'>Profile phrase</th>
                   <th className='pb-3 font-medium'>Evidence</th>
                 </tr>
               </thead>
               <tbody className='divide-y divide-border'>
-                {sampleRoleVocabularyRows.map(row => (
+                {readiness.roleVocabularyRows.map(row => (
                   <tr key={row.employerLanguage} className='align-top'>
                     <td className='py-3 pr-4 font-medium text-foreground'>
                       {row.employerLanguage}
                       {row.priority === 'core'
                         ? (
-                          <span className='ml-2 rounded-md bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary'>
+                          <span className='ml-2 rounded-md bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary'>
                             Core
                           </span>
                         )
@@ -238,7 +236,7 @@ function StatusBadge({status}: {status: ProfileSignalStatus}) {
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-pill px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+        'inline-flex items-center gap-1.5 rounded-md px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset',
         STATUS_CLASSES[status],
       )}
     >

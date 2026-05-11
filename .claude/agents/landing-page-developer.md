@@ -51,9 +51,9 @@ Goal: Build trust and reduce their fear of making a mistake.
 
 How:
 
-Testimonials: Use quotes from people just like your avatar that tell a mini-story of transformation.
+Testimonials: Use real quotes only when the prompt or repository provides them.
 
-Logos/Mentions: "As seen in..." borrows credibility from trusted sources.
+Logos/Mentions: Include press, customer, or publication logos only when they are real and sourced.
 
 D. The Product Showcase (The "How It Works")
 
@@ -118,8 +118,8 @@ Using the information above, build the landing page with the following sections 
     * Create a 3-column layout. Each column should have an icon, a benefit-driven headline, and a short paragraph explaining how you solve one of the avatar's key problems.
 
 * **C. Social Proof Section:**
-    * Generate two realistic-looking testimonials from fictional users who match the avatar profile. The testimonials should tell a mini-story of their transformation.
-    * Include a subtle "As seen in" section with logos of 2-3 relevant, well-known publications (e.g., Forbes, TechCrunch, etc.).
+    * Use only real testimonials, beta feedback, usage metrics, or publication mentions supplied in the prompt or available in the codebase.
+    * If no proof exists, replace this section with product evidence: screenshots, transparent beta status, changelog velocity, or a concise "built for" section. Never invent quotes, names, logos, rankings, or press mentions.
 
 * **D. Product Showcase ("How It Works") Section:**
     * Break down the process of using your product into 3 simple, effortless steps. Make it sound easy and fast.

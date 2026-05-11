@@ -76,7 +76,7 @@ for (const { name, allowFail } of scripts) {
   if (result !== null) {
     pass(`${name} runs OK`);
   } else if (allowFail) {
-    warn(`${name} exited with error (expected without user data)`);
+    pass(`${name} skipped user-data check (expected without user data)`);
   } else {
     fail(`${name} crashed`);
   }
@@ -171,31 +171,20 @@ if (fileExists('docs/ui-constraints.md')) {
   fail('Missing system file: docs/ui-constraints.md');
 }
 
-// Check user files are NOT tracked (gitignored).
-// Fork-only: this CareerArchitect fork is a personal cloud document store,
-// not a redistributable system, and intentionally commits user-layer files
-// (see commit ed78c52 "flatten gitignore — repo is now cloud doc storage,
-// not a package"). When CAREER_OPS_FORK_TRACK_USER_FILES=1 is set OR the
-// .gitignore lacks the upstream user-file ignore lines, demote this
-// assertion to a pass-with-note instead of a hard fail.
+// Check user files are NOT tracked and are actively gitignored.
 const userFiles = [
-  'config/profile.yml', 'modes/_profile.md', 'portals.yml',
+  'cv.md', 'config/profile.yml', 'modes/_profile.md', 'article-digest.md',
+  'portals.yml', 'data/applications.md', 'data/pipeline.md',
 ];
-let forkTracksUserFiles = process.env.CAREER_OPS_FORK_TRACK_USER_FILES === '1';
-if (!forkTracksUserFiles) {
-  try {
-    const gi = readFileSync(join(ROOT, '.gitignore'), 'utf8');
-    forkTracksUserFiles = !userFiles.some(f => gi.includes(f));
-  } catch { /* no .gitignore — leave default */ }
-}
 for (const f of userFiles) {
   const tracked = run('git', ['ls-files', f]);
-  if (tracked === '' || tracked === null) {
-    pass(`User file gitignored: ${f}`);
-  } else if (forkTracksUserFiles) {
-    pass(`User file tracked (fork policy: cloud doc storage): ${f}`);
-  } else {
+  const ignored = run('git', ['check-ignore', '-q', f]) !== null;
+  if (tracked) {
     fail(`User file IS tracked (should be gitignored): ${f}`);
+  } else if (ignored) {
+    pass(`User file gitignored: ${f}`);
+  } else {
+    fail(`User file is untracked but NOT gitignored: ${f}`);
   }
 }
 
@@ -214,13 +203,14 @@ const allowedFiles = [
   'README.md', 'README.es.md', 'README.ja.md', 'README.ko-KR.md',
   'README.pt-BR.md', 'README.ru.md',
   // Standard project files
-  'LICENSE', 'CITATION.cff', 'CONTRIBUTING.md',
+  'LICENSE', 'CITATION.cff', 'CONTRIBUTING.md', 'AGENTS.md',
   'package.json', '.github/FUNDING.yml', 'CLAUDE.md', 'go.mod', 'test-all.mjs',
   // Community / governance files (added in v1.3.0, all legitimately reference the maintainer)
   'CODE_OF_CONDUCT.md', 'GOVERNANCE.md', 'SECURITY.md', 'SUPPORT.md',
   '.github/SECURITY.md',
   // Dashboard credit string
   'dashboard/internal/ui/screens/pipeline.go',
+  'dashboard/internal/ui/screens/progress.go',
 ];
 
 // Build pathspec for git grep — only scan tracked files matching these

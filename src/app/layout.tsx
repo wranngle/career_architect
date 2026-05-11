@@ -1,8 +1,23 @@
 import type {Metadata, Viewport} from 'next';
-import {Inter} from 'next/font/google';
+import {
+  Bricolage_Grotesque,
+  Inter,
+  JetBrains_Mono,
+} from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({subsets: ['latin']});
+const display = Bricolage_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-display',
+});
+const body = Inter({
+  subsets: ['latin'],
+  variable: '--font-body',
+});
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+});
 
 export const metadata: Metadata = {
   title: 'Career Architect — an open-source job-search pipeline you can read',
@@ -24,7 +39,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${display.variable} ${body.variable} ${mono.variable}`}>
         {children}
       </body>
     </html>

@@ -18,7 +18,7 @@ export function StatusBadge({status}: {status: Status}) {
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-pill px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+        'inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset',
         STATUS_CLASSES[status],
       )}
     >

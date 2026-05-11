@@ -1,23 +1,29 @@
 # wranngle/career_architect — minimal gitignore
 #
-# This repo is treated as cloud document storage, not a deployable
-# package. Everything that's "work product" gets committed and pushed
-# so it survives ephemeral Claude Code on the web sessions.
+# Keep generated and user-specific career data out of new commits. The public
+# repo should ship the pipeline, templates, and examples, not a user's search.
 #
-# Only THREE categories are excluded:
+# Excluded categories:
 #   1. Secrets that would be auto-scanned and burned if public
 #   2. Regeneratable build artifacts too large to track usefully
 #   3. Transient runtime state (locks, pids) that have no value at rest
+#   4. User-layer career data and generated work product
 
 # 1 — Secrets (DO NOT COMMIT)
-# Repo is going public — restored upstream's .env-ignore policy.
-# User-data files (cv.md, config/profile.yml, modes/_profile.md,
-# article-digest.md, portals.yml, data/applications.md, data/pipeline.md,
-# reports/*.md, output/*.pdf, jds/*.md, interview-prep/*) remain tracked
-# from the prior cloud-doc-storage policy era. Re-add them here if you
-# want them out of new commits — they'll still be in history.
 .env
 .env.*
+
+# User layer (see DATA_CONTRACT.md)
+cv.md
+config/profile.yml
+modes/_profile.md
+article-digest.md
+portals.yml
+data/
+reports/
+output/
+jds/
+interview-prep/
 
 # 2 — Regeneratable build artifacts
 node_modules/

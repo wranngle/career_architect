@@ -5,10 +5,11 @@ progress). Inherited from upstream
 [`santifer/career-ops`](https://github.com/santifer/career-ops) — see the root
 [`UPSTREAM.md`](../UPSTREAM.md) for attribution detail.
 
-> **Web equivalent.** The same data model is rendered for the web at
+> **Related web view.** The local files are rendered for the web at
 > [`/admin`](../src/app/admin) on the deployed Next.js site. Same surfaces:
-> Pipeline, Progress, Scans. Use whichever fits the task — they share the same
-> tracker.md / reports/ data layer.
+> Pipeline, Progress, Scans. Use whichever fits the task. The TUI reads
+> `applications.md` or `data/applications.md`; the web view reads
+> `data/applications.md` when present and clearly marks sample fallback data.
 
 ## Build & run
 
@@ -44,7 +45,8 @@ and the vendored [`tokens/tokens.css`](../tokens/tokens.css).
 
 ## Data
 
-The TUI reads tracker.md and `reports/` directly off disk. It does not write
-back. State changes (e.g. status updates via `c`) are persisted by re-writing
-tracker.md atomically. See `dashboard/internal/data/career.go` for the parsing
-and serialization layer.
+The TUI reads `applications.md` or `data/applications.md`, plus `reports/`,
+directly off disk. It does not write back except for explicit state changes
+(e.g. status updates via `c`), which are persisted by re-writing the tracker
+atomically. See `dashboard/internal/data/career.go` for the parsing and
+serialization layer.
