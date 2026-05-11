@@ -16,9 +16,8 @@ categories.
 > ATS quality bar, the MCP troubleshooting docs, the 5-tier search
 > ladder) live as a separate, MIT-licensed public repo:
 > **[wranngle/CareerArchitect](https://github.com/wranngle/CareerArchitect)**
-> *(after the rename — see `BRANCHES (status)` below)*. That repo has
-> zero personal data; this one is my personal working tree and contains
-> my CV, profile, and application history.
+> *(after the rename — see `BRANCHES (status)` below)*. Keep personal search
+> data in the gitignored user-layer files described in `DATA_CONTRACT.md`.
 
 ## Why a fork
 
@@ -55,6 +54,7 @@ npm run doctor                          # validates the environment
 
 # Config
 cp config/profile.example.yml config/profile.yml
+cp modes/_profile.template.md modes/_profile.md
 cp templates/portals.example.yml portals.yml
 # Optional: append sections from templates/portals.extensions.yml
 #           into portals.yml for non-AI board coverage.
@@ -86,12 +86,11 @@ npm run dev
 # then open http://localhost:3000/admin
 ```
 
-Renders the same Pipeline / Progress / Scans screens as the Go TUI, plus a
-public-safe Profile readiness view for cross-surface CV, LinkedIn, portfolio,
-GitHub, and application-answer coherence. All screens use synthetic
-placeholder data so reviewers can poke around without a tracker.md on disk.
-See [`src/app/admin/`](./src/app/admin) and the demo banner at the top of
-every admin page for the framing.
+Renders Pipeline / Progress / Scans screens and a Profile readiness view. It
+reads local career-ops files when they exist and falls back to clearly marked
+sample data when the tracker is not initialized. See
+[`src/app/admin/`](./src/app/admin) and the data banner at the top of every
+admin page for the framing.
 
 ### Terminal (Go TUI)
 
@@ -101,7 +100,8 @@ cd dashboard && go build -o ../career-dashboard ./...
 ```
 
 See [`dashboard/README.md`](./dashboard/README.md) for full theme + flag
-reference. The TUI reads tracker.md and `reports/` directly off disk.
+reference. The TUI reads `applications.md` / `data/applications.md` and
+`reports/` directly off disk.
 
 ## Design tokens
 

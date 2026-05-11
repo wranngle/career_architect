@@ -1,11 +1,12 @@
 import {
   buildProgressMetrics,
-  sampleApplications,
 } from '@/lib/sample-data';
+import {getApplications} from '@/lib/career-data';
 import {Bar, MetricTile} from '@/components/admin/metric-tile';
 
 export default function AdminProgressPage() {
-  const m = buildProgressMetrics(sampleApplications);
+  const applications = getApplications();
+  const m = buildProgressMetrics(applications.items);
   const maxBucket = Math.max(...m.scoreBuckets.map(b => b.count), 1);
   const maxWeekly = Math.max(...m.weeklyActivity.map(w => w.count), 1);
 
@@ -16,10 +17,7 @@ export default function AdminProgressPage() {
           Progress
         </h1>
         <p className='text-sm text-muted-foreground'>
-          Funnel, score distribution, and weekly activity. Mirrors the Go TUI&apos;s
-          progress screen (
-          <code className='font-mono text-xs'>dashboard/internal/ui/screens/progress.go</code>
-          ).
+          Funnel, score distribution, and weekly activity. Source: {applications.source}.
         </p>
       </header>
 

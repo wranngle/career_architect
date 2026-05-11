@@ -1,9 +1,9 @@
+/* Wranngle design tokens (mirrored from gtm_ops/tokens; generated from DESIGN.md). */
+@import "../../tokens/tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Wranngle design tokens (mirrored from gtm_ops/tokens — generated from DESIGN.md). */
-@import "../../tokens/tokens.css";
 
 @layer base {
   /* shadcn-convention HSL triplets mapped to Wranngle palette. */
@@ -80,7 +80,7 @@
   }
 }
 
-/* Custom scrollbar — branded sunset → violet. */
+/* Custom scrollbar: quiet, neutral, and out of the user's way. */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -90,12 +90,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #ff5f00, #cf3c69);
+  background: hsl(var(--border));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #ef4b00, #b92a56);
+  background: hsl(var(--muted-foreground));
 }
 
 /* Smooth scroll behavior */

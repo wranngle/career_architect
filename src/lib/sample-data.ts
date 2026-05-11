@@ -243,7 +243,7 @@ export type ProgressMetrics = {
 };
 
 export function buildProgressMetrics(apps: CareerApplication[]): ProgressMetrics {
-  const total = apps.length || 1;
+  const total = apps.length;
   const counts = (filter: (a: CareerApplication) => boolean) =>
     apps.filter(app => filter(app)).length;
 
@@ -255,11 +255,11 @@ export function buildProgressMetrics(apps: CareerApplication[]): ProgressMetrics
   const offer = counts(a => a.status === 'offer');
 
   const funnelStages: FunnelStage[] = [
-    {label: 'Evaluated', count: total, pct: 100},
-    {label: 'Applied', count: applied, pct: (applied / total) * 100},
-    {label: 'Responded', count: responded, pct: (responded / total) * 100},
-    {label: 'Interview', count: interview, pct: (interview / total) * 100},
-    {label: 'Offer', count: offer, pct: (offer / total) * 100},
+    {label: 'Evaluated', count: total, pct: total === 0 ? 0 : 100},
+    {label: 'Applied', count: applied, pct: total === 0 ? 0 : (applied / total) * 100},
+    {label: 'Responded', count: responded, pct: total === 0 ? 0 : (responded / total) * 100},
+    {label: 'Interview', count: interview, pct: total === 0 ? 0 : (interview / total) * 100},
+    {label: 'Offer', count: offer, pct: total === 0 ? 0 : (offer / total) * 100},
   ];
 
   const buckets: Array<{label: string; min: number; max: number}> = [

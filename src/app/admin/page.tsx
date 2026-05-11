@@ -3,20 +3,26 @@ import {
   buildPipelineMetrics,
   buildProfileReadinessMetrics,
   buildProgressMetrics,
-  sampleApplications,
-  sampleScans,
 } from '@/lib/sample-data';
+import {
+  getApplications,
+  getProfileReadiness,
+  getScans,
+} from '@/lib/career-data';
 import {MetricTile} from '@/components/admin/metric-tile';
 import {StatusBadge, ScoreChip} from '@/components/admin/status-badge';
 
 export default function AdminOverviewPage() {
-  const metrics = buildPipelineMetrics(sampleApplications);
-  const progress = buildProgressMetrics(sampleApplications);
-  const profile = buildProfileReadinessMetrics();
-  const top = [...sampleApplications]
+  const applications = getApplications();
+  const scans = getScans();
+  const profileData = getProfileReadiness();
+  const metrics = buildPipelineMetrics(applications.items);
+  const progress = buildProgressMetrics(applications.items);
+  const profile = buildProfileReadinessMetrics(profileData.signals);
+  const top = [...applications.items]
     .sort((a, b) => b.score - a.score)
     .slice(0, 5);
-  const lastScan = sampleScans[0];
+  const lastScan = scans.items[0];
 
   return (
     <div className='flex flex-col gap-8 pt-2'>
@@ -25,8 +31,7 @@ export default function AdminOverviewPage() {
           Pipeline overview
         </h1>
         <p className='text-sm text-muted-foreground'>
-          Aggregate snapshot of evaluations, application stages, and recent
-          scans. Same data the Go TUI renders — rendered for the web.
+          Aggregate snapshot of evaluations, application stages, and recent scans.
         </p>
       </header>
 
@@ -66,9 +71,8 @@ export default function AdminOverviewPage() {
               Profile readiness
             </h2>
             <p className='mt-1 text-sm leading-relaxed text-muted-foreground'>
-              Public-safe coherence checks for the CV, LinkedIn profile,
-              portfolio, GitHub, and reusable application answers. Use this
-              before promoting new skills or featuring proof surfaces.
+              Setup checks for the CV, profile config, personalization file,
+              scanner config, and reusable proof points.
             </p>
           </div>
           <div className='flex flex-wrap items-center gap-3'>
@@ -102,23 +106,29 @@ export default function AdminOverviewPage() {
             </Link>
           </div>
           <ul className='divide-y divide-border'>
-            {top.map(app => (
-              <li
-                key={app.number}
-                className='flex items-center gap-4 py-3 first:pt-0 last:pb-0'
-              >
-                <ScoreChip score={app.score} />
-                <div className='flex-1 min-w-0'>
-                  <div className='truncate font-medium text-foreground'>
-                    {app.company}
+            {top.length === 0
+              ? (
+                <li className='py-3 text-sm text-muted-foreground'>
+                  No tracked applications yet.
+                </li>
+              )
+              : top.map(app => (
+                <li
+                  key={app.number}
+                  className='flex items-center gap-4 py-3 first:pt-0 last:pb-0'
+                >
+                  <ScoreChip score={app.score} />
+                  <div className='flex-1 min-w-0'>
+                    <div className='truncate font-medium text-foreground'>
+                      {app.company}
+                    </div>
+                    <div className='truncate text-xs text-muted-foreground'>
+                      {app.role}
+                    </div>
                   </div>
-                  <div className='truncate text-xs text-muted-foreground'>
-                    {app.role}
-                  </div>
-                </div>
-                <StatusBadge status={app.status} />
-              </li>
-            ))}
+                  <StatusBadge status={app.status} />
+                </li>
+              ))}
           </ul>
         </div>
 
@@ -134,28 +144,32 @@ export default function AdminOverviewPage() {
               All scans →
             </Link>
           </div>
-          <dl className='space-y-2 text-sm'>
-            <Row label='ID' value={<span className='font-mono text-xs'>{lastScan.id}</span>} />
-            <Row label='New jobs' value={lastScan.newJobs} />
-            <Row label='Evaluated' value={lastScan.evaluated} />
-            <Row label='Portals' value={lastScan.portalsScanned} />
-            <Row
-              label='Status'
-              value={
-                <span
-                  className={
-                    lastScan.status === 'completed'
-                      ? 'text-sunset-700'
-                      : (lastScan.status === 'partial'
-                        ? 'text-wviolet-700'
-                        : 'text-destructive')
+          {lastScan
+            ? (
+              <dl className='space-y-2 text-sm'>
+                <Row label='ID' value={<span className='font-mono text-xs'>{lastScan.id}</span>} />
+                <Row label='New jobs' value={lastScan.newJobs} />
+                <Row label='Evaluated' value={lastScan.evaluated} />
+                <Row label='Portals' value={lastScan.portalsScanned} />
+                <Row
+                  label='Status'
+                  value={
+                    <span
+                      className={
+                        lastScan.status === 'completed'
+                          ? 'text-sunset-700'
+                          : (lastScan.status === 'partial'
+                            ? 'text-wviolet-700'
+                            : 'text-destructive')
+                      }
+                    >
+                      {lastScan.status}
+                    </span>
                   }
-                >
-                  {lastScan.status}
-                </span>
-              }
-            />
-          </dl>
+                />
+              </dl>
+            )
+            : <p className='text-sm text-muted-foreground'>No scan history yet.</p>}
         </div>
       </section>
     </div>
@@ -165,7 +179,7 @@ export default function AdminOverviewPage() {
 function Row({label, value}: {label: string; value: React.ReactNode}) {
   return (
     <div className='flex items-baseline justify-between gap-4'>
-      <dt className='text-xs uppercase tracking-wider text-muted-foreground'>
+      <dt className='text-xs text-muted-foreground'>
         {label}
       </dt>
       <dd className='font-medium text-foreground'>{value}</dd>

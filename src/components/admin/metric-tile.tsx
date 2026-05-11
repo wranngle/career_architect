@@ -26,7 +26,7 @@ export function MetricTile({
         aria-hidden
       />
       <div className='flex flex-col gap-1.5 pl-2'>
-        <span className='text-xs font-medium uppercase tracking-wider text-muted-foreground'>
+        <span className='text-xs font-medium text-muted-foreground'>
           {label}
         </span>
         <span className='font-display text-3xl font-semibold tabular-nums text-foreground'>
@@ -52,9 +52,9 @@ export function Bar({
   const safe = Math.max(0, Math.min(100, pct));
   const color = variant === 'primary' ? 'bg-primary' : 'bg-wviolet-500';
   return (
-    <div className='h-2 w-full overflow-hidden rounded-pill bg-muted'>
+    <div className='h-2 w-full overflow-hidden rounded-md bg-muted'>
       <div
-        className={cn('h-full rounded-pill', color)}
+        className={cn('h-full rounded-md', color)}
         style={{width: `${safe}%`}}
         aria-valuenow={safe}
         aria-valuemin={0}

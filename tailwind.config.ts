@@ -98,9 +98,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["'Bricolage Grotesque'", "Outfit", "system-ui", "sans-serif"],
-        sans: ["Inter", "system-ui", "sans-serif"],
-        mono: ["'JetBrains Mono'", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        sans: ["var(--font-body)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       borderRadius: {
         // Canonical Wranngle radius scale (DESIGN.md): 4 / 8 / 12 / 16 / 24 / pill.
