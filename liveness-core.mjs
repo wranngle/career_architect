@@ -1,3 +1,6 @@
+import { appendFile, mkdir } from 'fs/promises';
+import { dirname, isAbsolute, resolve } from 'path';
+
 const HARD_EXPIRED_PATTERNS = [
   /job (is )?no longer available/i,
   /job.*no longer open/i,
@@ -72,4 +75,53 @@ export function classifyLiveness({ status = 0, finalUrl = '', bodyText = '', app
   }
 
   return { result: 'uncertain', reason: 'content present but no visible apply control found' };
+}
+
+const DEFAULT_JSONL_PATH = 'logs/liveness.jsonl';
+
+function ecsOutcome(result) {
+  if (result === 'active') return 'success';
+  if (result === 'expired') return 'failure';
+  return 'unknown';
+}
+
+export function buildLivenessEvent({ url, result, reason, status, finalUrl, timestamp } = {}) {
+  const event = {
+    '@timestamp': timestamp ?? new Date().toISOString(),
+    event: {
+      action: 'liveness.check',
+      category: ['web'],
+      kind: 'event',
+      outcome: ecsOutcome(result),
+    },
+    url: { full: url },
+    labels: { liveness_result: result },
+  };
+  if (reason) event.message = reason;
+  if (typeof status === 'number' && status > 0) {
+    event.http = { response: { status_code: status } };
+  }
+  if (finalUrl && finalUrl !== url) {
+    event.url.final = finalUrl;
+  }
+  return event;
+}
+
+export async function appendLivenessEvent(event, { logPath = DEFAULT_JSONL_PATH, cwd = process.cwd() } = {}) {
+  const target = isAbsolute(logPath) ? logPath : resolve(cwd, logPath);
+  await mkdir(dirname(target), { recursive: true });
+  await appendFile(target, JSON.stringify(event) + '\n', 'utf-8');
+  return target;
+}
+
+export async function logLivenessCheck({ url, classification, status, finalUrl, logPath, cwd } = {}) {
+  const event = buildLivenessEvent({
+    url,
+    result: classification?.result,
+    reason: classification?.reason,
+    status,
+    finalUrl,
+  });
+  await appendLivenessEvent(event, { logPath, cwd });
+  return event;
 }
