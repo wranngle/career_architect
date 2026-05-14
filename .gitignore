@@ -25,6 +25,12 @@ output/
 jds/
 interview-prep/
 
+# Test fixtures under tests/ legitimately mirror those names — keep them tracked.
+!tests/fixtures/**/data/
+!tests/fixtures/**/data/**
+!tests/fixtures/**/reports/
+!tests/fixtures/**/reports/**
+
 # 2 — Regeneratable build artifacts
 node_modules/
 .next/
