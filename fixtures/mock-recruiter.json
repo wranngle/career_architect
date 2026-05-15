@@ -1,0 +1,29 @@
+{
+  "company": "acme-corp",
+  "questions": [
+    "Walk me through your last role and the kind of work you owned end-to-end.",
+    "We just shipped a new event-driven pipeline — what's your experience with similar systems?",
+    "How do you decide what to automate vs. leave to a human reviewer?",
+    "Tell me about a time you reduced toil for a team and how you measured the impact.",
+    "Why Acme Corp, and what would the first 90 days look like for you?"
+  ],
+  "scripted_answers": [
+    "Most recent role I owned the GTM ops automation stack — funnel routing, lead enrichment, attribution dashboards — about a 3-person team's worth of work as a solo operator.",
+    "Yes — I've built a few event-driven pipelines on Kafka and n8n. The one I'm proudest of replaced a nightly batch with a 30-second SLA.",
+    "Rule of thumb: if the downside of a wrong decision is recoverable in under an hour, automate; otherwise leave a human in the loop with a queue and audit trail.",
+    "Migrated a 14-step manual handoff into a single Slack-approval workflow. Cut cycle time from 3 days to 6 hours and freed up ~12 hours/week across the team.",
+    "Two reasons. Your recent blog post on the inference cost roadmap maps to work I've been doing on cost-per-conversion modeling, and the org's stage matches where I do my best work — small enough to own scope, big enough to ship to real users."
+  ],
+  "scoring_rubric": {
+    "criteria": [
+      "Specificity (named systems, numbers, scope)",
+      "Relevance to company signal (recon-brief alignment)",
+      "Ownership framing (I did vs. we did vs. they did)",
+      "Risk awareness (tradeoffs acknowledged)",
+      "Closing energy (clear motivation for THIS role)"
+    ],
+    "per_criterion_max": 2,
+    "expected_total": 9,
+    "verdict": "Strong — would advance to hiring manager."
+  }
+}

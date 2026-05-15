@@ -22,7 +22,9 @@
     "liveness": "node check-liveness.mjs",
     "scan": "node scan.mjs",
     "gemini:eval": "node gemini-eval.mjs",
-    "voice-coach": "node voice-coach.mjs"
+    "voice-coach": "node voice-coach.mjs",
+    "rehearse": "node bin/rehearse.mjs",
+    "test:rehearse": "node --test tests/rehearse.test.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
