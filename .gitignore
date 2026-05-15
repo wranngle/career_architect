@@ -79,6 +79,11 @@ data/ranked-*.tsv
 # 5 — Voice-coach provisioning record (per-user agent IDs; written by voice-coach.mjs)
 data/voice-coach-agent.json
 
+# 6 — Rejection-feedback learner ships a seed lessons file; per-user merges still
+# stay under the data/ rule, but the seed itself must travel with the repo so
+# bin/learn-rejection.mjs has something to dedup against on a fresh clone.
+!data/lessons.md
+
 # TypeScript incremental build cache
 *.tsbuildinfo
 tsconfig.tsbuildinfo
