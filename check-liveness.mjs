@@ -16,7 +16,7 @@
 
 import { chromium } from 'playwright';
 import { readFile } from 'fs/promises';
-import { classifyLiveness } from './liveness-core.mjs';
+import { classifyLiveness, logLivenessCheck } from './liveness-core.mjs';
 
 // Greenhouse boards render the JD client-side; the boards-api gives a
 // reliable fast-path to the same data. Try the API first for any
@@ -143,6 +143,11 @@ async function main() {
     if (result === 'active') active++;
     else if (result === 'expired') expired++;
     else uncertain++;
+    try {
+      await logLivenessCheck({ url, classification: { result, reason } });
+    } catch (e) {
+      console.error(`           (jsonl emit failed: ${e.message})`);
+    }
   }
 
   await browser.close();
