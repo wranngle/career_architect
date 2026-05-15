@@ -1,0 +1,35 @@
+{
+  "company": "Acme Corp",
+  "role": "Senior AI Platform Engineer",
+  "location": "Remote (US)",
+  "received_at": "2026-05-12",
+  "compensation": {
+    "base_salary_usd": 180000,
+    "signing_bonus_usd": 20000,
+    "equity": {
+      "type": "RSU",
+      "annual_grant_usd": 60000,
+      "vesting_years": 4,
+      "cliff_months": 12
+    },
+    "annual_bonus_target_pct": 15,
+    "currency": "USD"
+  },
+  "benefits": {
+    "pto_days": 20,
+    "health_premium_coverage_pct": 100,
+    "remote_stipend_usd": 1500,
+    "learning_budget_usd": 2000
+  },
+  "candidate": {
+    "target_base_multiplier": 1.15,
+    "walk_away_base_usd": 175000,
+    "competing_offers": [
+      { "company": "Globex", "base_salary_usd": 195000 }
+    ]
+  },
+  "constraints": {
+    "decision_deadline": "2026-05-23",
+    "non_negotiable": ["fully_remote"]
+  }
+}
