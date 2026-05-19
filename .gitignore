@@ -19,11 +19,17 @@ config/profile.yml
 modes/_profile.md
 article-digest.md
 portals.yml
-data/
+data/*
 reports/
 output/
 jds/
 interview-prep/
+
+# Submit-queue stub is part of the runtime contract (queue-applications.mjs),
+# so it's committed as a tracked file even though the surrounding data/ tree
+# is user-private. Uses data/* (not data/) so this re-include actually fires —
+# git refuses to re-include children of a fully excluded parent directory.
+!data/submit-queue.md
 
 # Test fixtures under tests/ legitimately mirror those names — keep them tracked.
 !tests/fixtures/**/data/
