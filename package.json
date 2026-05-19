@@ -28,7 +28,9 @@
     "tailor": "node bin/tailor.mjs",
     "test:tailor": "node --test tests/tailor.test.mjs",
     "negotiate": "node bin/negotiate.mjs",
-    "test:negotiate": "node --test tests/negotiate.test.mjs"
+    "test:negotiate": "node --test tests/negotiate.test.mjs",
+    "outreach": "node bin/outreach.mjs",
+    "test:outreach": "node --test tests/outreach.test.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",

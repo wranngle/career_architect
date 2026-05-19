@@ -1,0 +1,32 @@
+{
+  "first_name": "Priya",
+  "last_name": "Ramaswamy",
+  "title": "VP of AI Platform",
+  "company": "Helio Labs",
+  "linkedin": "https://www.linkedin.com/in/priya-ramaswamy-helio",
+  "signals": [
+    {
+      "kind": "article",
+      "title": "Why we shipped our agent evals before our agents",
+      "url": "https://helio.dev/blog/evals-first",
+      "published_at": "2026-05-09",
+      "summary": "Helio Labs runs every agent change through a gated eval harness before production rollout."
+    },
+    {
+      "kind": "talk",
+      "title": "Reliability budgets for LLM products",
+      "venue": "AI Engineer Summit",
+      "published_at": "2026-03-12"
+    },
+    {
+      "kind": "github",
+      "repo": "helio-labs/eval-harness",
+      "summary": "Open-source harness for scoring agent runs against a golden trace set.",
+      "last_active": "2026-04-22"
+    }
+  ],
+  "tone_preferences": {
+    "avoid": ["leverage", "synergy", "circle back"],
+    "favor": ["concrete numbers", "1-line pitch"]
+  }
+}

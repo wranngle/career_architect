@@ -1,0 +1,16 @@
+{
+  "title": "Staff AI Reliability Engineer",
+  "company": "Helio Labs",
+  "location": "Remote (US)",
+  "url": "https://helio.dev/careers/staff-ai-reliability-engineer",
+  "summary": "Own the agent evaluation harness and reliability budgets for Helio's customer-facing voice agents. Partner with applied teams to keep p95 latency under 900ms and answer-quality regressions below 1% per release.",
+  "must_have": [
+    "5+ years building production LLM or agent systems",
+    "Hands-on with eval harnesses, golden-trace datasets, regression gates",
+    "Comfort owning on-call rotations for a customer-facing AI surface"
+  ],
+  "nice_to_have": [
+    "Open-source agent or eval tooling contributions",
+    "Experience with Twilio or telephony integrations"
+  ]
+}
