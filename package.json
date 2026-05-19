@@ -30,7 +30,9 @@
     "negotiate": "node bin/negotiate.mjs",
     "test:negotiate": "node --test tests/negotiate.test.mjs",
     "outreach": "node bin/outreach.mjs",
-    "test:outreach": "node --test tests/outreach.test.mjs"
+    "test:outreach": "node --test tests/outreach.test.mjs",
+    "timeline": "node bin/timeline.mjs",
+    "test:timeline": "node --test tests/timeline.test.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
