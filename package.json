@@ -24,7 +24,9 @@
     "gemini:eval": "node gemini-eval.mjs",
     "voice-coach": "node voice-coach.mjs",
     "rehearse": "node bin/rehearse.mjs",
-    "test:rehearse": "node --test tests/rehearse.test.mjs"
+    "test:rehearse": "node --test tests/rehearse.test.mjs",
+    "tailor": "node bin/tailor.mjs",
+    "test:tailor": "node --test tests/tailor.test.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
