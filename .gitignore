@@ -91,3 +91,6 @@ tsconfig.tsbuildinfo
 # Transient bootstrap files
 /logs
 /old
+
+# git_good runtime (per dotfiles doctrine)
+.artifacts/
