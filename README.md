@@ -1,52 +1,47 @@
 # CareerArchitect
 
-A fork of [santifer/career-ops](https://github.com/santifer/career-ops) with
-a Next.js landing page and a few coverage extensions for non-AI job
-categories.
+A fork of [santifer/career-ops](https://github.com/santifer/career-ops),
+an AI job-search toolkit that runs inside Claude Code: score a job
+description against your CV, generate a tailored CV PDF, scan job portals,
+and track applications in plain files.
 
-## Demo
+This fork keeps the upstream pipeline intact and adds:
 
-🎬 _Loom walkthrough coming soon — JD evaluation, tailored CV generation, scanner + tracker flow._
-
-<!-- Replace with: <a href="https://www.loom.com/share/<id>"><img src="https://cdn.loom.com/sessions/thumbnails/<id>-with-play.gif" alt="Career Architect demo"></a> -->
-
-> **Looking for the additive bits as a clean overlay?** The non-personal
-> additions from this fork (the `hydrate` mode, USAJOBS + Google-Jobs-SERP
-> aggregators, the generic external-aggregator pattern for `scan.mjs`, the
-> ATS quality bar, the MCP troubleshooting docs, the 5-tier search
-> ladder) live as a separate, MIT-licensed public repo:
-> **[wranngle/CareerArchitect](https://github.com/wranngle/CareerArchitect)**
-> *(after the rename — see `BRANCHES (status)` below)*. Keep personal search
-> data in the gitignored user-layer files described in `DATA_CONTRACT.md`.
-
-## Why a fork
-
-Upstream Career-Ops is tuned for senior AI/ML engineers searching
-Greenhouse/Ashby/Lever. This fork adds:
-
-- **Non-AI portal coverage** — `templates/portals.extensions.yml` has
-  WebSearch queries for neurodiversity boards (Mentra, Hire Autism,
-  Spectroomz, Exceptional Individuals, abilityJOBS), academic platforms,
-  and international aggregators (Seek, Jora, Bayt, Naukri).
-- **Commute analysis** — `scripts/job-distance-analysis.py` rates each
-  tracked job's distance from every address in your `home_addresses`.
-- **Hard quality filters** — minimum pay, MLM/commission-only exclusions
-  via a new `hard_filters` section in `config/profile.yml`.
-- **ElevenLabs voice job coach** — `npm run voice-coach` provisions a
-  personal Conversational AI agent grounded in your `cv.md` + profile
-  + target JD. Mock interviews, story drilling, JD prep, and
-  negotiation rehearsal by voice. Requires `ELEVENLABS_API_KEY`. See
+- **ElevenLabs voice interview coach** -- `npm run voice-coach` provisions a
+  personal Conversational AI agent on your ElevenLabs workspace, grounded in
+  your `cv.md`, profile, and an optional target JD as a RAG knowledge base.
+  Used for mock interviews, story drilling, JD prep, and negotiation
+  rehearsal by voice. Each run creates a fresh agent and records its id in
+  `data/voice-coach-agent.json`. Requires `ELEVENLABS_API_KEY`. See
   [`modes/voice-coach.md`](./modes/voice-coach.md).
-- **Landing page** — a Next.js site under `src/`, decoupled from the
-  pipeline; keep it, replace it, or delete it.
+- **Non-AI portal queries** -- `templates/portals.extensions.yml` adds
+  WebSearch queries for boards the upstream AI/dev-tool defaults miss:
+  neurodiversity boards (Mentra, Hire Autism, Spectroomz, Exceptional
+  Individuals, abilityJOBS), entry-level remote aggregators, academic
+  platforms, and international boards (Seek, Jora, Bayt, Naukri). Copy the
+  sections you want into your `portals.yml`.
+- **Commute scoring** -- `scripts/job-distance-analysis.py` computes
+  haversine distance from every `home_addresses` entry in your profile to
+  each tracked job location and rates it excellent / acceptable / difficult
+  against `commute_thresholds`. Remote jobs are flagged separately.
+- **Hard filters** -- a `hard_filters` block in `config/profile.yml` (minimum
+  pay, commission-only / MLM exclusions). Jobs that fail are dropped before
+  scoring, not just downscored.
+- **Next.js landing page** -- a site under `src/` with a public landing page
+  and an `/admin` dashboard that reads local career-ops files when present
+  and falls back to clearly marked sample data otherwise. It is decoupled
+  from the pipeline; keep it, replace it, or delete it.
 
-Everything else (`.mjs` utilities, Go dashboard, skill modes, batch
-orchestrator, PDF generation) is upstream verbatim.
+Everything else (the `.mjs` utilities, the Go TUI dashboard, the skill
+modes, the batch orchestrator, PDF generation) is upstream. See
+[`UPSTREAM.md`](./UPSTREAM.md) for the exact port snapshot, what was and was
+not carried over, and the cloud-sandbox runtime workarounds verified in this
+fork.
 
 ## Install
 
 ```bash
-# Prereqs: Node ≥18, Go ≥1.21, Python ≥3.11
+# Prereqs: Node >= 18, Go >= 1.21, Python >= 3.11
 npm install
 npx playwright install chromium
 pip install -r requirements.txt
@@ -66,31 +61,44 @@ cp templates/portals.example.yml portals.yml
 
 ```
 /career-ops                       # show all subcommands
-/career-ops <JD text or URL>      # auto-pipeline: evaluate → PDF → tracker
+/career-ops <JD text or URL>      # auto-pipeline: evaluate -> PDF -> tracker
 /career-ops scan                  # scan all enabled portals
 /career-ops pdf                   # tailor cv.md for one JD, render PDF
 /career-ops tracker               # pipeline status
 /career-ops followup              # flag overdue follow-ups
 ```
 
-Full list: `.claude/skills/career-ops/SKILL.md`.
+Full list: [`.claude/skills/career-ops/SKILL.md`](./.claude/skills/career-ops/SKILL.md).
+
+## Voice interview coach
+
+```bash
+export ELEVENLABS_API_KEY=...   # https://elevenlabs.io/app/settings/api-keys
+
+npm run voice-coach                                     # uses config/profile.yml + cv.md
+npm run voice-coach -- --target-company ElevenLabs \
+                       --target-role "Automations Engineer"
+npm run voice-coach -- --jd reports/some-role.md        # attach a specific JD
+npm run voice-coach -- --dry-run                        # print payload, no API call
+npm run voice-coach -- --demo                           # generic demo, no personal KB
+```
 
 ## Dashboard
 
-Two surfaces, one data model. Use whichever fits the task.
+Two surfaces, one data model.
 
-### Web (`/admin`) — recommended for first look
+### Web (`/admin`)
 
 ```bash
 npm run dev
 # then open http://localhost:3000/admin
 ```
 
-Renders Pipeline / Progress / Scans screens and a Profile readiness view. It
-reads local career-ops files when they exist and falls back to clearly marked
+Renders Pipeline / Progress / Scans and a profile readiness view. It reads
+local career-ops files when they exist and falls back to clearly marked
 sample data when the tracker is not initialized. See
 [`src/app/admin/`](./src/app/admin) and the data banner at the top of every
-admin page for the framing.
+admin page.
 
 ### Terminal (Go TUI)
 
@@ -99,48 +107,14 @@ cd dashboard && go build -o ../career-dashboard ./...
 ./career-dashboard --theme=wranngle   # or catppuccin-latte / catppuccin-mocha / auto
 ```
 
-See [`dashboard/README.md`](./dashboard/README.md) for full theme + flag
-reference. The TUI reads `applications.md` / `data/applications.md` and
-`reports/` directly off disk.
-
-## Design tokens
-
-The Next.js layer pulls from
-[`tokens/tokens.css`](./tokens/tokens.css) (mirrored from the canonical
-Wranngle DESIGN.md). The TUI's `wranngle` theme maps the same palette onto
-the Catppuccin slot structure (see
-[`dashboard/internal/theme/wranngle.go`](./dashboard/internal/theme/wranngle.go)).
-
-## Landing page
-
-```bash
-npm run dev
-```
+See [`dashboard/README.md`](./dashboard/README.md) for full theme and flag
+reference. The TUI reads `data/applications.md` and `reports/` directly off
+disk.
 
 ## Non-goals
 
 Same as upstream: no database, no auto-submit, no queues, no vector DB.
-Claude evaluates and tailors; you submit via Simplify.jobs or any other
-manual path.
-
-## Branches (status)
-
-`main` is the only canonical branch. The repo is intentionally a single flat
-cloud document store — every branch ever opened has been reconciled into
-`main`, and nothing on disk lives only on a side branch.
-
-| Remote branch | Status | Why it still exists |
-|---|---|---|
-| `origin/main` | Canonical | Everything ships here. |
-| `origin/master` | Deprecated — merged into main | Old root-commit branch from initial scaffolding (commit `5c660f8`). All useful files were carried into main during the upstream port; the rest were intentionally removed (see `UPSTREAM.md`). Confirmed ancestor of main with zero unique commits. |
-| `origin/claude/setup-deployment-stack-Ig0PD` | Deprecated — merged into main | Earlier Claude session's deployment-stack work; superseded by the upstream port. Confirmed ancestor of main. |
-| `origin/claude/complete-verification-pass-pGa7Y` | Deprecated — merged into main | Earlier Claude session's verification pass; superseded. Confirmed ancestor of main. |
-| `origin/add-claude-github-actions-1765928276448` | Deprecated — closed PR #1 already merged | Source branch for the Claude Code Action install PR, kept by GitHub after merge. |
-
-These four can be deleted via the GitHub UI (Settings → Branches, or each
-branch page's trash icon) at any time — they're zero-information and only
-remain because the cloud sandbox proxy blocks `git push --delete` and the
-GitHub MCP exposed to in-sandbox sessions has no `delete_branch` tool.
+Claude evaluates and tailors; you submit manually.
 
 ## License
 
@@ -148,6 +122,7 @@ MIT, matching upstream.
 
 ## Credits
 
-All non-trivial design credit belongs to Santiago Fernández de Valderrama
-([@santifer](https://github.com/santifer)). This fork layers coverage
-extensions and a landing page on top.
+Core design credit belongs to Santiago Fernandez de Valderrama
+([@santifer](https://github.com/santifer)). This fork adds the voice coach,
+non-AI portal queries, commute scoring, hard filters, and the landing page
+on top.
