@@ -42,7 +42,7 @@ for the port details.
 ## Install
 
 ```bash
-# Prereqs: Node ≥18, Go ≥1.21, Python ≥3.11
+# Prereqs: Node ≥18, Go ≥1.24.2, Python ≥3.11
 npm install
 npx playwright install chromium
 pip install -r requirements.txt
