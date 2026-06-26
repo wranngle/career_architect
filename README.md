@@ -42,11 +42,10 @@ for the port details.
 ## Install
 
 ```bash
-# Prereqs: Node ≥18, Go ≥1.24.2, Python ≥3.11
+# Prereqs: Node ≥20.19, Go ≥1.24.2, Python ≥3.11
 npm install
 npx playwright install chromium
 pip install -r requirements.txt
-npm run doctor                          # validates the environment
 
 # Config
 cp config/profile.example.yml config/profile.yml
@@ -54,8 +53,10 @@ cp modes/_profile.template.md modes/_profile.md
 cp templates/portals.example.yml portals.yml
 # Optional: append sections from templates/portals.extensions.yml
 #           into portals.yml for non-AI board coverage.
-# Edit cv.md with your master resume content.
+# Create cv.md with your master resume content.
 # Optional: create .env with GEMINI_API_KEY=... (or export it) for Gemini evaluation.
+
+npm run doctor                          # validates the environment (needs the files above)
 ```
 
 ## Use (inside Claude Code)
@@ -92,7 +93,7 @@ admin page for the framing.
 
 ```bash
 cd dashboard && go build -o ../career-dashboard ./...
-./career-dashboard --theme=wranngle   # or catppuccin-latte / catppuccin-mocha / auto
+../career-dashboard --theme=wranngle   # or catppuccin-latte / catppuccin-mocha / auto
 ```
 
 See [`dashboard/README.md`](./dashboard/README.md) for full theme + flag
@@ -115,7 +116,7 @@ npm run dev
 
 ## Non-goals
 
-Same as upstream: no database, no auto-submit, no queues, no vector DB.
+Same as upstream: no database, no auto-submit, no background/job queues, no vector DB.
 Claude evaluates and tailors; you submit via Simplify.jobs or any other
 manual path.
 
