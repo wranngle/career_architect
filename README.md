@@ -55,7 +55,7 @@ cp templates/portals.example.yml portals.yml
 # Optional: append sections from templates/portals.extensions.yml
 #           into portals.yml for non-AI board coverage.
 # Edit cv.md with your master resume content.
-# Copy .env.example to .env if you want Gemini evaluation.
+# Optional: create .env with GEMINI_API_KEY=... (or export it) for Gemini evaluation.
 ```
 
 ## Use (inside Claude Code)
