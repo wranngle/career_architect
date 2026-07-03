@@ -19,14 +19,14 @@ const red = (s) => isTTY ? `\x1b[31m${s}\x1b[0m` : s;
 const dim = (s) => isTTY ? `\x1b[2m${s}\x1b[0m` : s;
 
 function checkNodeVersion() {
-  const major = parseInt(process.versions.node.split('.')[0]);
-  if (major >= 18) {
-    return { pass: true, label: `Node.js >= 18 (v${process.versions.node})` };
+  const [major, minor] = process.versions.node.split('.').map(Number);
+  if (major > 20 || (major === 20 && minor >= 19)) {
+    return { pass: true, label: `Node.js >= 20.19 (v${process.versions.node})` };
   }
   return {
     pass: false,
-    label: `Node.js >= 18 (found v${process.versions.node})`,
-    fix: 'Install Node.js 18 or later from https://nodejs.org',
+    label: `Node.js >= 20.19 (found v${process.versions.node})`,
+    fix: 'Install Node.js 20.19 or later from https://nodejs.org',
   };
 }
 

@@ -91,8 +91,8 @@ admin page for the framing.
 ### Terminal (Go TUI)
 
 ```bash
-cd dashboard && go build -o ../career-dashboard ./...
-../career-dashboard --theme=wranngle   # or catppuccin-latte / catppuccin-mocha / auto
+cd dashboard && go build -o ../career-dashboard .
+../career-dashboard --path .. --theme=wranngle   # or catppuccin-latte / catppuccin-mocha / auto
 ```
 
 See [`dashboard/README.md`](./dashboard/README.md) for full theme + flag
