@@ -18,16 +18,29 @@ import { readFileSync, readdirSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-const CAREER_OPS = dirname(fileURLToPath(import.meta.url));
+const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
+// Split-repo support: the runtime lives in this repo, but user data may live in
+// the invocation CWD (cv.md / config/profile.yml / data/). Prefer the CWD when
+// it looks like a career data dir; fall back to the script dir (single-repo).
+const CWD = process.cwd();
+const IS_DATA_DIR = existsSync(join(CWD, 'cv.md'))
+  || existsSync(join(CWD, 'config/profile.yml'))
+  || existsSync(join(CWD, 'data/applications.md'));
+const CAREER_OPS = IS_DATA_DIR ? CWD : SCRIPT_DIR;
 // Support both layouts: data/applications.md (boilerplate) and applications.md (original)
 const APPS_FILE = existsSync(join(CAREER_OPS, 'data/applications.md'))
   ? join(CAREER_OPS, 'data/applications.md')
   : join(CAREER_OPS, 'applications.md');
 const ADDITIONS_DIR = join(CAREER_OPS, 'batch/tracker-additions');
 const REPORTS_DIR = join(CAREER_OPS, 'reports');
-const STATES_FILE = existsSync(join(CAREER_OPS, 'templates/states.yml'))
-  ? join(CAREER_OPS, 'templates/states.yml')
-  : join(CAREER_OPS, 'states.yml');
+// states.yml is a system template: try the data dir first (user override),
+// then the runtime repo's own templates.
+const STATES_FILE = [
+  join(CAREER_OPS, 'templates/states.yml'),
+  join(CAREER_OPS, 'states.yml'),
+  join(SCRIPT_DIR, 'templates/states.yml'),
+  join(SCRIPT_DIR, 'states.yml'),
+].find(existsSync) ?? join(SCRIPT_DIR, 'templates/states.yml');
 
 // Ensure required directories exist (fresh setup)
 mkdirSync(join(CAREER_OPS, 'data'), { recursive: true });

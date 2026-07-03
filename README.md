@@ -4,13 +4,12 @@ A fork of [santifer/career-ops](https://github.com/santifer/career-ops) with
 a Next.js landing page and a few coverage extensions for non-AI job
 categories.
 
-> **Looking for the additive bits as a clean overlay?** The non-personal
-> additions from this fork (the `hydrate` mode, USAJOBS + Google-Jobs-SERP
-> aggregators, the generic external-aggregator pattern for `scan.mjs`, the
-> ATS quality bar, the MCP troubleshooting docs, the 5-tier search
-> ladder) live as a separate, MIT-licensed public repo:
-> **[wranngle/career_architect](https://github.com/wranngle/career_architect)**.
-> Keep personal search data in the gitignored user-layer files described in
+> **Where the additive bits live.** The non-personal additions from this
+> fork (the `hydrate` mode, USAJOBS + Google-Jobs-SERP aggregators, the
+> generic external-aggregator pattern for `scan.mjs`, the ATS quality bar,
+> the MCP troubleshooting docs, the 5-tier search ladder) ship in this
+> repo; `UPSTREAM.md` maps what is upstream and what is local. Keep
+> personal search data in the gitignored user-layer files described in
 > `DATA_CONTRACT.md`.
 
 ## Why a fork
