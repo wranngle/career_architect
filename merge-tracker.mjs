@@ -19,7 +19,13 @@ import { join, basename, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { execFileSync } from 'child_process';
 
-const CAREER_OPS = dirname(fileURLToPath(import.meta.url));
+const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
+// Split-repo support: user data lives in the invocation CWD when it looks
+// like a career data dir; fall back to the script dir (single-repo layout).
+const CAREER_OPS = (existsSync(join(process.cwd(), 'cv.md'))
+  || existsSync(join(process.cwd(), 'config/profile.yml'))
+  || existsSync(join(process.cwd(), 'data')))
+  ? process.cwd() : SCRIPT_DIR;
 // Support both layouts: data/applications.md (boilerplate) and applications.md (original)
 const APPS_FILE = existsSync(join(CAREER_OPS, 'data/applications.md'))
   ? join(CAREER_OPS, 'data/applications.md')

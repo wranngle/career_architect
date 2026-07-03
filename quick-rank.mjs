@@ -51,7 +51,13 @@ try {
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const ROOT = dirname(fileURLToPath(import.meta.url));
+const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
+// Split-repo support: user data lives in the invocation CWD when it looks
+// like a career data dir; fall back to the script dir (single-repo layout).
+const ROOT = (existsSync(join(process.cwd(), 'cv.md'))
+  || existsSync(join(process.cwd(), 'config/profile.yml'))
+  || existsSync(join(process.cwd(), 'data')))
+  ? process.cwd() : SCRIPT_DIR;
 const PIPELINE_PATH = join(ROOT, 'data', 'pipeline.md');
 const CV_PATH = join(ROOT, 'cv.md');
 
