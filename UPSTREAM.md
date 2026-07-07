@@ -21,9 +21,10 @@ Ported:     2026-04-23
 - `fonts/`, `interview-prep/`, `docs/`, `examples/`
 - `config/profile.example.yml` (extended with fork additions)
 - Root docs: `AGENTS.md`, `DATA_CONTRACT.md`, `CHANGELOG.md`,
-  `LEGAL_DISCLAIMER.md`, `SECURITY.md`, `SUPPORT.md`, `VERSION`
+  `LEGAL_DISCLAIMER.md`, `SUPPORT.md`, `VERSION`
   (upstream's `.env.example`/`.envrc` were not carried — create `.env`
-  by hand per the README)
+  by hand per the README; `SECURITY.md` was ported, then removed with the
+  community-health boilerplate)
 
 ## What was NOT ported
 

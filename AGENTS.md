@@ -60,7 +60,7 @@ For Codex-specific setup, see `docs/CODEX.md`.
 > |---|---|
 > | "Language Modes" (German / French / Japanese) | `modes/de/`, `modes/fr/`, `modes/ja/` |
 > | "OpenCode Commands" / "Gemini CLI Commands" | `.opencode/commands/`, `.gemini/commands/`, `GEMINI.md` |
-> | "Community and Governance" | `GOVERNANCE.md`, `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `CITATION.cff`; the Discord is upstream's |
+> | "Community and Governance" | `GOVERNANCE.md`, `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `CITATION.cff`, `SECURITY.md` (removed with the community boilerplate); the Discord is upstream's |
 > | "CI/CD and Quality" | `.github/` is empty — no Actions, labeler, branch protection, or Dependabot on this fork; quality gates run locally (`npm test`, `npm run lint`) |
 >
 > If a user asks for any of those, tell them this fork doesn't ship them
