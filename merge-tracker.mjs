@@ -15,17 +15,15 @@
  */
 
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, renameSync, existsSync } from 'fs';
-import { join, basename, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join } from 'path';
 import { execFileSync } from 'child_process';
 
-const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-// Split-repo support: user data lives in the invocation CWD when it looks
-// like a career data dir; fall back to the script dir (single-repo layout).
-const CAREER_OPS = (existsSync(join(process.cwd(), 'cv.md'))
-  || existsSync(join(process.cwd(), 'config/profile.yml'))
-  || existsSync(join(process.cwd(), 'data')))
-  ? process.cwd() : SCRIPT_DIR;
+import { resolveDataRoot } from './lib/resolve-root.mjs';
+import { canonicalLabel } from './lib/states.mjs';
+
+// Split-repo support: user data may live in the invocation CWD
+// (see lib/resolve-root.mjs).
+const CAREER_OPS = resolveDataRoot();
 // Support both layouts: data/applications.md (boilerplate) and applications.md (original)
 const APPS_FILE = existsSync(join(CAREER_OPS, 'data/applications.md'))
   ? join(CAREER_OPS, 'data/applications.md')
@@ -39,35 +37,13 @@ const VERIFY = process.argv.includes('--verify');
 mkdirSync(join(CAREER_OPS, 'data'), { recursive: true });
 mkdirSync(ADDITIONS_DIR, { recursive: true });
 
-// Canonical states and aliases
-const CANONICAL_STATES = ['Evaluated', 'Applied', 'Responded', 'Interview', 'Offer', 'Rejected', 'Discarded', 'SKIP'];
-
+// Canonical states and aliases come from templates/states.yml via lib/states.mjs.
 function validateStatus(status) {
-  const clean = status.replace(/\*\*/g, '').replace(/\s+\d{4}-\d{2}-\d{2}.*$/, '').trim();
-  const lower = clean.toLowerCase();
-
-  for (const valid of CANONICAL_STATES) {
-    if (valid.toLowerCase() === lower) return valid;
-  }
-
-  // Aliases
-  const aliases = {
-    // Spanish → English
-    'evaluada': 'Evaluated', 'condicional': 'Evaluated', 'hold': 'Evaluated', 'evaluar': 'Evaluated', 'verificar': 'Evaluated',
-    'aplicado': 'Applied', 'enviada': 'Applied', 'aplicada': 'Applied', 'applied': 'Applied', 'sent': 'Applied',
-    'respondido': 'Responded',
-    'entrevista': 'Interview',
-    'oferta': 'Offer',
-    'rechazado': 'Rejected', 'rechazada': 'Rejected',
-    'descartado': 'Discarded', 'descartada': 'Discarded', 'cerrada': 'Discarded', 'cancelada': 'Discarded',
-    'no aplicar': 'SKIP', 'no_aplicar': 'SKIP', 'skip': 'SKIP', 'monitor': 'SKIP',
-    'geo blocker': 'SKIP',
-  };
-
-  if (aliases[lower]) return aliases[lower];
+  const label = canonicalLabel(status);
+  if (label) return label;
 
   // DUPLICADO/Repost → Discarded
-  if (/^(duplicado|dup|repost)/i.test(lower)) return 'Discarded';
+  if (/^(duplicado|dup|repost)/i.test(status.trim())) return 'Discarded';
 
   console.warn(`⚠️  Non-canonical status "${status}" → defaulting to "Evaluated"`);
   return 'Evaluated';

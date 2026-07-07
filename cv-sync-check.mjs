@@ -11,16 +11,13 @@
  */
 
 import { readFileSync, existsSync, statSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join } from 'path';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-// Split-repo support: user data lives in the invocation CWD when it looks
-// like a career data dir; fall back to the script dir (single-repo layout).
-const projectRoot = (existsSync(join(process.cwd(), 'cv.md'))
-  || existsSync(join(process.cwd(), 'config/profile.yml'))
-  || existsSync(join(process.cwd(), 'data')))
-  ? process.cwd() : __dirname;
+import { resolveDataRoot } from './lib/resolve-root.mjs';
+
+// Split-repo support: user data may live in the invocation CWD
+// (see lib/resolve-root.mjs).
+const projectRoot = resolveDataRoot();
 
 const warnings = [];
 const errors = [];

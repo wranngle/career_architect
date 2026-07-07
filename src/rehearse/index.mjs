@@ -177,11 +177,13 @@ export function parseArgs(argv) {
 }
 
 export const HELP = [
-  'Usage: rehearse --company <slug> [--turns 5] [--mock <fixture.json>] [--root <dir>]',
+  'Usage: rehearse --company <slug> --mock <fixture.json> [--turns 5] [--root <dir>]',
   '',
   '  --company   Company slug (matches recon-brief output filename).',
   '  --turns     Number of Q/A turns (default 5).',
-  '  --mock      Path to mock-recruiter.json — skips stdin, returns canned questions.',
+  '  --mock      Path to mock-recruiter.json — returns canned questions.',
+  '              Currently REQUIRED: the live recruiter client is not yet',
+  '              wired, so running without --mock exits 2.',
   '  --root      Project root containing interview-prep/ (default cwd).',
   '',
   'Reads the most recent <root>/interview-prep/<slug>-recon-*.md and writes',

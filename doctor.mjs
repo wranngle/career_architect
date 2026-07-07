@@ -6,11 +6,15 @@
  */
 
 import { existsSync, mkdirSync, readdirSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join } from 'path';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const projectRoot = __dirname;
+import { REPO_ROOT, resolveDataRoot } from './lib/resolve-root.mjs';
+
+// Runtime checks (deps, Playwright, fonts) run against the repo; user-layer
+// checks (cv.md, config/, portals.yml, data/) run against the data root,
+// which in a split-repo layout is the invocation CWD (see lib/resolve-root.mjs).
+const projectRoot = REPO_ROOT;
+const dataRoot = resolveDataRoot();
 
 // ANSI colors (only on TTY)
 const isTTY = process.stdout.isTTY;
@@ -63,21 +67,21 @@ async function checkPlaywright() {
 }
 
 function checkCv() {
-  if (existsSync(join(projectRoot, 'cv.md'))) {
+  if (existsSync(join(dataRoot, 'cv.md'))) {
     return { pass: true, label: 'cv.md found' };
   }
   return {
     pass: false,
     label: 'cv.md not found',
     fix: [
-      'Create cv.md in the project root with your CV in markdown',
+      'Create cv.md in your data root with your CV in markdown',
       'See examples/ for reference CVs',
     ],
   };
 }
 
 function checkProfile() {
-  if (existsSync(join(projectRoot, 'config', 'profile.yml'))) {
+  if (existsSync(join(dataRoot, 'config', 'profile.yml'))) {
     return { pass: true, label: 'config/profile.yml found' };
   }
   return {
@@ -91,7 +95,7 @@ function checkProfile() {
 }
 
 function checkPortals() {
-  if (existsSync(join(projectRoot, 'portals.yml'))) {
+  if (existsSync(join(dataRoot, 'portals.yml'))) {
     return { pass: true, label: 'portals.yml found' };
   }
   return {
@@ -133,7 +137,7 @@ function checkFonts() {
 }
 
 function checkAutoDir(name) {
-  const dirPath = join(projectRoot, name);
+  const dirPath = join(dataRoot, name);
   if (existsSync(dirPath)) {
     return { pass: true, label: `${name}/ directory ready` };
   }
@@ -152,6 +156,9 @@ function checkAutoDir(name) {
 async function main() {
   console.log('\ncareer-ops doctor');
   console.log('================\n');
+  if (dataRoot !== projectRoot) {
+    console.log(dim(`data root: ${dataRoot} (split-repo layout)`) + '\n');
+  }
 
   const checks = [
     checkNodeVersion(),

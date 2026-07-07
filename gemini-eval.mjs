@@ -14,12 +14,13 @@
  * Requires:
  *   GEMINI_API_KEY in .env (or environment variable)
  *
- * Free-tier model: gemini-2.0-flash (generous quota, no billing required)
+ * Free-tier model: gemini-2.5-flash (generous quota, no billing required)
  */
 
 import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join } from 'path';
+
+import { REPO_ROOT, resolveDataRoot } from './lib/resolve-root.mjs';
 
 // ---------------------------------------------------------------------------
 // Bootstrap: load .env before anything else
@@ -36,20 +37,17 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 // ---------------------------------------------------------------------------
 // Paths
 // ---------------------------------------------------------------------------
-const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-// Split-repo support: user data lives in the invocation CWD when it looks
-// like a career data dir; fall back to the script dir (single-repo layout).
-const ROOT = (existsSync(join(process.cwd(), 'cv.md'))
-  || existsSync(join(process.cwd(), 'config/profile.yml'))
-  || existsSync(join(process.cwd(), 'data')))
-  ? process.cwd() : SCRIPT_DIR;
+// Split-repo support: user data may live in the invocation CWD; the mode
+// files and skill are system assets that always live in the runtime repo
+// (see lib/resolve-root.mjs).
+const ROOT = resolveDataRoot();
 
 const PATHS = {
-  // Primary evaluation logic lives in these two mode files
-  shared:   join(ROOT, 'modes', '_shared.md'),
-  oferta:   join(ROOT, 'modes', 'oferta.md'),
+  // Primary evaluation logic lives in these two mode files (system layer)
+  shared:   join(REPO_ROOT, 'modes', '_shared.md'),
+  oferta:   join(REPO_ROOT, 'modes', 'oferta.md'),
   // Canonical skill path referenced in Issue #344
-  evaluate: join(ROOT, '.claude', 'skills', 'career-ops', 'SKILL.md'),
+  evaluate: join(REPO_ROOT, '.claude', 'skills', 'career-ops', 'SKILL.md'),
   cv:       join(ROOT, 'cv.md'),
   reports:  join(ROOT, 'reports'),
   tracker:  join(ROOT, 'data', 'applications.md'),
@@ -71,11 +69,11 @@ if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
   USAGE
     node gemini-eval.mjs "<JD text>"
     node gemini-eval.mjs --file ./jds/my-job.txt
-    node gemini-eval.mjs --model gemini-2.0-flash "<JD text>"
+    node gemini-eval.mjs --model gemini-2.5-flash "<JD text>"
 
   OPTIONS
     --file <path>    Read JD from a file instead of inline text
-    --model <name>   Gemini model to use (default: gemini-2.0-flash)
+    --model <name>   Gemini model to use (default: gemini-2.5-flash)
     --no-save        Do not save report to reports/ directory
     --help           Show this help
 
@@ -314,7 +312,7 @@ ${evaluationText.replace(/---SCORE_SUMMARY---[\s\S]*?---END_SUMMARY---/, '').tri
 
     // Append tracker entry reminder
     console.log(`\n📊  Tracker entry (add to data/applications.md):`);
-    console.log(`    | ${num} | ${today} | ${company} | ${role} | ${score} | Evaluada | ❌ | [${num}](reports/${filename}) |`);
+    console.log(`    | ${num} | ${today} | ${company} | ${role} | ${score}/5 | Evaluated | ❌ | [${num}](reports/${filename}) |`);
   } catch (err) {
     console.warn(`⚠️   Could not save report: ${err.message}`);
   }

@@ -37,7 +37,6 @@ Optimization tactics (ported from the legacy job-search-agent.md):
 """
 
 import argparse
-import os
 import re
 import sys
 from datetime import date
@@ -55,7 +54,22 @@ except ImportError:
     sys.stderr.write("Missing dependency: pip install -U python-jobspy\n")
     sys.exit(2)
 
-ROOT = Path(__file__).parent
+SCRIPT_DIR = Path(__file__).parent
+
+
+def _resolve_data_root() -> Path:
+    """Mirror lib/resolve-root.mjs: user data lives in the invocation CWD when
+    it carries a career-data marker; fall back to the script's repo
+    (single-repo layout). Keeps this scanner's dedup on the same files as
+    scan.mjs, which resolves against the CWD."""
+    cwd = Path.cwd()
+    markers = ("cv.md", "config/profile.yml", "data/applications.md", "data/pipeline.md")
+    if any((cwd / m).exists() for m in markers):
+        return cwd
+    return SCRIPT_DIR
+
+
+ROOT = _resolve_data_root()
 PORTALS_PATH = ROOT / "portals.yml"
 PIPELINE_PATH = ROOT / "data" / "pipeline.md"
 SCAN_HISTORY_PATH = ROOT / "data" / "scan-history.tsv"

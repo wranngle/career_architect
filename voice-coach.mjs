@@ -24,18 +24,23 @@
  */
 
 import {
-  readFileSync, writeFileSync, existsSync, mkdirSync, statSync,
+  readFileSync, writeFileSync, existsSync, mkdirSync,
 } from 'node:fs';
-import {basename, resolve} from 'node:path';
+import {basename, join} from 'node:path';
 import yaml from 'js-yaml';
+
+import {REPO_ROOT, resolveDataRoot} from './lib/resolve-root.mjs';
 
 // ── Constants ───────────────────────────────────────────────────────
 
+// Split-repo support: the prompt template is a runtime asset; profile, CV,
+// and the agent record are user-layer (see lib/resolve-root.mjs).
+const DATA_ROOT = resolveDataRoot();
 const API_BASE = 'https://api.elevenlabs.io/v1/convai';
-const PROMPT_TEMPLATE_PATH = 'templates/voice-coach-system-prompt.md';
-const PROFILE_PATH = 'config/profile.yml';
-const CV_PATH = 'cv.md';
-const AGENT_RECORD_PATH = 'data/voice-coach-agent.json';
+const PROMPT_TEMPLATE_PATH = join(REPO_ROOT, 'templates/voice-coach-system-prompt.md');
+const PROFILE_PATH = join(DATA_ROOT, 'config/profile.yml');
+const CV_PATH = join(DATA_ROOT, 'cv.md');
+const AGENT_RECORD_PATH = join(DATA_ROOT, 'data/voice-coach-agent.json');
 const DEFAULT_VOICE_ID = 'pFZP5JQG7iQjIQuC4Bku'; // ElevenLabs "Lily" — warm, conversational
 const DEFAULT_COACH_NAME = 'Coach Avery';
 const DEFAULT_LLM = 'claude-opus-4-7';
@@ -401,7 +406,7 @@ async function main() {
   }
   const json = JSON.parse(text);
 
-  mkdirSync('data', {recursive: true});
+  mkdirSync(join(DATA_ROOT, 'data'), {recursive: true});
   const record = {
     agent_id: json.agent_id,
     name: agentLabel,

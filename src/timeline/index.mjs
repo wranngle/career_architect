@@ -8,10 +8,11 @@
  * per funnel stage, one row per in-flight application.
  *
  * "In-flight" = a row that entered the funnel and has not closed out, i.e.
- * status ∈ { Applied, Responded, Interview, Offer }. Accepted and the
- * closed-loss statuses (Rejected, Discarded, SKIP, Evaluated) are excluded
- * by default — they are no longer awaiting a next action. Pass --include
- * to widen the filter.
+ * status ∈ { Applied, Responded, Screen, Tech, Onsite, Interview, Offer }
+ * (per templates/states.yml). Accepted and the closed-loss statuses
+ * (Rejected, Ghosted, Discarded, SKIP, Evaluated) are excluded by default —
+ * they are no longer awaiting a next action. Pass --include to widen the
+ * filter.
  *
  * Sibling: funnel-metrics.mjs (PR #5) reports stage counts as JSON; this
  * CLI reports the same stages as a calendar so the operator can see which
@@ -21,16 +22,20 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
-export const DEFAULT_IN_FLIGHT_STATUSES = ['applied', 'responded', 'interview', 'offer'];
-export const STAGE_ORDER = ['applied', 'responded', 'interview', 'offer', 'accepted', 'rejected', 'discarded', 'evaluated', 'skip'];
+export const DEFAULT_IN_FLIGHT_STATUSES = ['applied', 'responded', 'screen', 'tech', 'onsite', 'interview', 'offer'];
+export const STAGE_ORDER = ['applied', 'responded', 'screen', 'tech', 'onsite', 'interview', 'offer', 'accepted', 'rejected', 'ghosted', 'discarded', 'evaluated', 'skip'];
 
 const STAGE_LABELS = {
   applied: 'Applied',
-  responded: 'Recruiter screen',
+  responded: 'Responded',
+  screen: 'Recruiter screen',
+  tech: 'Tech interview',
+  onsite: 'Onsite / final round',
   interview: 'Interview loop',
   offer: 'Offer',
   accepted: 'Accepted',
   rejected: 'Rejected',
+  ghosted: 'Ghosted',
   discarded: 'Discarded',
   evaluated: 'Evaluated',
   skip: 'Skipped',
@@ -41,10 +46,14 @@ const STAGE_LABELS = {
 const STAGE_TASK_STATE = {
   applied: 'active',
   responded: 'active',
+  screen: 'active',
+  tech: 'crit, active',
+  onsite: 'crit, active',
   interview: 'crit, active',
   offer: 'crit, active',
   accepted: 'done',
   rejected: 'done',
+  ghosted: 'done',
   discarded: 'done',
   evaluated: 'done',
   skip: 'done',
@@ -53,10 +62,14 @@ const STAGE_TASK_STATE = {
 const DEFAULT_DURATION_DAYS = {
   applied: 7,
   responded: 5,
+  screen: 5,
+  tech: 7,
+  onsite: 10,
   interview: 10,
   offer: 7,
   accepted: 1,
   rejected: 1,
+  ghosted: 1,
   discarded: 1,
   evaluated: 1,
   skip: 1,

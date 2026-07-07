@@ -16,14 +16,22 @@
  */
 
 import { readFileSync, writeFileSync, appendFileSync, existsSync, mkdirSync } from 'fs';
+import { join, isAbsolute } from 'path';
 import { execFileSync } from 'child_process';
 import yaml from 'js-yaml';
+
+import { REPO_ROOT } from './lib/resolve-root.mjs';
+
 const parseYaml = yaml.load;
 
 // ── Config ──────────────────────────────────────────────────────────
 
 const PORTALS_PATH = 'portals.yml';
-const PORTALS_EXTENSIONS_PATH = 'templates/portals.extensions.yml';
+// System template: prefer a data-dir override (CWD copy), else the runtime
+// repo's own copy — in a split-repo layout the CWD has no templates/.
+const PORTALS_EXTENSIONS_PATH = existsSync('templates/portals.extensions.yml')
+  ? 'templates/portals.extensions.yml'
+  : join(REPO_ROOT, 'templates/portals.extensions.yml');
 const SCAN_HISTORY_PATH = 'data/scan-history.tsv';
 const PIPELINE_PATH = 'data/pipeline.md';
 const APPLICATIONS_PATH = 'data/applications.md';
@@ -378,8 +386,13 @@ function runAggregator(name, cfg) {
   const missing = (cfg.env_required || []).filter(v => !process.env[v]);
   if (missing.length) return { offers: [], skipped: `missing env: ${missing.join(', ')}` };
 
-  const script = cfg.script;
+  let script = cfg.script;
   if (!script) return { offers: [], skipped: 'no script configured' };
+  // Relative script paths (e.g. scripts/usajobs_search.py) live in the
+  // runtime repo; a CWD copy (data-dir override) takes precedence.
+  if (!isAbsolute(script) && !existsSync(script)) {
+    script = join(REPO_ROOT, script);
+  }
 
   const defaults = cfg.defaults || {};
   const searches = cfg.searches || [];

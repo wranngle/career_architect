@@ -10,16 +10,14 @@
  */
 
 import { readFileSync, writeFileSync, copyFileSync, existsSync, mkdirSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join } from 'path';
 
-const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-// Split-repo support: user data lives in the invocation CWD when it looks
-// like a career data dir; fall back to the script dir (single-repo layout).
-const CAREER_OPS = (existsSync(join(process.cwd(), 'cv.md'))
-  || existsSync(join(process.cwd(), 'config/profile.yml'))
-  || existsSync(join(process.cwd(), 'data')))
-  ? process.cwd() : SCRIPT_DIR;
+import { resolveDataRoot } from './lib/resolve-root.mjs';
+import { STATUS_INDEX, canonicalId } from './lib/states.mjs';
+
+// Split-repo support: user data may live in the invocation CWD
+// (see lib/resolve-root.mjs).
+const CAREER_OPS = resolveDataRoot();
 // Support both layouts: data/applications.md (boilerplate) and applications.md (original)
 const APPS_FILE = existsSync(join(CAREER_OPS, 'data/applications.md'))
   ? join(CAREER_OPS, 'data/applications.md')
@@ -29,31 +27,14 @@ const DRY_RUN = process.argv.includes('--dry-run');
 // Ensure required directories exist (fresh setup)
 mkdirSync(join(CAREER_OPS, 'data'), { recursive: true });
 
-// Status advancement order (higher = more advanced in pipeline)
-// Aplicado > Rechazado because active application > terminal state
-const STATUS_RANK = {
-  // English canonicals (states.yml labels)
-  'skip': 0,
-  'discarded': 0,
-  'rejected': 1,
-  'evaluated': 2,
-  'applied': 3,
-  'responded': 4,
-  'interview': 5,
-  'offer': 6,
-  // Spanish aliases — kept for backwards compat with existing tracker data
-  'no_aplicar': 0,
-  'no aplicar': 0,
-  'descartado': 0,
-  'descartada': 0,
-  'rechazado': 1,  // Terminal — below active states
-  'rechazada': 1,
-  'evaluada': 2,
-  'aplicado': 3,
-  'respondido': 4,
-  'entrevista': 5,
-  'oferta': 6,
-};
+// Status advancement order (higher = more advanced in pipeline), derived
+// from templates/states.yml via lib/states.mjs. Terminal lanes rank lowest
+// (Applied > Rejected because active application > terminal state), and
+// aliases (Spanish included) canonicalize before ranking.
+function statusRank(status) {
+  const id = canonicalId(status);
+  return id === null ? 0 : STATUS_INDEX.rankById[id];
+}
 
 function normalizeCompany(name) {
   return name.toLowerCase()
@@ -185,10 +166,10 @@ for (const [company, companyEntries] of groups) {
     const keeper = cluster[0];
 
     // Check if any removed entry has more advanced status
-    let bestStatusRank = STATUS_RANK[keeper.status.toLowerCase()] || 0;
+    let bestStatusRank = statusRank(keeper.status);
     let bestStatus = keeper.status;
     for (let k = 1; k < cluster.length; k++) {
-      const rank = STATUS_RANK[cluster[k].status.toLowerCase()] || 0;
+      const rank = statusRank(cluster[k].status);
       if (rank > bestStatusRank) {
         bestStatusRank = rank;
         bestStatus = cluster[k].status;

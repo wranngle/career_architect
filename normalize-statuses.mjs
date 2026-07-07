@@ -2,8 +2,9 @@
 /**
  * normalize-statuses.mjs — Clean non-canonical states in applications.md
  *
- * Maps all non-canonical statuses to canonical ones per states.yml:
- *   Evaluada, Aplicado, Respondido, Entrevista, Oferta, Rechazado, Descartado, NO APLICAR
+ * Maps all non-canonical statuses to canonical ones per templates/states.yml:
+ *   Evaluated, Applied, Responded, Screen, Tech, Onsite, Interview, Offer,
+ *   Rejected, Ghosted, Discarded, SKIP
  *
  * Also strips markdown bold (**) and dates from the status field,
  * moving DUPLICADO info to the notes column.
@@ -12,16 +13,14 @@
  */
 
 import { readFileSync, writeFileSync, copyFileSync, existsSync, mkdirSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join } from 'path';
 
-const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-// Split-repo support: user data lives in the invocation CWD when it looks
-// like a career data dir; fall back to the script dir (single-repo layout).
-const CAREER_OPS = (existsSync(join(process.cwd(), 'cv.md'))
-  || existsSync(join(process.cwd(), 'config/profile.yml'))
-  || existsSync(join(process.cwd(), 'data')))
-  ? process.cwd() : SCRIPT_DIR;
+import { resolveDataRoot } from './lib/resolve-root.mjs';
+import { canonicalLabel } from './lib/states.mjs';
+
+// Split-repo support: user data may live in the invocation CWD
+// (see lib/resolve-root.mjs).
+const CAREER_OPS = resolveDataRoot();
 // Support both layouts: data/applications.md (boilerplate) and applications.md (original)
 const APPS_FILE = existsSync(join(CAREER_OPS, 'data/applications.md'))
   ? join(CAREER_OPS, 'data/applications.md')
@@ -70,23 +69,10 @@ function normalizeStatus(raw) {
   // "—" (em dash, no status) → Discarded
   if (s === '—' || s === '-' || s === '') return { status: 'Discarded' };
 
-  // Already canonical (English, per states.yml) — just fix casing/bold
-  const canonical = [
-    'Evaluated', 'Applied', 'Responded', 'Interview',
-    'Offer', 'Rejected', 'Discarded', 'SKIP',
-  ];
-  for (const c of canonical) {
-    if (lower === c.toLowerCase()) return { status: c };
-  }
-
-  // Spanish aliases → English canonicals
-  if (['evaluada'].includes(lower)) return { status: 'Evaluated' };
-  if (['aplicado', 'enviada', 'aplicada', 'applied', 'sent'].includes(lower)) return { status: 'Applied' };
-  if (['respondido'].includes(lower)) return { status: 'Responded' };
-  if (['entrevista'].includes(lower)) return { status: 'Interview' };
-  if (['oferta'].includes(lower)) return { status: 'Offer' };
-  if (['cerrada', 'descartada'].includes(lower)) return { status: 'Discarded' };
-  if (['no aplicar', 'no_aplicar', 'skip'].includes(lower)) return { status: 'SKIP' };
+  // Canonical labels and aliases per templates/states.yml (via lib/states.mjs):
+  // fixes casing/bold and maps Spanish/legacy aliases to English canonicals.
+  const label = canonicalLabel(lower);
+  if (label) return { status: label };
 
   // Unknown — flag it
   return { status: null, unknown: true };

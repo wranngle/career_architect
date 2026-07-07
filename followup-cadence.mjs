@@ -12,16 +12,14 @@
  */
 
 import { readFileSync, existsSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join } from 'path';
 
-const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-// Split-repo support: user data lives in the invocation CWD when it looks
-// like a career data dir; fall back to the script dir (single-repo layout).
-const CAREER_OPS = (existsSync(join(process.cwd(), 'cv.md'))
-  || existsSync(join(process.cwd(), 'config/profile.yml'))
-  || existsSync(join(process.cwd(), 'data')))
-  ? process.cwd() : SCRIPT_DIR;
+import { resolveDataRoot } from './lib/resolve-root.mjs';
+import { STATUS_INDEX, canonicalId } from './lib/states.mjs';
+
+// Split-repo support: user data may live in the invocation CWD
+// (see lib/resolve-root.mjs).
+const CAREER_OPS = resolveDataRoot();
 const APPS_FILE = existsSync(join(CAREER_OPS, 'data/applications.md'))
   ? join(CAREER_OPS, 'data/applications.md')
   : join(CAREER_OPS, 'applications.md');
@@ -45,27 +43,16 @@ const CADENCE = {
   interview_thankyou: 1,
 };
 
-// --- Status normalization (mirrors verify-pipeline.mjs) ---
-const ALIASES = {
-  'evaluada': 'evaluated', 'condicional': 'evaluated', 'hold': 'evaluated',
-  'evaluar': 'evaluated', 'verificar': 'evaluated',
-  'aplicado': 'applied', 'enviada': 'applied', 'aplicada': 'applied',
-  'applied': 'applied', 'sent': 'applied',
-  'respondido': 'responded',
-  'entrevista': 'interview',
-  'oferta': 'offer',
-  'rechazado': 'rejected', 'rechazada': 'rejected',
-  'descartado': 'discarded', 'descartada': 'discarded',
-  'cerrada': 'discarded', 'cancelada': 'discarded',
-  'no aplicar': 'skip', 'no_aplicar': 'skip', 'monitor': 'skip', 'geo blocker': 'skip',
-};
-
-const ACTIONABLE_STATUSES = ['applied', 'responded', 'interview'];
+// --- Status normalization (canonical ids per templates/states.yml) ---
+// Actionable = an open application awaiting a next touch: the applied and
+// responded lanes plus every interview-group stage (screen/tech/onsite/…).
+const ACTIONABLE_GROUPS = ['applied', 'responded', 'interview'];
+const ACTIONABLE_STATUSES = ACTIONABLE_GROUPS.flatMap((g) => STATUS_INDEX.idsByGroup[g] ?? []);
 
 function normalizeStatus(raw) {
   const clean = raw.replace(/\*\*/g, '').trim().toLowerCase()
     .replace(/\s+\d{4}-\d{2}-\d{2}.*$/, '').trim();
-  return ALIASES[clean] || clean;
+  return canonicalId(clean) || clean;
 }
 
 // --- Date helpers ---

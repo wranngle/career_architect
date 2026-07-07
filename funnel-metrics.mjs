@@ -9,11 +9,13 @@
  * every "Responded" row also counts as "applied", etc. — the standard
  * top-of-funnel-to-offer interpretation.
  *
- *   applied   → row was submitted (any canonical status except Evaluated/SKIP)
- *   screening → row reached recruiter contact (Responded/Interview/Offer/Accepted)
- *   technical → row reached interview loop (Interview/Offer/Accepted)
- *   onsite    → row reached final-round / onsite (Interview rows whose notes
- *               mention onsite|final|onsite/final, plus Offer/Accepted)
+ *   applied   → row was submitted (any canonical status except Evaluated/SKIP;
+ *               Rejected and Ghosted still count — the funnel measures attempts)
+ *   screening → row reached recruiter contact (Responded/Screen/Tech/Onsite/
+ *               Interview/Offer/Accepted)
+ *   technical → row reached interview loop (Tech/Onsite/Interview/Offer/Accepted)
+ *   onsite    → row reached final-round / onsite (Onsite, Interview rows whose
+ *               notes mention onsite|final|onsite/final, plus Offer/Accepted)
  *   offer     → row received an offer (Offer/Accepted)
  *   accepted  → row accepted the offer (status Accepted, or Offer with
  *               "accepted" in the notes field)
@@ -77,10 +79,21 @@ function bucketize(entries) {
     // Accepted, Rejected). Rejected counts as having applied even if it
     // bounced — the funnel measures attempts, not just successes.
     counts.applied += 1;
-    if (s === 'rejected' || s === 'applied') continue;
+    if (s === 'rejected' || s === 'ghosted' || s === 'applied') continue;
 
-    if (s === 'responded') {
+    if (s === 'responded' || s === 'screen') {
       counts.screening += 1;
+      continue;
+    }
+    if (s === 'tech') {
+      counts.screening += 1;
+      counts.technical += 1;
+      continue;
+    }
+    if (s === 'onsite') {
+      counts.screening += 1;
+      counts.technical += 1;
+      counts.onsite += 1;
       continue;
     }
     if (s === 'interview') {

@@ -15,52 +15,27 @@
  */
 
 import { readFileSync, readdirSync, existsSync, mkdirSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { join } from 'path';
 
-const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-// Split-repo support: the runtime lives in this repo, but user data may live in
-// the invocation CWD (cv.md / config/profile.yml / data/). Prefer the CWD when
-// it looks like a career data dir; fall back to the script dir (single-repo).
-const CWD = process.cwd();
-const IS_DATA_DIR = existsSync(join(CWD, 'cv.md'))
-  || existsSync(join(CWD, 'config/profile.yml'))
-  || existsSync(join(CWD, 'data/applications.md'));
-const CAREER_OPS = IS_DATA_DIR ? CWD : SCRIPT_DIR;
+import { resolveDataRoot } from './lib/resolve-root.mjs';
+import { canonicalId } from './lib/states.mjs';
+
+// Split-repo support: user data may live in the invocation CWD; system
+// templates always live in the runtime repo (see lib/resolve-root.mjs).
+const CAREER_OPS = resolveDataRoot();
 // Support both layouts: data/applications.md (boilerplate) and applications.md (original)
 const APPS_FILE = existsSync(join(CAREER_OPS, 'data/applications.md'))
   ? join(CAREER_OPS, 'data/applications.md')
   : join(CAREER_OPS, 'applications.md');
 const ADDITIONS_DIR = join(CAREER_OPS, 'batch/tracker-additions');
 const REPORTS_DIR = join(CAREER_OPS, 'reports');
-// states.yml is a system template: try the data dir first (user override),
-// then the runtime repo's own templates.
-const STATES_FILE = [
-  join(CAREER_OPS, 'templates/states.yml'),
-  join(CAREER_OPS, 'states.yml'),
-  join(SCRIPT_DIR, 'templates/states.yml'),
-  join(SCRIPT_DIR, 'states.yml'),
-].find(existsSync) ?? join(SCRIPT_DIR, 'templates/states.yml');
 
 // Ensure required directories exist (fresh setup)
 mkdirSync(join(CAREER_OPS, 'data'), { recursive: true });
 mkdirSync(REPORTS_DIR, { recursive: true });
 
-const CANONICAL_STATUSES = [
-  'evaluated', 'applied', 'responded', 'interview',
-  'offer', 'rejected', 'discarded', 'skip',
-];
-
-const ALIASES = {
-  'evaluada': 'evaluated', 'condicional': 'evaluated', 'hold': 'evaluated', 'evaluar': 'evaluated', 'verificar': 'evaluated',
-  'aplicado': 'applied', 'enviada': 'applied', 'aplicada': 'applied', 'applied': 'applied', 'sent': 'applied',
-  'respondido': 'responded',
-  'entrevista': 'interview',
-  'oferta': 'offer',
-  'rechazado': 'rejected', 'rechazada': 'rejected',
-  'descartado': 'discarded', 'descartada': 'discarded', 'cerrada': 'discarded', 'cancelada': 'discarded',
-  'no aplicar': 'skip', 'no_aplicar': 'skip', 'monitor': 'skip', 'geo blocker': 'skip',
-};
+// Canonical statuses and aliases come from templates/states.yml via
+// lib/states.mjs (with a hardcoded fallback if the YAML is unavailable).
 
 let errors = 0;
 let warnings = 0;
@@ -101,7 +76,7 @@ for (const e of entries) {
   // Strip trailing dates
   const statusOnly = clean.replace(/\s+\d{4}-\d{2}-\d{2}.*$/, '').trim();
 
-  if (!CANONICAL_STATUSES.includes(statusOnly) && !ALIASES[statusOnly]) {
+  if (canonicalId(statusOnly) === null) {
     error(`#${e.num}: Non-canonical status "${e.status}"`);
     badStatuses++;
   }
@@ -129,7 +104,7 @@ for (const e of entries) {
   if (!companyRoleMap.has(key)) companyRoleMap.set(key, []);
   companyRoleMap.get(key).push(e);
 }
-for (const [key, group] of companyRoleMap) {
+for (const [, group] of companyRoleMap) {
   if (group.length > 1) {
     warn(`Possible duplicates: ${group.map(e => `#${e.num}`).join(', ')} (${group[0].company} — ${group[0].role})`);
     dupes++;

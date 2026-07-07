@@ -14,12 +14,12 @@ import { chromium } from 'playwright';
 import { resolve, dirname } from 'path';
 import { readFile } from 'fs/promises';
 import { mkdirSync } from 'fs';
-import { fileURLToPath } from 'url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import { REPO_ROOT, resolveDataRoot } from './lib/resolve-root.mjs';
 
-// Ensure output directory exists (fresh setup)
-mkdirSync(resolve(__dirname, 'output'), { recursive: true });
+// Ensure output directory exists (fresh setup). output/ is user-layer, so it
+// lives in the data root; fonts/ below is a runtime asset in the repo.
+mkdirSync(resolve(resolveDataRoot(), 'output'), { recursive: true });
 
 /**
  * Normalize text for ATS compatibility by converting problematic Unicode.
@@ -113,7 +113,7 @@ async function generatePDF() {
   let html = await readFile(inputPath, 'utf-8');
 
   // Resolve font paths relative to career-ops/fonts/
-  const fontsDir = resolve(__dirname, 'fonts');
+  const fontsDir = resolve(REPO_ROOT, 'fonts');
   html = html.replace(
     /url\(['"]?\.\/fonts\//g,
     `url('file://${fontsDir}/`
