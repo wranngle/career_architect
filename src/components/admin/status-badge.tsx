@@ -3,7 +3,11 @@ import {cn} from '@/lib/utils';
 
 const STATUS_CLASSES: Record<Status, string> = {
   // Map status to brand-aligned hues. Healthy/positive = sunset; signal = wviolet;
-  // neutral = sand; muted = night.
+  // neutral = sand; muted = night. The interview sub-stages (screen/tech/onsite)
+  // share the interview family's sunset hue; ghosted sits with rejected.
+  screen: 'bg-sunset-500/10 text-sunset-700 ring-sunset-500/30',
+  tech: 'bg-sunset-500/10 text-sunset-700 ring-sunset-500/30',
+  onsite: 'bg-sunset-500/10 text-sunset-700 ring-sunset-500/30',
   interview: 'bg-sunset-500/10 text-sunset-700 ring-sunset-500/30',
   offer: 'bg-sunset-500 text-primary-foreground ring-sunset-600/30',
   applied: 'bg-wviolet-500/10 text-wviolet-700 ring-wviolet-500/30',
@@ -11,6 +15,7 @@ const STATUS_CLASSES: Record<Status, string> = {
   evaluated: 'bg-sand-200 text-night-800 ring-sand-300',
   skip: 'bg-night-200 text-night-700 ring-night-300',
   rejected: 'bg-night-100 text-night-600 ring-night-200',
+  ghosted: 'bg-night-100 text-night-600 ring-night-200',
   discarded: 'bg-night-100 text-night-500 ring-night-200',
 };
 

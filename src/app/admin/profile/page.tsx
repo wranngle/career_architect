@@ -3,7 +3,6 @@ import {
   CheckCircle2,
   ClipboardCheck,
   GitBranch,
-  ShieldCheck,
   Target,
 } from 'lucide-react';
 import {
@@ -35,16 +34,12 @@ export default function ProfileReadinessPage() {
   return (
     <div className='flex flex-col gap-8 pt-2'>
       <header className='flex flex-col gap-2'>
-        <div className='flex items-center gap-2 text-sm font-medium text-primary'>
-          <ShieldCheck className='h-4 w-4' aria-hidden />
-          Local setup checks
-        </div>
         <h1 className='font-display text-3xl font-semibold tracking-tight'>
           Profile readiness
         </h1>
         <p className='max-w-3xl text-sm leading-relaxed text-muted-foreground'>
-          Computed from the local CV, profile config, scanner config, and
-          personalization files. Source: {readiness.source}.
+          Local setup checks computed from the CV, profile config, scanner
+          config, and personalization files. Source: {readiness.source}.
         </p>
       </header>
 

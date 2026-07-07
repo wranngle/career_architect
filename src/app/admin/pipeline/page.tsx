@@ -8,6 +8,9 @@ import {MetricTile} from '@/components/admin/metric-tile';
 import {StatusBadge, ScoreChip} from '@/components/admin/status-badge';
 
 const GROUP_ORDER: Status[] = [
+  'onsite',
+  'tech',
+  'screen',
   'interview',
   'offer',
   'responded',
@@ -15,6 +18,7 @@ const GROUP_ORDER: Status[] = [
   'evaluated',
   'skip',
   'rejected',
+  'ghosted',
   'discarded',
 ];
 

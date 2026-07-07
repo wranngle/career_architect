@@ -8,9 +8,13 @@ export type Status
   = | 'evaluated'
   | 'applied'
   | 'responded'
+  | 'screen'
+  | 'tech'
+  | 'onsite'
   | 'interview'
   | 'offer'
   | 'rejected'
+  | 'ghosted'
   | 'discarded'
   | 'skip';
 
@@ -24,7 +28,9 @@ export type CareerApplication = {
   hasPDF: boolean;
   reportPath: string;
   notes: string;
-  jobURL: string;
+  // Direct link to the job posting, when known. The tracker itself does not
+  // record posting URLs, so live-mode rows usually omit it.
+  jobURL?: string;
   archetype?: string;
   tldr?: string;
   remote?: string;
@@ -434,156 +440,7 @@ export type ProfileReadinessMetrics = {
   score: number;
 };
 
-export const sampleProfileSignals: ProfileSignal[] = [
-  {
-    id: 'canonical-narrative',
-    label: 'Canonical role narrative',
-    category: 'positioning',
-    status: 'ready',
-    owner: 'Profile',
-    evidence: 'CV, profile headline, and public site all frame the candidate as a full-stack automation builder for revenue and operations teams.',
-    action: 'Keep target role, current work, and public proof in the same sentence-level frame.',
-    publicSafe: true,
-  },
-  {
-    id: 'role-vocabulary',
-    label: 'Target-company vocabulary',
-    category: 'positioning',
-    status: 'ready',
-    owner: 'Applications',
-    evidence: 'Skill language includes agents, internal tools, CRM workflows, billing handoffs, and operator-facing dashboards.',
-    action: 'Refresh profile skills from target-team language before each top-priority application batch.',
-    publicSafe: true,
-  },
-  {
-    id: 'sql-proof',
-    label: 'SQL and data proof gate',
-    category: 'proof',
-    status: 'watch',
-    owner: 'Portfolio',
-    evidence: 'Automation proof is strong; SQL-backed reconciliation and reporting proof should be more explicit before promoting SQL as a top skill.',
-    action: 'Publish a small public-safe reporting artifact with schema, query excerpts, and result interpretation.',
-    publicSafe: true,
-  },
-  {
-    id: 'public-contradiction-blocker',
-    label: 'Public surface contradiction blocker',
-    category: 'safety',
-    status: 'blocked',
-    owner: 'Website',
-    evidence: 'Public copy must not imply customers, revenue, or production scale unless the CV, profile, and portfolio can support the same claim.',
-    action: 'Downgrade unsupported claims to prototype, internal tool, or lab language before featuring them.',
-    publicSafe: true,
-  },
-  {
-    id: 'application-answer-hygiene',
-    label: 'Application answer hygiene',
-    category: 'safety',
-    status: 'ready',
-    owner: 'Applications',
-    evidence: 'Answers avoid low-signal personal anecdotes and reuse role-relevant proof blocks with consistent numbers and scope.',
-    action: 'Keep reusable answer snippets tied to verified project evidence.',
-    publicSafe: true,
-  },
-  {
-    id: 'recommendation-gap',
-    label: 'Recommendation coverage',
-    category: 'distribution',
-    status: 'watch',
-    owner: 'Network',
-    evidence: 'Profile positioning is clear, but third-party validation should cover automation, reliability, and collaboration.',
-    action: 'Request three short recommendations mapped to the target role archetype.',
-    publicSafe: true,
-  },
-  {
-    id: 'network-routing',
-    label: 'Referral routing',
-    category: 'distribution',
-    status: 'watch',
-    owner: 'Network',
-    evidence: 'Target-company list exists; first-degree and warm second-degree paths need explicit owner and next action.',
-    action: 'Attach each priority company to a referral route before applying cold.',
-    publicSafe: true,
-  },
-  {
-    id: 'measurement-loop',
-    label: 'Profile measurement loop',
-    category: 'distribution',
-    status: 'ready',
-    owner: 'Profile',
-    evidence: 'Search appearances, profile views, recruiter replies, and screen conversions can be tracked with the existing pipeline cadence.',
-    action: 'Review metrics weekly and only change one public-surface variable at a time.',
-    publicSafe: true,
-  },
-];
-
-export const sampleRoleVocabularyRows: RoleVocabularyRow[] = [
-  {
-    employerLanguage: 'AI agents that automate business workflows',
-    publicProfilePhrase: 'voice agents, lead parsers, RAG assistants, and human-in-the-loop review flows',
-    evidenceType: 'project readme, demo clip, architecture note',
-    priority: 'core',
-  },
-  {
-    employerLanguage: 'Internal tooling for GTM and revenue teams',
-    publicProfilePhrase: 'CRM enrichment, routing, quoting, billing, and handoff automation',
-    evidenceType: 'CV bullet, portfolio case study, application answer',
-    priority: 'core',
-  },
-  {
-    employerLanguage: 'Operational reliability and measurable impact',
-    publicProfilePhrase: 'latency budgets, evals, alerting, reconciliation checks, and conversion-rate instrumentation',
-    evidenceType: 'metrics table, dashboard screenshot, postmortem note',
-    priority: 'core',
-  },
-  {
-    employerLanguage: 'Customer-facing judgment with builder speed',
-    publicProfilePhrase: 'usable interfaces, Slack notifications, approval queues, and support-ready admin flows',
-    evidenceType: 'product screenshots, workflow diagrams',
-    priority: 'supporting',
-  },
-  {
-    employerLanguage: 'Finance and operations system literacy',
-    publicProfilePhrase: 'Stripe, QuickBooks, ERP exports, invoice reconciliation, and reporting pipelines',
-    evidenceType: 'sanitized schema, query note, integration checklist',
-    priority: 'supporting',
-  },
-];
-
-export const samplePublicSurfaceChecks: PublicSurfaceCheck[] = [
-  {
-    surface: 'CV / resume',
-    currentUse: 'Primary proof surface for quantified project outcomes.',
-    requiredAlignment: 'Numbers, stack, and role scope must match profile and application answers.',
-    status: 'ready',
-  },
-  {
-    surface: 'LinkedIn profile',
-    currentUse: 'Recruiter search surface and lightweight proof router.',
-    requiredAlignment: 'Headline, about section, and skills should match the target-role vocabulary map.',
-    status: 'ready',
-  },
-  {
-    surface: 'Portfolio / website',
-    currentUse: 'Public proof surface for demos, project framing, and architecture notes.',
-    requiredAlignment: 'No production-scale, customer, or revenue claim should appear without matching evidence elsewhere.',
-    status: 'blocked',
-  },
-  {
-    surface: 'GitHub profile',
-    currentUse: 'Technical credibility and artifact discovery.',
-    requiredAlignment: 'Pinned repositories should map to the same automation, data, and internal-tooling narrative.',
-    status: 'watch',
-  },
-  {
-    surface: 'Application answers',
-    currentUse: 'Role-specific translation layer for recruiters and hiring managers.',
-    requiredAlignment: 'Reusable snippets must cite the same proof blocks as CV and portfolio.',
-    status: 'ready',
-  },
-];
-
-export function buildProfileReadinessMetrics(signals: ProfileSignal[] = sampleProfileSignals): ProfileReadinessMetrics {
+export function buildProfileReadinessMetrics(signals: ProfileSignal[]): ProfileReadinessMetrics {
   const total = signals.length || 1;
   const ready = signals.filter(signal => signal.status === 'ready').length;
   const watch = signals.filter(signal => signal.status === 'watch').length;
@@ -604,9 +461,13 @@ export const STATUS_LABELS: Record<Status, string> = {
   evaluated: 'Evaluated',
   applied: 'Applied',
   responded: 'Responded',
+  screen: 'Screen',
+  tech: 'Tech',
+  onsite: 'Onsite',
   interview: 'Interview',
   offer: 'Offer',
   rejected: 'Rejected',
+  ghosted: 'Ghosted',
   discarded: 'Discarded',
   skip: 'Skip',
 };

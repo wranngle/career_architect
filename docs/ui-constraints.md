@@ -4,6 +4,13 @@
 >
 > Applied by AI agents when editing `src/` Next.js components or `templates/cv-template.html`.
 > See `CLAUDE.md` → Corrective rules → rule 3 for the trigger condition.
+>
+> **Repo-specific carve-out (`/admin` operational pages):** the admin
+> dashboard's metric tiles summarize real local data (tracker counts,
+> scores, readiness) — functional tiles are permitted there, including as
+> the opening block. "No metric-card grid as the first instinct" and the
+> hero/decorative-copy bans still apply in full to the landing page and to
+> any tile that isn't backed by a real number.
 
 ---
 

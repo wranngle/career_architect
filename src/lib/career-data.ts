@@ -42,7 +42,11 @@ type FileState = {
   content: string;
 };
 
-const ROOT = process.cwd();
+// Split-repo support: point CAREER_DATA_DIR at the directory holding your
+// user-layer files (cv.md, config/, data/, …) when they live outside this
+// repo — mirrors lib/resolve-root.mjs for the Node CLIs.
+const envDataDir = process.env.CAREER_DATA_DIR;
+const ROOT = envDataDir && existsSync(envDataDir) ? envDataDir : process.cwd();
 const APPLICATIONS_PATH = join(ROOT, 'data/applications.md');
 const SCAN_HISTORY_PATH = join(ROOT, 'data/scan-history.tsv');
 const CV_PATH = join(ROOT, 'cv.md');
@@ -56,9 +60,13 @@ const STATUS_BY_LABEL: Record<string, Status> = {
   evaluated: 'evaluated',
   applied: 'applied',
   responded: 'responded',
+  screen: 'screen',
+  tech: 'tech',
+  onsite: 'onsite',
   interview: 'interview',
   offer: 'offer',
   rejected: 'rejected',
+  ghosted: 'ghosted',
   discarded: 'discarded',
   skip: 'skip',
 };
@@ -193,7 +201,8 @@ function parseApplications(markdown: string): CareerApplication[] {
         hasPDF: isTruthyCell(cells[pdfIndex]),
         reportPath,
         notes: stripMarkdown(cells[notesIndex] ?? ''),
-        jobURL: reportPath,
+        // The tracker does not record posting URLs — leave jobURL unset
+        // rather than mislabeling the report path as the job link.
       };
       return app;
     })
@@ -416,6 +425,9 @@ function isTruthyCell(value = ''): boolean {
 }
 
 function isEvaluatedScanStatus(value = ''): boolean {
+  // Scan-history statuses: scan.mjs writes 'added'; the scan mode records
+  // 'skipped_expired' / 'skipped_title'. Anything beyond those means the
+  // row progressed into evaluation.
   const normalized = value.trim().toLowerCase();
-  return ['evaluated', 'applied', 'skip', 'rejected', 'discarded'].includes(normalized);
+  return normalized !== '' && normalized !== 'added' && !normalized.startsWith('skipped');
 }

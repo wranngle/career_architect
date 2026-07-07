@@ -38,36 +38,6 @@
 
     --radius: 0.5rem; /* 8px — token-aligned --radius-md */
   }
-
-  .dark {
-    --background: 247 21% 8%;            /* night-950 */
-    --foreground: 43 54% 97%;            /* sand-50 */
-
-    --card: 250 13% 14%;                 /* night-900 */
-    --card-foreground: 43 54% 97%;
-
-    --popover: 250 13% 14%;
-    --popover-foreground: 43 54% 97%;
-
-    --primary: 22 100% 50%;              /* sunset-500 stays brand */
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 339 60% 52%;            /* violet-500 */
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 250 13% 18%;
-    --muted-foreground: 250 11% 70%;
-
-    --accent: 31 100% 60%;
-    --accent-foreground: 247 21% 8%;
-
-    --destructive: 0 62.8% 50%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 250 13% 22%;
-    --input: 250 13% 22%;
-    --ring: 22 100% 50%;
-  }
 }
 
 @layer base {
