@@ -8,6 +8,23 @@
 
 /** @type {import('xo').FlatXoConfig} */
 const config = [
+  // Lint scope: the Next.js app only. The Node pipeline scripts (root/bin/
+  // lib/tests *.mjs) follow upstream career-ops conventions, and the Go
+  // dashboard and generated/config files are out of scope. Note `*.mjs`
+  // alone matches only root-level files — `**/*.mjs` is required to also
+  // exclude bin/, lib/, and tests/.
+  {
+    ignores: [
+      '.next/**',
+      'dashboard/**',
+      'tokens/**',
+      '**/*.mjs',
+      'next.config.js',
+      'tailwind.config.ts',
+      'postcss.config.js',
+      'next-env.d.ts',
+    ],
+  },
   // XO base options (formerly in package.json#xo)
   {
     space: 2,
