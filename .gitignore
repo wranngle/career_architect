@@ -76,6 +76,13 @@ career-dashboard
 # 4 — Stale per-day artifacts (regeneratable; don't pollute history)
 data/ranked-*.tsv
 
+# 4b — Batch user data (per AGENTS.md: batch/ is gitignored except scripts
+# and prompt — inputs, state, logs, and tracker additions are user-layer)
+batch/batch-input.tsv
+batch/batch-state.tsv
+batch/logs/
+batch/tracker-additions/
+
 # 5 — Voice-coach provisioning record (per-user agent IDs; written by voice-coach.mjs)
 data/voice-coach-agent.json
 

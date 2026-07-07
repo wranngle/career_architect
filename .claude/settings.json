@@ -27,6 +27,12 @@
         "api.mapbox.com",
         "events.mapbox.com",
 
+        "data.usajobs.gov",
+        "serpapi.com",
+        "api.elevenlabs.io",
+        "hooks.slack.com",
+        "api.clay.com",
+
         "boards-api.greenhouse.io",
         "job-boards.greenhouse.io",
         "job-boards.eu.greenhouse.io",
