@@ -285,7 +285,12 @@ func enrichFromScanHistory(careerOpsPath string, apps []model.CareerApplication)
 	scanPath := filepath.Join(careerOpsPath, "scan-history.tsv")
 	scanData, err := os.ReadFile(scanPath)
 	if err != nil {
-		return
+		// Fallback: try data/ subdirectory
+		scanPath = filepath.Join(careerOpsPath, "data", "scan-history.tsv")
+		scanData, err = os.ReadFile(scanPath)
+		if err != nil {
+			return
+		}
 	}
 
 	// Build company -> URL index from scan-history
@@ -559,7 +564,7 @@ func UpdateApplicationStatus(careerOpsPath string, app model.CareerApplication, 
 		// Match by report number
 		if app.ReportNumber != "" && strings.Contains(line, fmt.Sprintf("[%s]", app.ReportNumber)) {
 			// Replace the status field
-			lines[i] = replaceStatusInLine(line, app.Status, newStatus)
+			lines[i] = replaceStatusInLine(line, newStatus)
 			found = true
 			break
 		}
@@ -572,10 +577,29 @@ func UpdateApplicationStatus(careerOpsPath string, app model.CareerApplication, 
 	return os.WriteFile(filePath, []byte(strings.Join(lines, "\n")), 0644)
 }
 
-// replaceStatusInLine replaces the old status with new status in a table line.
-func replaceStatusInLine(line, oldStatus, newStatus string) string {
-	// Case-insensitive replacement of the status field
-	return strings.Replace(line, oldStatus, newStatus, 1)
+// replaceStatusInLine replaces the status column of a tracker table row,
+// leaving every other column untouched (so e.g. a company named "Applied
+// Materials" is never rewritten when its status is "Applied").
+// Column layout: # | Date | Company | Role | Score | Status | PDF | Report | Notes
+func replaceStatusInLine(line, newStatus string) string {
+	const statusCol = 5
+
+	if strings.Contains(line, "\t") {
+		// Mixed format: leading "| " then tab-separated cells
+		parts := strings.Split(line, "\t")
+		if len(parts) > statusCol {
+			parts[statusCol] = newStatus
+		}
+		return strings.Join(parts, "\t")
+	}
+
+	// Pure pipe format: cell 0 is the (empty) text before the leading "|",
+	// so the status column sits at split index statusCol+1.
+	cells := strings.Split(line, "|")
+	if len(cells) > statusCol+1 {
+		cells[statusCol+1] = " " + newStatus + " "
+	}
+	return strings.Join(cells, "|")
 }
 
 // cleanTableCell removes trailing pipes and whitespace from a table cell value.

@@ -6,8 +6,9 @@ progress). Inherited from upstream
 [`UPSTREAM.md`](../UPSTREAM.md) for attribution detail.
 
 > **Related web view.** The local files are rendered for the web at
-> [`/admin`](../src/app/admin) on the deployed Next.js site. Same surfaces:
-> Pipeline, Progress, Scans. Use whichever fits the task. The TUI reads
+> [`/admin`](../src/app/admin) on the deployed Next.js site. Shared surfaces:
+> Pipeline and Progress; the TUI adds a Report viewer, the web view adds
+> Scans and Profile. Use whichever fits the task. The TUI reads
 > `applications.md` or `data/applications.md`; the web view reads
 > `data/applications.md` when present and clearly marks sample fallback data.
 
@@ -15,16 +16,24 @@ progress). Inherited from upstream
 
 ```bash
 cd dashboard
-go build -o ../career-dashboard ./...
+go build -o ../career-dashboard .
 ../career-dashboard                 # auto-detect light/dark, Catppuccin theme
 ../career-dashboard --theme=wranngle # branded Wranngle palette (light/dark auto)
 ```
 
-Inside the project root:
+Inside the project root (the Go module lives in `dashboard/`, there is no root
+`go.mod`):
 
 ```bash
-go run ./dashboard
+(cd dashboard && go run .)
 ```
+
+## Flags
+
+| Flag       | Default | Notes |
+|------------|---------|-------|
+| `--path`   | `.`     | Career data directory to read: the folder containing `applications.md` (or `data/applications.md`) and `reports/`. |
+| `--theme`  | `auto`  | Palette selection — see the table below. |
 
 ## Themes
 
