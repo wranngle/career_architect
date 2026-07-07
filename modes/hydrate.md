@@ -151,15 +151,18 @@ Use ASCII bullets (`-`), `Month YYYY – Month YYYY` date format, plain text.
 
 ### 2. `config/profile.yml` (preferences + identity)
 
-Copy from `config/profile.example.yml` if missing, then fill:
-- `identity.full_name`, `identity.email`, `identity.location`, `identity.timezone`
-- `targeting.roles[]` (from gap-fill Q1)
-- `targeting.salary.{min, target, walk_away, currency}` (from Q2)
-- `targeting.geography.{home_addresses, commute_thresholds, remote_only}` (from Q3 + Q4)
-- `targeting.work_auth` (from Q4)
-- `targeting.availability` (from Q5)
-- `hard_filters[]` (from Q6)
+Copy from `config/profile.example.yml` if missing, then fill (key names
+below match the real schema in that file — do not invent others):
+- `candidate.{full_name, email, phone, location, linkedin, github, portfolio_url, twitter}` (contact info + scraped URLs)
+- `target_roles.primary[]` + `target_roles.archetypes[]` (from gap-fill Q1)
+- `compensation.{target_range, minimum, currency, location_flexibility}` (from Q2)
+- `location.{country, city, timezone, visa_status}` (from Q3 + Q4)
+- `home_addresses[]` + `commute_thresholds` (top-level fork extensions, from Q3 — feed `scripts/job-distance-analysis.py`)
+- `hard_filters:` map (from Q6 — `min_pay_hourly`, `min_pay_annual`, `exclude_compensation_types`, `remote_required`, seniority bounds, etc.; see the example file for the full key set)
 - `language.modes_dir` (default `modes/`; switch to `modes/de` etc. only if user explicitly opts in)
+
+Availability / notice period (Q5) has no dedicated key in the schema —
+record it in the `modes/_profile.md` narrative notes instead.
 
 ### 3. `modes/_profile.md` (narrative + archetype + scoring weights)
 
@@ -192,8 +195,8 @@ Refuse to proceed to `scan` / `oferta` / `pdf` if any of these are true
 post-hydrate. Tell the user exactly what's missing:
 
 - `cv.md` < 1000 chars
-- `config/profile.yml` missing `targeting.salary.target` OR
-  `targeting.roles` empty
+- `config/profile.yml` missing `compensation.target_range` OR
+  `target_roles.primary` empty
 - `modes/_profile.md` has fewer than 2 archetypes
 - `article-digest.md` has fewer than 5 proof points
 - LinkedIn was offered as a source but never pasted (user said "skip" —

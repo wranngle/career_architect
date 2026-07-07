@@ -24,7 +24,7 @@
      │                    Output Pipeline                      │
      │  ┌──────────┐  ┌────────────┐  ┌───────────────────┐  │
      │  │ Report.md│  │  PDF (HTML  │  │ Tracker TSV       │  │
-     │  │ (A-F eval)│  │  → Puppeteer)│  │ (merge-tracker)  │  │
+     │  │ (A-G eval)│  │  → Playwright)│  │ (merge-tracker) │  │
      │  └──────────┘  └────────────┘  └───────────────────┘  │
      └────────────────────────────────────────────────────────┘
                                │
@@ -39,13 +39,14 @@
 1. **Input**: User pastes JD text or URL
 2. **Extract**: Playwright/WebFetch extracts JD from URL
 3. **Classify**: Detect archetype (1 of 6 types)
-4. **Evaluate**: 6 blocks (A-F):
+4. **Evaluate**: 7 blocks (A-G):
    - A: Role summary
    - B: CV match (gaps + mitigation)
    - C: Level strategy
    - D: Comp research (WebSearch)
    - E: CV personalization plan
    - F: Interview prep (STAR stories)
+   - G: Posting legitimacy (freshness, description quality, hiring signals — reported as `**Legitimacy:** {tier}` in the header)
 5. **Score**: Weighted average across 10 dimensions (1-5)
 6. **Report**: Save as `reports/{num}-{company}-{date}.md`
 7. **PDF**: Generate ATS-optimized CV (`generate-pdf.mjs`)
@@ -103,7 +104,7 @@ Scripts maintain data consistency:
 
 The `dashboard/` directory contains a standalone Go TUI application that visualizes the pipeline:
 
-- Filter tabs: All, Evaluada, Aplicado, Entrevista, Top >=4, No Aplicar
+- Filter tabs: ALL, EVALUATED, APPLIED, INTERVIEW, TOP ≥4, SKIP
 - Sort modes: Score, Date, Company, Status
 - Grouped/flat view
 - Lazy-loaded report previews

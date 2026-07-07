@@ -23,7 +23,9 @@ For Codex-specific setup, see `docs/CODEX.md`.
 >
 > | File | Purpose |
 > |---|---|
-> | `src/` | Next.js landing page (decoupled; branding only) |
+> | `src/` | Two things: the Next.js landing page + `/admin` dashboard (`src/app`, `src/components`, `src/lib` — branding/UI, `docs/ui-constraints.md` applies) AND the implementation modules for the six bin/ CLIs (`src/{rehearse,tailor,negotiate,outreach,timeline,learn-rejection}/index.mjs` — pipeline logic, NOT UI) |
+> | `bin/` + `tests/` | CLI shims over the `src/<name>/index.mjs` modules, and their node:test suites (`npm test`) |
+> | `lib/resolve-root.mjs` + `lib/states.mjs` | Split-repo data-root resolver and the `templates/states.yml` loader shared by the pipeline scripts |
 > | `templates/portals.extensions.yml` | WebSearch queries for neurodiversity, academic, international aggregators + `usajobs:` + `google_jobs_serp:` aggregator blocks |
 > | `scripts/job-distance-analysis.py` | Commute distance rating against user-managed `data/job-locations.tsv` (derived from `data/applications.md` + Mapbox/Exa geocoding) |
 > | `scripts/usajobs_search.py` | USAJOBS federal-jobs aggregator (Tier 1c) |
@@ -33,6 +35,7 @@ For Codex-specific setup, see `docs/CODEX.md`.
 > | `requirements.txt`, `.mcp.json`, `UPSTREAM.md` | Fork scaffolding |
 > | `docs/ui-constraints.md` | UI design constraints (Uncodixfy ruleset) — applied by AI agents when editing `src/` or `templates/cv-template.html` |
 > | `voice-coach.mjs` + `templates/voice-coach-system-prompt.md` + `modes/voice-coach.md` | Provisions a personal ElevenLabs Conversational AI voice job-coach agent grounded in `cv.md` + `config/profile.yml` (+ optional `--jd`). Requires `ELEVENLABS_API_KEY`. Records agent IDs in `data/voice-coach-agent.json`. |
+> | `lib/resolve-root.mjs` (split-repo layout) | User data may live in a separate directory: scripts resolve user-layer paths against the invocation CWD when it carries data markers, and system assets against the runtime repo. See "Split-repo layout" in `DATA_CONTRACT.md`. |
 >
 > **Fork-only mode triggers** (the upstream "Skill Modes" table does not list these):
 >
@@ -57,7 +60,8 @@ For Codex-specific setup, see `docs/CODEX.md`.
 > |---|---|
 > | "Language Modes" (German / French / Japanese) | `modes/de/`, `modes/fr/`, `modes/ja/` |
 > | "OpenCode Commands" / "Gemini CLI Commands" | `.opencode/commands/`, `.gemini/commands/`, `GEMINI.md` |
-> | "Community and Governance" | `GOVERNANCE.md`, `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `CITATION.cff` |
+> | "Community and Governance" | `GOVERNANCE.md`, `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `CITATION.cff`; the Discord is upstream's |
+> | "CI/CD and Quality" | `.github/` is empty — no Actions, labeler, branch protection, or Dependabot on this fork; quality gates run locally (`npm test`, `npm run lint`) |
 >
 > If a user asks for any of those, tell them this fork doesn't ship them
 > and offer to either create stubs or skip.

@@ -196,12 +196,16 @@ absolute thresholds when generating any CV from this mode:
 
 ## Format enforcement (strict — these are hard rules)
 
+These rows restate what `templates/cv-template.html` + `generate-pdf.mjs`
+pin, so the tailored content never fights the template (see "Diseño del
+PDF" above for the visual spec):
+
 | Rule | Spec |
 |---|---|
-| Layout | Single-column. 1-inch margins. Left-align (never full-justify). |
-| Body font | `Calibri` or `Arial`, **11 pt**. Never smaller. |
-| Heading font | Same family, **12-14 pt**, bold. |
-| Section headings | Use ONLY these literals: `Professional Experience`, `Education`, `Skills`, `Technical Skills`, `Certifications`. No creative alternatives. |
+| Layout | Single-column. 0.6in margins (pinned in `generate-pdf.mjs`). Left-align (never full-justify). |
+| Body font | `DM Sans` 11px, self-hosted in `fonts/` (pinned in the template). Never smaller. |
+| Heading font | `Space Grotesk`, section headers 13px uppercase, name 24px bold (pinned in the template). |
+| Section headings | Use ONLY the template's literals: `Professional Summary`, `Work Experience`, `Projects`, `Education`, `Certifications`, `Skills`. No creative alternatives. |
 | Date format | `Month YYYY – Month YYYY` (e.g. `August 2021 – Present`). En-dash, not hyphen. |
 | Bullet character | `•` (U+2022) or `▪` (U+25AA) only. No emoji, no `→`, no `★`. |
 | Contact info | In document body at the top, NEVER in headers/footers (ATS strips those). |

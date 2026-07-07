@@ -21,8 +21,9 @@ Ported:     2026-04-23
 - `fonts/`, `interview-prep/`, `docs/`, `examples/`
 - `config/profile.example.yml` (extended with fork additions)
 - Root docs: `AGENTS.md`, `DATA_CONTRACT.md`, `CHANGELOG.md`,
-  `LEGAL_DISCLAIMER.md`, `SECURITY.md`, `SUPPORT.md`, `VERSION`,
-  `.env.example`, `.envrc`
+  `LEGAL_DISCLAIMER.md`, `SECURITY.md`, `SUPPORT.md`, `VERSION`
+  (upstream's `.env.example`/`.envrc` were not carried — create `.env`
+  by hand per the README)
 
 ## What was NOT ported
 
@@ -33,13 +34,24 @@ Ported:     2026-04-23
   `GOVERNANCE.md`, `GEMINI.md`, `CITATION.cff`,
   `.release-please-manifest.json`, `renovate.json`, `.coderabbit.yaml`
 - Nix flake: `flake.nix`, `flake.lock`
-- Upstream `.github/` workflows (the fork keeps its own `.github/`)
+- Upstream `.github/` workflows (this fork ships no CI — quality gates run
+  locally via `npm test` / `node test-all.mjs`)
 
 ## Fork-specific additions
 
-- `src/` — Next.js landing page
-- `templates/portals.extensions.yml` — non-AI portal queries
+- `src/` — Next.js landing page + `/admin` dashboard (`src/app`,
+  `src/components`, `src/lib`) AND the implementation modules for the
+  six bin/ CLIs (`src/{rehearse,tailor,negotiate,outreach,timeline,learn-rejection}/index.mjs`)
+- `bin/` — CLI shims over the `src/<name>/index.mjs` modules
+- `lib/resolve-root.mjs`, `lib/states.mjs` — split-repo data-root resolver
+  and the states.yml loader shared by the pipeline scripts
+- `tests/` — node:test suites for the CLIs, lib modules, and briefs
+- `templates/portals.extensions.yml` — non-AI portal queries + aggregator blocks
 - `scripts/job-distance-analysis.py` — commute rating
+- `scripts/usajobs_search.py`, `scripts/google_jobs_serp.py` — Tier 1c
+  aggregators invoked by `scan.mjs`
+- `voice-coach.mjs` + `templates/voice-coach-system-prompt.md` — ElevenLabs
+  voice job-coach provisioning
 - `config/profile.example.yml` extensions: `home_addresses`,
   `commute_thresholds`, `hard_filters`
 - `requirements.txt` — Python deps for `job-distance-analysis.py`
@@ -129,6 +141,8 @@ To sync later:
 
 1. Check upstream's new SHA on https://github.com/santifer/career-ops.
 2. Diff each of the ported paths against upstream and apply.
-3. Do NOT touch `src/`, `scripts/`, `templates/portals.extensions.yml`,
-   `requirements.txt`, or the extension section of `config/profile.example.yml`.
+3. Do NOT touch `src/`, `bin/`, `lib/`, `tests/`, `scripts/`,
+   `voice-coach.mjs`, `templates/portals.extensions.yml`,
+   `templates/voice-coach-system-prompt.md`, `requirements.txt`, or the
+   extension section of `config/profile.example.yml`.
 4. Update the SHA and date at the top of this file.

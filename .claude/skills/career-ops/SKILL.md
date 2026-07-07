@@ -3,7 +3,7 @@ name: career-ops
 description: AI job search command center -- evaluate offers, generate CVs, scan portals, track applications
 user_invocable: true
 args: mode
-argument-hint: "[scan | deep | pdf | oferta | ofertas | apply | batch | tracker | pipeline | contacto | training | project | interview-prep | update]"
+argument-hint: "[scan | deep | pdf | latex | oferta | ofertas | apply | batch | tracker | pipeline | contacto | training | project | interview-prep | patterns | followup | autopilot | learn | hydrate | voice-coach | update]"
 ---
 
 # career-ops -- Router
@@ -31,6 +31,11 @@ Determine the mode from `{{mode}}`:
 | `hydrate` | `hydrate` (fork-only — see `modes/hydrate.md`) |
 | `patterns` | `patterns` |
 | `followup` | `followup` |
+| `latex` | `latex` |
+| `interview-prep` | `interview-prep` |
+| `autopilot` | `autopilot` |
+| `learn` | `learn` |
+| `voice-coach` | `voice-coach` (fork-only — see `modes/voice-coach.md`) |
 
 **Auto-pipeline detection:** If `{{mode}}` is not a known sub-command AND contains JD text (keywords: "responsibilities", "requirements", "qualifications", "about the role", "we're looking for", company name + role) or a URL to a JD, execute `auto-pipeline`.
 
@@ -48,11 +53,12 @@ career-ops -- Command Center
 Available commands:
   /career-ops {JD}      → AUTO-PIPELINE: evaluate + report + PDF + tracker (paste text or URL)
   /career-ops pipeline  → Process pending URLs from inbox (data/pipeline.md)
-  /career-ops oferta    → Evaluation only A-F (no auto PDF)
+  /career-ops oferta    → Evaluation only A-G (no auto PDF)
   /career-ops ofertas   → Compare and rank multiple offers
   /career-ops contacto  → LinkedIn power move: find contacts + draft message
   /career-ops deep      → Deep research prompt about company
   /career-ops pdf       → PDF only, ATS-optimized CV
+  /career-ops latex     → Export CV as LaTeX/Overleaf .tex
   /career-ops training  → Evaluate course/cert against North Star
   /career-ops project   → Evaluate portfolio project idea
   /career-ops tracker   → Application status overview
@@ -61,6 +67,10 @@ Available commands:
   /career-ops batch     → Batch processing with parallel workers
   /career-ops patterns  → Analyze rejection patterns and improve targeting
   /career-ops followup  → Follow-up cadence tracker: flag overdue, generate drafts
+  /career-ops interview-prep → Company-specific interview intel + story bank
+  /career-ops autopilot → Daily autonomous scan + rank + auto-eval loop
+  /career-ops learn     → Recalibrate scoring weights from past outcomes
+  /career-ops voice-coach → Provision the ElevenLabs voice job-coach agent
 
 Inbox: add URLs to data/pipeline.md → /career-ops pipeline
 Or paste a JD directly to run the full pipeline.
@@ -75,12 +85,12 @@ After determining the mode, load the necessary files before executing:
 ### Modes that require `_shared.md` + their mode file:
 Read `modes/_shared.md` + `modes/{mode}.md`
 
-Applies to: `auto-pipeline`, `oferta`, `ofertas`, `pdf`, `contacto`, `apply`, `pipeline`, `scan`, `batch`
+Applies to: `auto-pipeline`, `oferta`, `ofertas`, `pdf`, `latex`, `contacto`, `apply`, `pipeline`, `scan`, `batch`, `autopilot`, `learn`
 
 ### Standalone modes (only their mode file):
 Read `modes/{mode}.md`
 
-Applies to: `tracker`, `deep`, `training`, `project`, `patterns`, `followup`
+Applies to: `tracker`, `deep`, `training`, `project`, `patterns`, `followup`, `interview-prep`, `hydrate`, `voice-coach`
 
 ### Modes delegated to subagent:
 For `scan`, `apply` (with Playwright), and `pipeline` (3+ URLs): launch as Agent with the content of `_shared.md` + `modes/{mode}.md` injected into the subagent prompt.

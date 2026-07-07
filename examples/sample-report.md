@@ -3,6 +3,7 @@
 **Date:** 2026-04-01
 **Archetype:** AI Platform / LLMOps Engineer
 **Score:** 4.2/5
+**Legitimacy:** High Confidence
 **URL:** https://jobs.example.com/acme-ai-senior-engineer
 **PDF:** output/cv-candidate-acme-ai-2026-04-01.pdf
 
@@ -67,6 +68,19 @@
 | 2 | Team leadership | ML Platform team | 4 teams needed MLOps | Led 3-eng team, built platform | Registry + A/B + feature store | Deploy time 2 weeks → 4 hours |
 
 **Recommended case study:** LLM Eval Toolkit -- shows LLM-specific expertise + open source impact
+
+## G) Posting Legitimacy
+
+**Tier: High Confidence** -- observations, not accusations; every signal has legitimate explanations.
+
+| Signal | Observation | Read |
+|--------|-------------|------|
+| Posting freshness | Posted 6 days ago; Apply button active on company ATS (Greenhouse) | ✅ Fresh, live |
+| Description quality | Names concrete stack (Python, K8s, LLM serving), team size (~8), 6-month scope; salary band published | ✅ Role-specific, low boilerplate |
+| Company hiring signals | No layoffs or hiring-freeze coverage found for Acme AI in the last 12 months; 3 adjacent infra roles open | ✅ Consistent hiring |
+| Reposting detection | No prior appearance of this company + role in `data/scan-history.tsv` | ✅ First posting |
+
+**Net read:** Real, active opening -- worth full application effort now rather than later.
 
 ---
 

@@ -108,9 +108,12 @@ Si el score final es >= 4.5, generar borrador de respuestas para el formulario d
 - **Good fit?** → "I sit at the intersection of [A] and [B], which is exactly where this role lives."
 - **How did you hear?** → Honesto: "Found through [portal/scan], evaluated against my criteria, and it scored highest."
 
-**Idioma**: Siempre en el idioma del JD (EN default). Aplicar `/tech-translate`.
+**Idioma**: Siempre en el idioma del JD (EN default). Traducir la jerga técnica a lenguaje claro para el lector no técnico (recruiter-friendly).
 
 ## Paso 5 — Actualizar Tracker
-Registrar en `data/applications.md` con todas las columnas incluyendo Report y PDF en ✅.
+Escribir un TSV de una línea en `batch/tracker-additions/{num}-{company-slug}.tsv`
+y ejecutar `node merge-tracker.mjs` (regla de Pipeline Integrity — nunca añadir
+filas directamente a `data/applications.md`), con todas las columnas incluyendo
+Report y PDF en ✅.
 
 **Si algún paso falla**, continuar con los siguientes y marcar el paso fallido como pendiente en el tracker.

@@ -252,7 +252,7 @@ tiers — start at Tier 1 and proceed sequentially.**
 |---|---|---|---|
 | 1a | `scan.mjs` (zero-token JSON APIs) | Greenhouse, Ashby, Lever | Always first — free, fast, fresh |
 | 1b | `scan-jobspy.py` (Python JobSpy) | Indeed, LinkedIn, Glassdoor, ZipRecruiter, Google, Bayt, Naukri | Always concurrent with 1a |
-| 1c | Direct API | USAJOBS (`scripts/usajobs_search.py`), Google Jobs via SERP API (planned) | Always — federal coverage that JobSpy + ATS scanners miss |
+| 1c | Direct API | USAJOBS (`scripts/usajobs_search.py`), Google Jobs via SERP API (`scripts/google_jobs_serp.py`) | Always — federal coverage that JobSpy + ATS scanners miss |
 | 2 | Targeted Exa with `site:` filter | RemoteOK, We Work Remotely, FlexJobs, AngelList/Wellfound, Stack Overflow Jobs; Mentra, Hire Autism, Spectroomz, Exceptional Individuals, abilityJOBS, Spectrum Careers, Specialisterne | Mandatory if role is remote-first or accessibility-focused |
 | 3 | Broad Exa | Jooble, Monster, CareerBuilder, JobSpider; Seek (AU), Jora (multi); Loopcv | Mandatory unless explicitly out-of-scope |
 | 4 | Specialized Exa (academic) | Chronicle of Higher Education, HigherEdJobs, Academic Jobs Online | Only if role is academic/research |
@@ -306,7 +306,7 @@ SEARCH COVERAGE CHECKLIST — {date}
   - [ ] Naukri:       [...]
 - Tier 1c (Direct API):
   - [ ] USAJOBS:      [...]
-  - [ ] Google Jobs (SERP): [Skipped: not yet wired]
+  - [ ] Google Jobs (SERP): [...]
 - Tier 2 (Exa site-targeted):
   - [ ] Remote/Tech:  [...]
   - [ ] Neurodiversity: [...]

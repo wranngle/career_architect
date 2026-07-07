@@ -1,6 +1,6 @@
 # Batch Processing
 
-Process multiple job offers in parallel via `claude -p` workers. Each worker runs the full evaluation pipeline (A-F report + PDF + tracker line) autonomously.
+Process multiple job offers in parallel via `claude -p` workers. Each worker runs the full evaluation pipeline (A-G report + PDF + tracker line) autonomously.
 
 ## Quick Start
 
@@ -76,5 +76,5 @@ A PID-based lock file (`batch-runner.pid`) prevents concurrent batch runs. If a 
 ## Prerequisites
 
 - `claude` CLI in PATH (Claude Max subscription for default model)
-- Node.js >= 18, Playwright chromium installed (`npm run doctor` to verify)
+- Node.js >= 20.19, Playwright chromium installed (`npm run doctor` to verify)
 - `batch-input.tsv` with at least one offer

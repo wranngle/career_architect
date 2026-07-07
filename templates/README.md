@@ -1,6 +1,8 @@
 # Templates
 
-System-layer template files used by career-ops scripts and modes. These files are auto-updated when you run `npm run update` -- put user customizations in the user-layer files instead (see DATA_CONTRACT.md).
+System-layer template files used by career-ops scripts and modes. They ship
+with the repo (this fork's updater is disabled — see `docs/SCRIPTS.md`) --
+put user customizations in the user-layer files instead (see DATA_CONTRACT.md).
 
 ## Files
 
@@ -9,7 +11,9 @@ System-layer template files used by career-ops scripts and modes. These files ar
 | `cv-template.html` | `generate-pdf.mjs` | HTML/CSS template for ATS-optimized CV PDFs |
 | `cv-template.tex` | `generate-latex.mjs` | LaTeX/Overleaf template for ATS-optimized CV PDFs |
 | `portals.example.yml` | Onboarding | Example portal scanner configuration (copy to `portals.yml` to activate) |
-| `states.yml` | `verify-pipeline.mjs`, `normalize-statuses.mjs`, `merge-tracker.mjs` | Canonical application states and their aliases |
+| `portals.extensions.yml` | `scan.mjs` | Non-AI board queries + external-aggregator blocks (USAJOBS, Google Jobs SERP) |
+| `states.yml` | `lib/states.mjs` (verify-pipeline, merge-tracker, normalize-statuses, followup-cadence, dedup-tracker) | Canonical application states and their aliases |
+| `voice-coach-system-prompt.md` | `voice-coach.mjs` | System-prompt template for the ElevenLabs voice job-coach agent |
 
 ### cv-template.html
 
@@ -46,6 +50,6 @@ Pre-configured portal scanner with 45+ tracked companies and search queries. Con
 
 ### states.yml
 
-Defines the 8 canonical application states (`Evaluated`, `Applied`, `Responded`, `Interview`, `Offer`, `Rejected`, `Discarded`, `SKIP`) with aliases for common variants. All pipeline scripts validate statuses against this file.
+Defines the 12 canonical application states (`Evaluated`, `Applied`, `Responded`, `Screen`, `Tech`, `Onsite`, `Interview`, `Offer`, `Rejected`, `Ghosted`, `Discarded`, `SKIP`) with aliases for common variants. The pipeline scripts load canonical ids and aliases from this file via `lib/states.mjs` (with hardcoded fallbacks if the YAML is unavailable), so new states only need to be added here.
 
 **Do not rename states** -- the dashboard and all scripts depend on these exact IDs. You can add aliases if you encounter new variants that should map to an existing state.

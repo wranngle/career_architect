@@ -7,11 +7,17 @@ Lee y muestra `data/applications.md`.
 | # | Fecha | Empresa | Rol | Score | Estado | PDF | Report |
 ```
 
-Estados posibles: `Evaluada` → `Aplicado` → `Respondido` → `Contacto` → `Entrevista` → `Oferta` / `Rechazada` / `Descartada` / `NO APLICAR`
+Estados posibles (canónicos en inglés, fuente de verdad `templates/states.yml`):
+`Evaluated` → `Applied` → `Responded` → `Screen` → `Tech` → `Onsite` →
+`Interview` (genérico) → `Offer`, con salidas terminales `Rejected` /
+`Ghosted` / `Discarded` / `SKIP`.
 
-- `Aplicado` = el candidato envió su candidatura
-- `Respondido` = Un recruiter/empresa contactó y el candidato respondió (inbound)
-- `Contacto` = El candidato contactó proactivamente a alguien de la empresa (outbound, ej: LinkedIn power move)
+- `Applied` = el candidato envió su candidatura
+- `Responded` = la empresa respondió (aún sin entrevista)
+- `Screen` / `Tech` / `Onsite` = etapas de entrevista con detalle; `Interview`
+  es el genérico cuando la etapa no está clara
+- El outreach proactivo (LinkedIn power move) se registra en la columna de
+  notas y en `data/follow-ups.md`, no como estado del tracker
 
 Si el usuario pide actualizar un estado, editar la fila correspondiente.
 

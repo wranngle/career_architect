@@ -3,27 +3,30 @@
 ## Prerequisites
 
 - [Claude Code](https://claude.ai/code) installed and configured
-- Node.js 18+ (for PDF generation and utility scripts)
-- (Optional) Go 1.21+ (for the dashboard TUI)
+- Node.js 20.19+ (for PDF generation and utility scripts)
+- Python 3.11+ (for the aggregator and analysis scripts)
+- (Optional) Go 1.24.2+ (for the dashboard TUI)
 
 ## Quick Start (5 steps)
 
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/santifer/career-ops.git
-cd career-ops
+git clone https://github.com/wranngle/career_architect.git
+cd career_architect
 npm install
 npx playwright install chromium   # Required for PDF generation
+pip install -r requirements.txt
 ```
 
 ### 2. Configure your profile
 
 ```bash
 cp config/profile.example.yml config/profile.yml
+cp modes/_profile.template.md modes/_profile.md
 ```
 
-Edit `config/profile.yml` with your personal details: name, email, target roles, narrative, proof points.
+Edit `config/profile.yml` with your personal details: name, email, target roles, narrative, proof points. Edit `modes/_profile.md` with your archetypes, framing, and negotiation scripts — it is never overwritten by updates.
 
 ### 3. Add your CV
 

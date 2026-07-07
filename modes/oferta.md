@@ -163,6 +163,7 @@ Guardar evaluación completa en `reports/{###}-{company-slug}-{YYYY-MM-DD}.md`.
 **Arquetipo:** {detectado}
 **Score:** {X/5}
 **Legitimacy:** {High Confidence | Proceed with Caution | Suspicious}
+**URL:** {URL de la oferta original}
 **PDF:** {ruta o pendiente}
 
 ---
@@ -234,18 +235,24 @@ the tracker line, and the auto-pipeline gate (4.0 hard-stop).
 
 ### 2. Registrar en tracker
 
-**SIEMPRE** registrar en `data/applications.md`:
-- Siguiente número secuencial
-- Fecha actual
-- Empresa
-- Rol
-- Score: promedio de match (1-5)
-- Estado: `Evaluada`
-- PDF: ❌ (o ✅ si auto-pipeline generó PDF)
-- Report: link relativo al report .md (ej: `[001](reports/001-company-2026-01-01.md)`)
+**NUNCA añadir filas nuevas directamente a `data/applications.md`** (regla
+de Pipeline Integrity en `CLAUDE.md`). En su lugar, escribir un TSV de una
+sola línea en `batch/tracker-additions/{num}-{company-slug}.tsv` y ejecutar
+`node merge-tracker.mjs` después de cada batch de evaluaciones:
 
-**Formato del tracker:**
-
-```markdown
-| # | Fecha | Empresa | Rol | Score | Estado | PDF | Report |
 ```
+{num}\t{fecha}\t{empresa}\t{rol}\tEvaluated\t{score}/5\t{pdf_emoji}\t[{num}](reports/{num}-{company-slug}-{fecha}.md)\t{nota_1_frase}
+```
+
+- 9 columnas tab-separated, orden exacto: num, date, company, role,
+  **status, score**, pdf, report, notes. En el TSV el status va ANTES del
+  score; en applications.md el orden es el inverso — `merge-tracker.mjs`
+  hace el swap automáticamente.
+- `{num}` = siguiente número secuencial (max existente + 1)
+- Estado: `Evaluated` — canónico en inglés según `templates/states.yml`
+  (nunca `Evaluada` ni otros alias)
+- PDF: ❌ (o ✅ si auto-pipeline generó PDF)
+- Score: el `score` del Block H, formato `X.X/5`
+
+Actualizar status/notas de filas YA existentes sí se hace editando
+`data/applications.md` directamente.

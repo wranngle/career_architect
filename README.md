@@ -58,6 +58,11 @@ cp templates/portals.example.yml portals.yml
 npm run doctor                          # validates the environment (needs the files above)
 ```
 
+Personal data can also live in a separate directory instead of the repo:
+run any script from that directory and it resolves user-layer paths (cv.md,
+config/, data/, reports/, output/) against your CWD. See "Split-repo layout"
+in [`DATA_CONTRACT.md`](./DATA_CONTRACT.md).
+
 ## Use (inside Claude Code)
 
 ```

@@ -44,7 +44,15 @@ These files contain system logic, scripts, templates, and instructions that impr
 | `modes/training.md` | Training evaluation instructions |
 | `modes/patterns.md` | Pattern analysis instructions |
 | `modes/followup.md` | Follow-up cadence instructions |
-| `modes/de/*` | German language modes |
+| `modes/latex.md` | LaTeX/Overleaf CV export instructions |
+| `modes/interview-prep.md` | Interview intel + story bank instructions |
+| `modes/autopilot.md` | Autonomous scan+rank+eval loop instructions |
+| `modes/learn.md` | Scoring-weight recalibration instructions |
+| `modes/hydrate.md` | Profile hydration instructions (fork-only) |
+| `modes/voice-coach.md` | Voice job-coach instructions (fork-only) |
+| `bin/*` + `src/{rehearse,tailor,negotiate,outreach,timeline,learn-rejection}/` | CLI shims and their implementation modules |
+| `lib/*` | Shared modules (split-repo resolver, states loader) |
+| `tests/*` | node:test suites |
 | `CLAUDE.md` | Agent instructions |
 | `AGENTS.md` | Codex instructions |
 | `*.mjs` | Utility scripts |
@@ -63,3 +71,20 @@ These files contain system logic, scripts, templates, and instructions that impr
 **If a file is in the User Layer, no update process may read, modify, or delete it.**
 
 **If a file is in the System Layer, it can be safely replaced with the latest version from the upstream repo.**
+
+## Split-repo layout (optional)
+
+The User Layer does not have to live inside this repo. If you keep your
+personal data (cv.md, config/, portals.yml, data/, reports/, output/) in a
+separate directory, run the scripts from that directory:
+
+```bash
+cd ~/my-career-data
+node /path/to/career_architect/verify-pipeline.mjs
+```
+
+Scripts detect a data dir by its markers (`cv.md`, `config/profile.yml`,
+`data/applications.md`, or `data/pipeline.md`) and resolve User-Layer paths
+against the invocation CWD, while System-Layer assets (templates/, fonts/,
+modes/) always resolve against the runtime repo. See `lib/resolve-root.mjs`.
+With no markers in the CWD, everything falls back to the single-repo layout.

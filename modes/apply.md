@@ -13,7 +13,7 @@ Modo interactivo para cuando el candidato está rellenando un formulario de apli
 1. DETECTAR    → Leer Chrome tab activa (screenshot/URL/título)
 2. IDENTIFICAR → Extraer empresa + rol de la página
 3. BUSCAR      → Match contra reports existentes en reports/
-4. CARGAR      → Leer report completo + Section G (si existe)
+4. CARGAR      → Leer report completo + Section H (si existe)
 5. COMPARAR    → ¿El rol en pantalla coincide con el evaluado? Si cambió → avisar
 6. ANALIZAR    → Identificar TODAS las preguntas del formulario visibles
 7. GENERAR     → Para cada pregunta, generar respuesta personalizada
@@ -34,7 +34,7 @@ Modo interactivo para cuando el candidato está rellenando un formulario de apli
 1. Extraer nombre de empresa y título del rol de la página
 2. Buscar en `reports/` por nombre de empresa (Grep case-insensitive)
 3. Si hay match → cargar el report completo
-4. Si hay Section G → cargar los draft answers previos como base
+4. Si hay Section H → cargar los draft answers previos como base
 5. Si NO hay match → avisar y ofrecer ejecutar auto-pipeline rápido
 
 ## Paso 3 — Detectar cambios en el rol
@@ -42,7 +42,7 @@ Modo interactivo para cuando el candidato está rellenando un formulario de apli
 Si el rol en pantalla difiere del evaluado:
 - **Avisar al candidato**: "El rol ha cambiado de [X] a [Y]. ¿Quieres que re-evalúe o adapto las respuestas al nuevo título?"
 - **Si adaptar**: Ajustar las respuestas al nuevo rol sin re-evaluar
-- **Si re-evaluar**: Ejecutar evaluación A-F completa, actualizar report, regenerar Section G
+- **Si re-evaluar**: Ejecutar evaluación A-G completa, actualizar report, regenerar Section H
 - **Actualizar tracker**: Cambiar título del rol en applications.md si procede
 
 ## Paso 4 — Analizar preguntas del formulario
@@ -55,7 +55,7 @@ Identificar TODAS las preguntas visibles:
 - Upload fields (resume, cover letter PDF)
 
 Clasificar cada pregunta:
-- **Ya respondida en Section G** → adaptar la respuesta existente
+- **Ya respondida en Section H** → adaptar la respuesta existente
 - **Nueva pregunta** → generar respuesta desde el report + cv.md
 
 ## Paso 5 — Generar respuestas
@@ -63,7 +63,7 @@ Clasificar cada pregunta:
 Para cada pregunta, generar la respuesta siguiendo:
 
 1. **Contexto del report**: Usar proof points del bloque B, historias STAR del bloque F
-2. **Section G previa**: Si existe una respuesta draft, usarla como base y refinar
+2. **Section H previa**: Si existe una respuesta draft, usarla como base y refinar
 3. **Tono "I'm choosing you"**: Mismo framework del auto-pipeline
 4. **Especificidad**: Referenciar algo concreto del JD visible en pantalla
 5. **career-ops proof point**: Incluir en "Additional info" si hay campo para ello
@@ -96,7 +96,7 @@ Notas:
 
 Si el candidato confirma que envió la aplicación:
 1. Actualizar estado en `applications.md` de "Evaluada" a "Aplicado"
-2. Actualizar Section G del report con las respuestas finales
+2. Actualizar Section H del report con las respuestas finales
 3. Sugerir siguiente paso: `/career-ops contacto` para LinkedIn outreach
 
 ## Scroll handling
