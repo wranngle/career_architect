@@ -15,7 +15,12 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const projectRoot = __dirname;
+// Split-repo support: user data lives in the invocation CWD when it looks
+// like a career data dir; fall back to the script dir (single-repo layout).
+const projectRoot = (existsSync(join(process.cwd(), 'cv.md'))
+  || existsSync(join(process.cwd(), 'config/profile.yml'))
+  || existsSync(join(process.cwd(), 'data')))
+  ? process.cwd() : __dirname;
 
 const warnings = [];
 const errors = [];
