@@ -15,6 +15,9 @@
 
 # User layer (see DATA_CONTRACT.md)
 cv.md
+# The bare `cv.md` pattern matches at any depth — re-include the fictional
+# example CVs, which are documentation, not user data.
+!examples/**/cv.md
 config/profile.yml
 modes/_profile.md
 article-digest.md
