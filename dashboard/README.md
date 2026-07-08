@@ -6,7 +6,8 @@ progress). Inherited from upstream
 [`UPSTREAM.md`](../UPSTREAM.md) for attribution detail.
 
 > **Related web view.** The local files are rendered for the web at
-> [`/admin`](../src/app/admin) on the deployed Next.js site. Shared surfaces:
+> [`/admin`](../src/app/admin) on the local Next.js app (`npm run dev` —
+> nothing is deployed). Shared surfaces:
 > Pipeline and Progress; the TUI adds a Report viewer, the web view adds
 > Scans and Profile. Use whichever fits the task. The TUI reads
 > `applications.md` or `data/applications.md`; the web view reads
