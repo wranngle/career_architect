@@ -66,12 +66,11 @@ export default function CareerArchitectLandingPage() {
         <div className='mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl content-center gap-10 px-6 py-16 lg:grid-cols-[0.92fr_1.08fr] lg:items-center'>
           <div className='max-w-2xl'>
             <h1 className='font-display text-4xl font-semibold leading-tight tracking-tight md:text-6xl'>
-              A local job-search pipeline you can audit.
+              Audit every step in a local job-search pipeline.
             </h1>
             <p className='mt-6 text-lg leading-relaxed text-sand-100 md:text-xl'>
-              Career Architect evaluates job descriptions against your CV, drafts
-              tailored variants, scans configured portals, and keeps the tracker
-              in plain files.
+              Know which roles are worth a tailored CV, decide what you send,
+              and keep the whole trail on your machine.
             </p>
             <div className='mt-8 flex flex-wrap gap-3'>
               <a
@@ -79,7 +78,7 @@ export default function CareerArchitectLandingPage() {
                 className='inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-sunset-600'
               >
                 <Github className='h-4 w-4' aria-hidden />
-                Read the source
+                Audit the pipeline
                 <ArrowRight className='h-4 w-4' aria-hidden />
               </a>
               <a

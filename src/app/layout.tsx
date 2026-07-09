@@ -20,20 +20,20 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Career Architect — an open-source job-search pipeline you can read',
-  description: 'MIT-licensed tooling that scores a job description against your CV, drafts a tailored variant, and tracks where every application went. Local-first. No SaaS. Built by Cody Arnold.',
+  title: 'Career Architect: local, auditable job-search pipeline',
+  description: 'Know which jobs fit, tailor your CV, and track every application — a local-first job search pipeline you can audit. No SaaS. Built by Cody Arnold.',
   keywords: 'open source, job search, resume, CV, AI, career, MIT, local-first, n8n, automation',
   authors: [{name: 'Cody Arnold', url: 'https://github.com/wranngle'}],
   openGraph: {
-    title: 'Career Architect — an open-source job-search pipeline you can read',
-    description: 'Scores a job description against your CV, drafts a tailored variant, and tracks where every application went. Local-first, MIT-licensed.',
+    title: 'Career Architect: local, auditable job-search pipeline',
+    description: 'Know which jobs fit, tailor your CV, and track every application — a local-first job search pipeline you can audit. No SaaS. Built by Cody Arnold.',
     type: 'website',
     siteName: 'Career Architect',
   },
   twitter: {
     card: 'summary',
-    title: 'Career Architect — an open-source job-search pipeline you can read',
-    description: 'Scores a job description against your CV, drafts a tailored variant, and tracks where every application went. Local-first, MIT-licensed.',
+    title: 'Career Architect: local, auditable job-search pipeline',
+    description: 'Know which jobs fit, tailor your CV, and track every application — a local-first job search pipeline you can audit. No SaaS. Built by Cody Arnold.',
   },
 };
 
