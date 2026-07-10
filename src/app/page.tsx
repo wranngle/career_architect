@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import {
   ArrowRight,
   FileText,
@@ -7,7 +6,6 @@ import {
   ShieldCheck,
   Terminal,
 } from 'lucide-react';
-import demoGif from '../../docs/demo.gif';
 
 const workflow = [
   {
@@ -63,7 +61,7 @@ export default function CareerArchitectLandingPage() {
       </header>
 
       <section className='border-b border-border bg-night-950 text-sand-50'>
-        <div className='mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl content-center gap-10 px-6 py-16 lg:grid-cols-[0.92fr_1.08fr] lg:items-center'>
+        <div className='mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl content-center gap-10 px-6 py-16'>
           <div className='max-w-2xl'>
             <h1 className='font-display text-4xl font-semibold leading-tight tracking-tight md:text-6xl'>
               Audit every step in a local job-search pipeline.
@@ -89,16 +87,6 @@ export default function CareerArchitectLandingPage() {
                 Open /admin
               </a>
             </div>
-          </div>
-
-          <div className='overflow-hidden rounded-lg border border-night-700 bg-night-900'>
-            <Image
-              src={demoGif}
-              alt='Terminal dashboard showing scored job applications grouped by status'
-              className='h-auto w-full'
-              priority
-              unoptimized
-            />
           </div>
         </div>
       </section>
