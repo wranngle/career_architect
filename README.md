@@ -1,5 +1,10 @@
 # CareerArchitect
 
+[![License](https://img.shields.io/github/license/wranngle/career_architect?color=A371F7)](./LICENSE) ![Status](https://img.shields.io/badge/status-active-brightgreen.svg)
+
+> [!NOTE]
+> Active personal project. Used in my own workflow. Issues triaged on a personal-time cadence.
+
 A fork of [santifer/career-ops](https://github.com/santifer/career-ops) with
 a Next.js landing page and a few coverage extensions for non-AI job
 categories.
@@ -41,6 +46,9 @@ for the port details.
 ## Install
 
 ```bash
+git clone https://github.com/wranngle/career_architect.git
+cd career_architect
+
 # Prereqs: Node ≥20.19, Go ≥1.24.2, Python ≥3.11
 npm install
 npx playwright install chromium
@@ -113,6 +121,10 @@ the Catppuccin slot structure (see
 [`dashboard/internal/theme/wranngle.go`](./dashboard/internal/theme/wranngle.go)).
 
 ## Landing page
+
+A Next.js page under `src/` that describes the pipeline and links to the
+`/admin` dashboard. It is decoupled from the scripts; keep it, replace it,
+or delete it.
 
 ```bash
 npm run dev

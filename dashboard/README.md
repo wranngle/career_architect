@@ -1,12 +1,12 @@
-# dashboard/ — Career Architect terminal UI
+# dashboard/: Career Architect terminal UI
 
 A `bubbletea` + `lipgloss` TUI for the local pipeline (tracker, reports, scan
 progress). Inherited from upstream
-[`santifer/career-ops`](https://github.com/santifer/career-ops) — see the root
+[`santifer/career-ops`](https://github.com/santifer/career-ops); see the root
 [`UPSTREAM.md`](../UPSTREAM.md) for attribution detail.
 
 > **Related web view.** The local files are rendered for the web at
-> [`/admin`](../src/app/admin) on the local Next.js app (`npm run dev` —
+> [`/admin`](../src/app/admin) on the local Next.js app (`npm run dev`,
 > nothing is deployed). Shared surfaces:
 > Pipeline and Progress; the TUI adds a Report viewer, the web view adds
 > Scans and Profile. Use whichever fits the task. The TUI reads
@@ -34,7 +34,7 @@ Inside the project root (the Go module lives in `dashboard/`, there is no root
 | Flag       | Default | Notes |
 |------------|---------|-------|
 | `--path`   | `.`     | Career data directory to read: the folder containing `applications.md` (or `data/applications.md`) and `reports/`. |
-| `--theme`  | `auto`  | Palette selection — see the table below. |
+| `--theme`  | `auto`  | Palette selection; see the table below. |
 
 ## Themes
 
@@ -49,9 +49,9 @@ Inside the project root (the Go module lives in `dashboard/`, there is no root
 
 The Wranngle theme maps the existing slot names (Blue/Mauve/Sky/Peach/etc.)
 onto the canonical Wranngle palette (sunset / wviolet / sand / night) so all
-TUI surfaces inherit the brand without code changes elsewhere. Source:
-[`~/.agents/DESIGN.md`](https://github.com/wranngle/.dotfiles/blob/main/wranngle-DESIGN.md)
-and the vendored [`tokens/tokens.css`](../tokens/tokens.css).
+TUI surfaces inherit the brand without code changes elsewhere. Source: the
+canonical Wranngle DESIGN.md, mirrored into the vendored
+[`tokens/tokens.css`](../tokens/tokens.css).
 
 ## Data
 
