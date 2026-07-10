@@ -19,7 +19,7 @@ A fork of [santifer/career-ops](https://github.com/santifer/career-ops) with a N
 
 ## What it does
 
-Evaluates a job description against your CV, scans job boards for matching postings, generates a tailored ATS-clean PDF, and tracks every application in a markdown pipeline. Paste a JD; it tells you whether to apply and hands you the resume to do it.
+Paste a job description and get a scored fit evaluation against your CV, plus a tailored ATS-clean PDF ready to submit. It scans your configured job boards for new postings and tracks every application in a plain markdown pipeline. The whole loop runs from your terminal against files you own.
 
 ## Why a fork
 
@@ -77,7 +77,9 @@ in [`DATA_CONTRACT.md`](./DATA_CONTRACT.md).
 
 ## Use
 
-Inside Claude Code, one skill runs the whole pipeline: paste a JD and get an evaluation, a tailored PDF, and a tracker entry.
+Get the job-search pipeline from JD intake to evaluation, PDF generation, tracker status, portal scans, follow-up checks, recruiter practice, CV tailoring, negotiation drafts, outreach messages, timelines, and rejection lessons.
+
+### Inside Claude Code
 
 ```
 /career-ops                       # show all subcommands
@@ -90,18 +92,16 @@ Inside Claude Code, one skill runs the whole pipeline: paste a JD and get an eva
 
 Full list: `.claude/skills/career-ops/SKILL.md`.
 
-Six of the steps also run standalone, no Claude session needed. Pass args after `--`:
+### Standalone npm scripts
 
-```bash
-npm run rehearse -- --company <slug> --mock <fixture.json>   # 5-turn mock recruiter call
-npm run tailor -- <jd.md>                      # tailor cv.md into a per-JD variant
-npm run negotiate -- <offer.json>              # negotiation script from a structured offer
-npm run outreach -- <person.json> <jd.json>    # cold outreach message, printed to stdout
-npm run timeline                               # application calendar from data/applications.md
-npm run learn-rejection -- <rejection.md>      # extract lessons from a rejection email
-```
+Six of the steps also run standalone, no Claude session needed. With npm scripts, CLI args go after `--`, e.g. `npm run tailor -- <jd.md>`.
 
-For `rehearse`, the `--mock` flag is currently required (live recruiter client not wired). Each CLI prints usage with `--help`.
+- `npm run rehearse` -> `node bin/rehearse.mjs`: 5-turn mock recruiter call. Usage: `npm run rehearse -- --company <slug> --mock <fixture.json> [--turns 5] [--root <dir>]`. The `--mock` flag is currently required (live recruiter client not wired).
+- `npm run tailor` -> `node bin/tailor.mjs`: per-JD CV variant. Usage: `npm run tailor -- <jd.md> [--root <dir>] [--cv <cv.md>] [--out-dir <dir>]`.
+- `npm run negotiate` -> `node bin/negotiate.mjs`: offer negotiation script generator. Usage: `npm run negotiate -- <offer.json> [--root <dir>] [--out-dir <dir>]`. Offer JSON must include `compensation.base_salary_usd`.
+- `npm run outreach` -> `node bin/outreach.mjs`: cold-message generator. Usage: `npm run outreach -- <person.json> <jd.json> [--write] [--root <dir>] [--out-dir <dir>]`. Prints to stdout; `--write` also writes a file.
+- `npm run timeline` -> `node bin/timeline.mjs`: application calendar built from `data/applications.md`. Usage: `npm run timeline -- [--root <dir>] [--out <path>] [--today YYYY-MM-DD] [--include ...] [--stdout]`. Writes `out/timeline.md` by default.
+- `npm run learn-rejection` -> `node bin/learn-rejection.mjs`: rejection-feedback learner; extracts lessons from a rejection email into `data/lessons.md`. Usage: `npm run learn-rejection -- <rejection.md> [--root <dir>] [--lessons <path>] [--today <YYYY-MM-DD>] [--stdout]`.
 
 ## Dashboard
 
