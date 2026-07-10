@@ -1,13 +1,13 @@
 # CareerArchitect
 
+> paste a JD into Claude Code, get a scored evaluation, a tailored CV PDF, and a tracker entry
+
+A fork of [santifer/career-ops](https://github.com/santifer/career-ops) with a Next.js landing page and coverage extensions for non-AI job categories.
+
 [![License](https://img.shields.io/github/license/wranngle/career_architect?color=A371F7)](./LICENSE) ![Status](https://img.shields.io/badge/status-active-brightgreen.svg)
 
 > [!NOTE]
 > Active personal project. Used in my own workflow. Issues triaged on a personal-time cadence.
-
-A fork of [santifer/career-ops](https://github.com/santifer/career-ops) with
-a Next.js landing page and a few coverage extensions for non-AI job
-categories.
 
 > **Where the additive bits live.** The non-personal additions from this
 > fork (the `hydrate` mode, USAJOBS + Google-Jobs-SERP aggregators, the
@@ -16,6 +16,10 @@ categories.
 > repo; `UPSTREAM.md` maps what is upstream and what is local. Keep
 > personal search data in the gitignored user-layer files described in
 > `DATA_CONTRACT.md`.
+
+## What it does
+
+Evaluates a job description against your CV, scans job boards for matching postings, generates a tailored ATS-clean PDF, and tracks every application in a markdown pipeline. Paste a JD; it tells you whether to apply and hands you the resume to do it.
 
 ## Why a fork
 
@@ -71,11 +75,13 @@ run any script from that directory and it resolves user-layer paths (cv.md,
 config/, data/, reports/, output/) against your CWD. See "Split-repo layout"
 in [`DATA_CONTRACT.md`](./DATA_CONTRACT.md).
 
-## Use (inside Claude Code)
+## Use
+
+Inside Claude Code, one skill runs the whole pipeline: paste a JD and get an evaluation, a tailored PDF, and a tracker entry.
 
 ```
 /career-ops                       # show all subcommands
-/career-ops <JD text or URL>      # auto-pipeline: evaluate → PDF → tracker
+/career-ops <JD text or URL>      # auto-pipeline: evaluate -> PDF -> tracker
 /career-ops scan                  # scan all enabled portals
 /career-ops pdf                   # tailor cv.md for one JD, render PDF
 /career-ops tracker               # pipeline status
@@ -83,6 +89,19 @@ in [`DATA_CONTRACT.md`](./DATA_CONTRACT.md).
 ```
 
 Full list: `.claude/skills/career-ops/SKILL.md`.
+
+Six of the steps also run standalone, no Claude session needed. Pass args after `--`:
+
+```bash
+npm run rehearse -- --company <slug> --mock <fixture.json>   # 5-turn mock recruiter call
+npm run tailor -- <jd.md>                      # tailor cv.md into a per-JD variant
+npm run negotiate -- <offer.json>              # negotiation script from a structured offer
+npm run outreach -- <person.json> <jd.json>    # cold outreach message, printed to stdout
+npm run timeline                               # application calendar from data/applications.md
+npm run learn-rejection -- <rejection.md>      # extract lessons from a rejection email
+```
+
+For `rehearse`, the `--mock` flag is currently required (live recruiter client not wired). Each CLI prints usage with `--help`.
 
 ## Dashboard
 
