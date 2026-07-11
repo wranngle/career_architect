@@ -12,10 +12,7 @@ Subagent definitions available to Claude Code sessions in this repo.
 Both agents should read `docs/ui-constraints.md` before touching `src/` and
 treat `tokens/tokens.css` as the tier-1 color source.
 
-## Vendored collection
-
-The remaining `*.md` files in this directory are the
-[wshobson/agents](https://github.com/wshobson/agents) collection (backend-architect,
-python-pro, security-auditor, …), vendored unmodified as general-purpose
-helpers. They are not career-ops-specific; see each file's frontmatter for
-its trigger description.
+General-purpose personas (backend-architect, python-pro, security-auditor,
+and friends) are not vendored here; install the
+[wshobson/agents](https://github.com/wshobson/agents) collection at user
+level if you want them.
