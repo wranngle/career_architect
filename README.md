@@ -129,7 +129,7 @@ Every CLI runs the same way against the sample files in `fixtures/`, so you can 
 
 </details>
 
-## 🖥️ Dashboards
+## 📊 Dashboards
 
 Two surfaces, one data model. Both read local career-ops files when they exist and fall back to clearly labeled sample data when the tracker is not initialized, so the first run always renders something honest.
 
