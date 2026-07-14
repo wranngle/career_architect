@@ -1,10 +1,11 @@
 # Getting Help
 
-> **Fork note:** this repo (`wranngle/career_architect`) is a personal fork
-> with its own issue tracker disabled. The channels below belong to the
-> upstream [santifer/career-ops](https://github.com/santifer/career-ops)
-> project and are for upstream questions — don't report fork-specific
-> problems there.
+> **Fork note:** this repo (`wranngle/career_architect`) is a personal fork.
+> Report fork-specific bugs and feature ideas on
+> [this repo's issue tracker](https://github.com/wranngle/career_architect/issues).
+> The channels below belong to the upstream
+> [santifer/career-ops](https://github.com/santifer/career-ops) project and
+> are for upstream questions — don't report fork-specific problems there.
 
 career-ops is an open source project maintained in limited time. Here's how to get help efficiently.
 

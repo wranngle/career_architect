@@ -9,16 +9,19 @@ Ported:     2026-04-23
 - `modes/*.md` (English only; `modes/de/`, `modes/fr/`, `modes/ja/`,
   `modes/pt/`, `modes/ru/` omitted)
 - `.claude/skills/career-ops/SKILL.md`
-- All root-level `.mjs` utilities (15 files): scan, doctor, verify,
+- Root-level `.mjs` utilities (15 files): scan, doctor, verify,
   dedup, merge, pdf, latex, liveness, followup, analyze-patterns,
-  update-system, cv-sync-check, normalize-statuses, gemini-eval,
-  test-all, liveness-core
+  cv-sync-check, normalize-statuses, gemini-eval, test-all,
+  liveness-core (`update-system.mjs` was also ported, then neutered
+  into a fork-detached stub — see `docs/SCRIPTS.md`)
 - `dashboard/` (Go + Bubble Tea TUI)
 - `batch/` (orchestrator)
 - `templates/cv-template.html`, `templates/cv-template.tex`,
   `templates/portals.example.yml`, `templates/states.yml`,
   `templates/README.md`
-- `fonts/`, `interview-prep/`, `docs/`, `examples/`
+- `fonts/`, `docs/`, `examples/` (`interview-prep/` was ported but is
+  user-layer — under the split-repo layout it lives in your data root,
+  not this tree)
 - `config/profile.example.yml` (extended with fork additions)
 - Root docs: `AGENTS.md`, `DATA_CONTRACT.md`, `CHANGELOG.md`,
   `LEGAL_DISCLAIMER.md`, `SUPPORT.md`, `VERSION`
@@ -58,6 +61,27 @@ Ported:     2026-04-23
 - `requirements.txt` — Python deps for `job-distance-analysis.py`
   and JobSpy
 - `.mcp.json` — MCP server config (Playwright, Memory, Exa)
+- Fork-born root CLIs: `morning-brief.mjs`, `recon-brief.mjs`,
+  `funnel-metrics.mjs`, `queue-applications.mjs`, `notify-slack.mjs`,
+  `clay-enrich.mjs`, `quick-rank.mjs`, `scan-jobspy.py` — briefs,
+  funnel metrics, submit-queue migrator, Slack notifier, enrichment,
+  Gemini quick-ranking, JobSpy scanner (see `docs/SCRIPTS.md`)
+- `modes/hydrate.md`, `modes/voice-coach.md` — fork modes
+- `docs/ui-constraints.md` — UI ruleset; `docs/brand/` + `docs/hero.webp`,
+  `docs/admin-scans.png` — README brand assets and demo media
+- `.github/FUNDING.yml` — sponsor link
+
+## Versioning
+
+Two version axes coexist:
+
+- `VERSION` (currently 1.5.0) is the upstream career-ops core snapshot
+  this fork tracks; `test-all.mjs` asserts it is valid semver.
+- Fork releases are versioned from `package.json` and git tags
+  (`v1.0.0` onward) on the
+  [Releases page](https://github.com/wranngle/career_architect/releases).
+  `CHANGELOG.md` below its fork note is upstream history, not fork
+  history.
 
 ## Cloud-sandbox runtime quirks
 
@@ -143,7 +167,10 @@ To sync later:
 1. Check upstream's new SHA on https://github.com/santifer/career-ops.
 2. Diff each of the ported paths against upstream and apply.
 3. Do NOT touch `src/`, `bin/`, `lib/`, `tests/`, `scripts/`,
-   `voice-coach.mjs`, `templates/portals.extensions.yml`,
+   `voice-coach.mjs`, the fork-born root CLIs listed above,
+   `modes/hydrate.md`, `modes/voice-coach.md`, `docs/ui-constraints.md`,
+   `docs/brand/`, `.github/FUNDING.yml`,
+   `templates/portals.extensions.yml`,
    `templates/voice-coach-system-prompt.md`, `requirements.txt`, or the
    extension section of `config/profile.example.yml`.
 4. Update the SHA and date at the top of this file.

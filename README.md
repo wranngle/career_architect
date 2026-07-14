@@ -47,7 +47,7 @@ flowchart LR
 
 ## ✨ Features
 
-- 📋 **JD in, decision out**: `scan.mjs` evaluates a pasted job description against your `cv.md` and profile, writes a scored report, and appends the tracker.
+- 📋 **JD in, decision out**: the `/career-ops` skill evaluates a pasted job description against your `cv.md` and profile, writes a scored report, and appends the tracker.
 - 📄 **ATS-clean PDF**: `generate-pdf.mjs` renders a tailored CV variant per JD; `verify-pipeline.mjs` checks the loop end to end.
 - 🗂️ **Portal scans by name**: configured queries for Ashby, Greenhouse, and Lever boards ship in `templates/portals.example.yml`, with non-AI board coverage in `templates/portals.extensions.yml`.
 - 🧰 **Six standalone CLIs**: rehearse, tailor, negotiate, outreach, timeline, and learn-rejection each run as a plain npm script, no Claude session needed.
@@ -190,4 +190,4 @@ MIT, matching upstream. See [LICENSE](LICENSE).
 
 ## Credits
 
-All non-trivial design credit belongs to Santiago Fernández de Valderrama ([@santifer](https://github.com/santifer)). This fork layers coverage extensions and a landing page on top. Bug reports and feature requests route to upstream per [`SUPPORT.md`](./SUPPORT.md); this repo's own issue tracker is disabled by design.
+All non-trivial design credit belongs to Santiago Fernández de Valderrama ([@santifer](https://github.com/santifer)). This fork layers coverage extensions and a landing page on top. Fork-specific bug reports and feature requests go to [this repo's issues](https://github.com/wranngle/career_architect/issues); upstream questions route per [`SUPPORT.md`](./SUPPORT.md).

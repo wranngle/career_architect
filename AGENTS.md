@@ -36,6 +36,7 @@ For Codex-specific setup, see `docs/CODEX.md`.
 > | `docs/ui-constraints.md` | UI design constraints (Uncodixfy ruleset) — applied by AI agents when editing `src/` or `templates/cv-template.html` |
 > | `voice-coach.mjs` + `templates/voice-coach-system-prompt.md` + `modes/voice-coach.md` | Provisions a personal ElevenLabs Conversational AI voice job-coach agent grounded in `cv.md` + `config/profile.yml` (+ optional `--jd`). Requires `ELEVENLABS_API_KEY`. Records agent IDs in `data/voice-coach-agent.json`. |
 > | `lib/resolve-root.mjs` (split-repo layout) | User data may live in a separate directory: scripts resolve user-layer paths against the invocation CWD when it carries data markers, and system assets against the runtime repo. See "Split-repo layout" in `DATA_CONTRACT.md`. |
+> | `morning-brief.mjs`, `recon-brief.mjs`, `funnel-metrics.mjs`, `queue-applications.mjs`, `notify-slack.mjs`, `clay-enrich.mjs`, `quick-rank.mjs`, `scan-jobspy.py` | Fork-born root CLIs: morning briefing, company recon brief, funnel metrics, pipeline-to-submit-queue migrator, Slack notifier for high-fit roles, Clay enrichment, Gemini quick-ranking, JobSpy scanner. See `docs/SCRIPTS.md`. |
 >
 > **Fork-only mode triggers** (the upstream "Skill Modes" table does not list these):
 >
@@ -61,7 +62,7 @@ For Codex-specific setup, see `docs/CODEX.md`.
 > | "Language Modes" (German / French / Japanese) | `modes/de/`, `modes/fr/`, `modes/ja/` |
 > | "OpenCode Commands" / "Gemini CLI Commands" | `.opencode/commands/`, `.gemini/commands/`, `GEMINI.md` |
 > | "Community and Governance" | `GOVERNANCE.md`, `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `CITATION.cff`, `SECURITY.md` (removed with the community boilerplate); the Discord is upstream's |
-> | "CI/CD and Quality" | `.github/` is empty — no Actions, labeler, branch protection, or Dependabot on this fork; quality gates run locally (`npm test`, `npm run lint`) |
+> | "CI/CD and Quality" | `.github/` carries only `FUNDING.yml` — no Actions, labeler, branch protection, or Dependabot on this fork; quality gates run locally (`npm test`, `npm run lint`) |
 >
 > If a user asks for any of those, tell them this fork doesn't ship them
 > and offer to either create stubs or skip.
