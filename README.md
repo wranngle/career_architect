@@ -20,6 +20,7 @@ Runs from your terminal against files you own. No server, no account, no databas
 **❤️ [Sponsor this project](https://github.com/sponsors/wranngle) ❤️**
 
 [![License](https://img.shields.io/github/license/wranngle/career_architect?color=A371F7)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/wranngle/career_architect?color=A371F7)](https://github.com/wranngle/career_architect/releases)
 [![Last commit](https://img.shields.io/github/last-commit/wranngle/career_architect)](https://github.com/wranngle/career_architect/commits/main)
 [![Contributors](https://img.shields.io/github/contributors/wranngle/career_architect)](https://github.com/wranngle/career_architect/graphs/contributors)
 
