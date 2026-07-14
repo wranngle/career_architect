@@ -1,8 +1,27 @@
 {
   "name": "career-architect",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "AI job search pipeline (Career-Ops port) with Next.js landing page",
+  "keywords": [
+    "job-search",
+    "career",
+    "claude-code",
+    "cv-generation",
+    "ats",
+    "job-scanner",
+    "nextjs"
+  ],
+  "homepage": "https://github.com/wranngle/career_architect",
+  "bugs": {
+    "url": "https://github.com/wranngle/career_architect/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wranngle/career_architect.git"
+  },
+  "license": "MIT",
+  "author": "Cody Arnold",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

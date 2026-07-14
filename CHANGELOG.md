@@ -1,5 +1,11 @@
 # Changelog
 
+> **Fork note:** everything below is upstream
+> [santifer/career-ops](https://github.com/santifer/career-ops) history,
+> kept verbatim from the ported snapshot. wranngle/career_architect
+> releases live on the
+> [Releases page](https://github.com/wranngle/career_architect/releases).
+
 ## [1.5.0](https://github.com/santifer/career-ops/compare/v1.4.0...v1.5.0) (2026-04-14)
 
 
