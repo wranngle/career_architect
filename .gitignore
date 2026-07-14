@@ -98,6 +98,9 @@ data/voice-coach-agent.json
 *.tsbuildinfo
 tsconfig.tsbuildinfo
 
+# Next.js regenerates this on every dev/build run (stock create-next-app posture)
+next-env.d.ts
+
 # Transient bootstrap files
 /logs
 /old

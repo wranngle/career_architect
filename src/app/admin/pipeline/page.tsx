@@ -74,76 +74,76 @@ export default function AdminPipelinePage() {
 
       <section className='overflow-x-auto rounded-lg border border-border bg-card shadow-sm'>
         <div className='min-w-[640px]'>
-        <div className='grid grid-cols-12 gap-2 border-b border-border bg-muted/40 px-4 py-2 text-[11px] font-semibold text-muted-foreground'>
-          <div className='col-span-1'>Score</div>
-          <div className='col-span-2'>Date</div>
-          <div className='col-span-3'>Company</div>
-          <div className='col-span-4'>Role</div>
-          <div className='col-span-2 text-right'>Comp</div>
-        </div>
+          <div className='grid grid-cols-12 gap-2 border-b border-border bg-muted/40 px-4 py-2 text-[11px] font-semibold text-muted-foreground'>
+            <div className='col-span-1'>Score</div>
+            <div className='col-span-2'>Date</div>
+            <div className='col-span-3'>Company</div>
+            <div className='col-span-4'>Role</div>
+            <div className='col-span-2 text-right'>Comp</div>
+          </div>
 
-        {grouped.length === 0
-          ? (
-            <div className='px-4 py-6 text-sm text-muted-foreground'>
-              No tracked applications yet.
-            </div>
-          )
-          : grouped.map(group => (
-            <div key={group.status}>
-              <div className='border-b border-border bg-sand-50 px-4 py-1.5 text-xs font-semibold text-night-700'>
-                {STATUS_LABELS[group.status]} ({group.items.length})
+          {grouped.length === 0
+            ? (
+              <div className='px-4 py-6 text-sm text-muted-foreground'>
+                No tracked applications yet.
               </div>
-              <ul className='divide-y divide-border'>
-                {group.items.map(app => (
-                  <li
-                    key={app.number}
-                    className='grid grid-cols-12 items-center gap-2 px-4 py-3 transition hover:bg-muted/30'
-                  >
-                    <div className='col-span-1'>
-                      <ScoreChip score={app.score} />
-                    </div>
-                    <div className='col-span-2 font-mono text-xs text-muted-foreground tabular-nums'>
-                      {app.date}
-                    </div>
-                    <div className='col-span-3 truncate font-medium text-foreground'>
-                      {app.company}
-                    </div>
-                    <div className='col-span-4 truncate text-sm text-muted-foreground'>
-                      {app.jobURL && !isDemo
+            )
+            : grouped.map(group => (
+              <div key={group.status}>
+                <div className='border-b border-border bg-sand-50 px-4 py-1.5 text-xs font-semibold text-night-700'>
+                  {STATUS_LABELS[group.status]} ({group.items.length})
+                </div>
+                <ul className='divide-y divide-border'>
+                  {group.items.map(app => (
+                    <li
+                      key={app.number}
+                      className='grid grid-cols-12 items-center gap-2 px-4 py-3 transition hover:bg-muted/30'
+                    >
+                      <div className='col-span-1'>
+                        <ScoreChip score={app.score} />
+                      </div>
+                      <div className='col-span-2 font-mono text-xs text-muted-foreground tabular-nums'>
+                        {app.date}
+                      </div>
+                      <div className='col-span-3 truncate font-medium text-foreground'>
+                        {app.company}
+                      </div>
+                      <div className='col-span-4 truncate text-sm text-muted-foreground'>
+                        {app.jobURL && !isDemo
+                          ? (
+                            <a
+                              href={app.jobURL}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                              className='hover:text-primary hover:underline'
+                            >
+                              {app.role}
+                            </a>
+                          )
+                          : app.role}
+                        {app.archetype
+                          ? (
+                            <span className='ml-2 inline-flex items-center rounded-md border border-border px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground'>
+                              {app.archetype}
+                            </span>
+                          )
+                          : null}
+                      </div>
+                      <div className='col-span-2 truncate text-right font-mono text-xs text-foreground'>
+                        {app.compEstimate ?? '-'}
+                      </div>
+                      {app.tldr
                         ? (
-                          <a
-                            href={app.jobURL}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='hover:text-primary hover:underline'
-                          >
-                            {app.role}
-                          </a>
-                        )
-                        : app.role}
-                      {app.archetype
-                        ? (
-                          <span className='ml-2 inline-flex items-center rounded-md border border-border px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground'>
-                            {app.archetype}
-                          </span>
+                          <div className='col-span-12 -mt-1 truncate pl-[8.333%] text-xs text-muted-foreground'>
+                            {app.tldr}
+                          </div>
                         )
                         : null}
-                    </div>
-                    <div className='col-span-2 truncate text-right font-mono text-xs text-foreground'>
-                      {app.compEstimate ?? '-'}
-                    </div>
-                    {app.tldr
-                      ? (
-                        <div className='col-span-12 -mt-1 truncate pl-[8.333%] text-xs text-muted-foreground'>
-                          {app.tldr}
-                        </div>
-                      )
-                      : null}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
         </div>
       </section>
 

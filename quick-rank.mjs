@@ -139,7 +139,7 @@ async function callGemini(prompt, modelName) {
   return result.response.text().trim();
 }
 
-// claude -p subprocess. Uses Cody's Claude Code Max subscription, no
+// claude -p subprocess. Runs on the local Claude Code subscription, no
 // per-token cost. Tricky bits to get right:
 //   - IS_SANDBOX=1 lets it run as root in cloud sandboxes
 //   - --strict-mcp-config skips MCP server discovery (otherwise hangs ~2min)
